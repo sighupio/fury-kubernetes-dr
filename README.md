@@ -1,2 +1,3 @@
 # fury-kubernetes-dr
-Fury Kubernetes Disaster Recovery blocks
+
+This repo contains packages to use in case of Disaster Recovery.
