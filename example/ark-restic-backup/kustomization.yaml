@@ -1,0 +1,15 @@
+namespace: kube-system
+
+bases:
+  - vendor/bases/addons/ark-restic #FIXME
+
+resources: 
+- ark-backup.yml
+
+  #secretGenerator:
+  #  - name: cloud-credentials
+  #    commands:
+  #      cloud: "cat ../../secrets/aws_cluster.ark"
+  #  - name: restic-credentials
+  #    commands:
+  #      cloud: "cat ../../secrets/aws_volumes.ark"

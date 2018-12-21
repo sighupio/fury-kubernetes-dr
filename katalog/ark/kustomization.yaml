@@ -1,0 +1,11 @@
+namespace: kube-system
+
+resources:
+  - crd.yml
+  - deploy.yml
+  - rbac.yml
+  - sm.yml
+  
+imageTags:
+  - name: gcr.io/heptio-images/ark
+    newTag: v0.9.9

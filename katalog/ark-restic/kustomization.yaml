@@ -1,0 +1,7 @@
+namespace: kube-system
+
+bases:
+- ../ark
+
+resources:
+- daemonset.yml
