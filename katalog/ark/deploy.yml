@@ -2,11 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ark
+  labels:
+    app: ark
 spec:
   replicas: 1
   selector:
-      matchLabels:
-          app: ark
+    matchLabels:
+      app: ark
   template:
     metadata:
       labels:
@@ -15,35 +17,28 @@ spec:
       restartPolicy: Always
       serviceAccountName: ark
       containers:
-        - name: ark
-          image: gcr.io/heptio-images/ark:v0.9.10
-          command:
-            - /ark
-          args:
-            - server
-          ports:
-            - name: metrics
-              containerPort: 8085
-          volumeMounts:
-            - name: cloud-credentials
-              mountPath: /credentials
-            - name: plugins
-              mountPath: /plugins
-            - name: scratch
-              mountPath: /scratch
-          env:
-            - name: AWS_SHARED_CREDENTIALS_FILE
-              value: /credentials/cloud
-            - name: ARK_SCRATCH_DIR
-              value: /scratch
-      volumes:
-        - name: cloud-credentials
-          secret:
-            secretName: cloud-credentials
+      - name: ark
+        image: gcr.io/heptio-images/ark:v0.10.1
+        command:
+        - /ark
+        args:
+        - server
+        ports:
+        - name: metrics
+          containerPort: 8085
+        volumeMounts:
         - name: plugins
-          emptyDir: {}
+          mountPath: /plugins
         - name: scratch
-          emptyDir: {}
+          mountPath: /scratch
+        env:
+        - name: ARK_SCRATCH_DIR
+          value: /scratch
+      volumes:
+      - name: plugins
+        emptyDir: {}
+      - name: scratch
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
