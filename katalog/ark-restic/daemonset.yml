@@ -1,6 +1,6 @@
 apiVersion: apps/v1
 kind: DaemonSet
-metadata: 
+metadata:
   name: restic
   labels:
     app: restic
