@@ -10,7 +10,7 @@ spec:
     bucket: ${google_storage_bucket.main.name}
     prefix: ${var.bucket_prefix}
 ---
-apiVersion: velero.io/v1
+apiVersion: ark.heptio.com/v1
 kind: VolumeSnapshotLocation
 metadata:
   name: default
