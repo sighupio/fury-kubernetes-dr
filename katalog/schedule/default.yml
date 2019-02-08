@@ -1,0 +1,42 @@
+apiVersion: ark.heptio.com/v1
+kind: Schedule
+metadata:
+  name: full
+spec:
+  schedule: "0 1 * * *"
+  template:
+    excludedNamespaces: null
+    excludedResources: null
+    hooks:
+      resources: null
+    includeClusterResources: true
+    includedNamespaces:
+    - '*'
+    includedResources: null
+    labelSelector: null
+    storageLocation: default
+    ttl: 720h0m0s
+    volumeSnapshotLocations:
+    - default
+---
+apiVersion: ark.heptio.com/v1
+kind: Schedule
+metadata:
+  name: manifests
+spec:
+  schedule: "*/15 * * * *"
+  template:
+    excludedNamespaces: null
+    excludedResources: null
+    hooks:
+      resources: null
+    includeClusterResources: true
+    snapshotVolumes: false
+    includedNamespaces:
+    - '*'
+    includedResources: null
+    labelSelector: null
+    storageLocation: default
+    ttl: 720h0m0s
+    volumeSnapshotLocations:
+    - default
