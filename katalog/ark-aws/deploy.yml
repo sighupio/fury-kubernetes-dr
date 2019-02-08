@@ -1,0 +1,18 @@
+- op: "add"
+  path: "/spec/template/spec/containers/0/volumeMounts/-"
+  value:
+    name: cloud-credentials
+    mountPath: /credentials
+
+- op: "add"
+  path: "/spec/template/spec/containers/0/env/-"
+  value:
+    name: AWS_SHARED_CREDENTIALS_FILE
+    value: /credentials/cloud
+
+- op: "add"
+  path: "/spec/template/spec/volumes/-"
+  value:
+    name: cloud-credentials
+    secret:
+      secretName: cloud-credentials

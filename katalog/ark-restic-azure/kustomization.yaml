@@ -1,4 +1,7 @@
 namespace: kube-system
 
-resources:
+bases:
+- ../ark-restic
+
+patches:
 - daemonset.yml
