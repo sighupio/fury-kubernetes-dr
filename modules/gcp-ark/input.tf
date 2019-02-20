@@ -6,6 +6,6 @@ variable name {}
 variable env {}
 
 provider "google" {
-    version = "1.20.0"
+    version = "2.0.0"
 }
 
