@@ -41,7 +41,7 @@ locals {
 apiVersion: ark.heptio.com/v1
 kind: VolumeSnapshotLocation
 metadata:
-  name: azure-default
+  name: default
 spec:
   provider: azure
   config:
