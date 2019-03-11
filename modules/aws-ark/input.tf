@@ -8,5 +8,5 @@ variable aws_region {
 variable ark_backup_bucket_name {}
 
 provider aws {
-  region = "eu-west-1"
+  region = "${var.aws_region}"
 }
