@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "main" {
-  name                      = "${var.cluster_name}${var.env}ark"
+  name                      = "${var.name}${var.env}ark"
   resource_group_name       = "${data.azurerm_resource_group.main.name}"
   location                  = "${data.azurerm_resource_group.main.location}"
   account_kind              = "BlobStorage"
@@ -11,13 +11,13 @@ resource "azurerm_storage_account" "main" {
   account_replication_type  = "GRS"
 
   tags {
-    cluster     = "${var.cluster_name}"
+    cluster     = "${var.name}"
     environment = "${var.env}"
   }
 }
 
 resource "azurerm_storage_container" "main" {
-  name                  = "${var.cluster_name}-${var.env}-ark"
+  name                  = "${var.name}-${var.env}-ark"
   resource_group_name   = "${data.azurerm_resource_group.main.name}"
   storage_account_name  = "${azurerm_storage_account.main.name}"
   container_access_type = "private"
