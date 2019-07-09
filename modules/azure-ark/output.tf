@@ -1,11 +1,12 @@
 output "ark-credentials" {
+  description = "Ark environment variables with cloud credentials"
   value = "${local.ark-credentials}"
 }
 
 locals {
   ark-credentials = <<EOF
-AZURE_SUBSCRIPTION_ID=${data.azurerm_subscription.main.subscription_id}
-AZURE_TENANT_ID=${var.tenant_id}
+AZURE_SUBSCRIPTION_ID=${data.azurerm_client_config.main.subscription_id}
+AZURE_TENANT_ID=${data.azurerm_client_config.main.tenant_id}
 AZURE_CLIENT_ID=${azuread_service_principal.main.application_id}
 AZURE_CLIENT_SECRET=${azuread_service_principal_password.main.value}
 AZURE_RESOURCE_GROUP=${data.azurerm_resource_group.aks.name}
@@ -13,6 +14,7 @@ EOF
 }
 
 output "ark-storagelocation" {
+  description = "Ark BackupStorageLocation CRD"
   value = "${local.ark-storagelocation}"
 }
 
@@ -33,6 +35,7 @@ EOF
 }
 
 output "ark-volumesnapshotlocation" {
+  description = "Ark VolumeSnapshotLocation CRD"
   value = "${local.ark-volumesnapshotlocation}"
 }
 
