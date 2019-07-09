@@ -1,5 +1,5 @@
 resource "azuread_application" "main" {
-  name = "${var.cluster_name}-${var.env}-ark"
+  name = "${var.name}-${var.env}-ark"
 }
 
 resource "azuread_service_principal" "main" {
