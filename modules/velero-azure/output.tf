@@ -1,10 +1,10 @@
-output "velero-credentials" {
+output "velero_credentials" {
   description = "velero environment variables with cloud credentials"
-  value       = "${local.velero-credentials}"
+  value       = "${local.velero_credentials}"
 }
 
 locals {
-  velero-credentials = <<EOF
+  velero_credentials = <<EOF
 AZURE_SUBSCRIPTION_ID=${data.azurerm_client_config.main.subscription_id}
 AZURE_TENANT_ID=${data.azurerm_client_config.main.tenant_id}
 AZURE_CLIENT_ID=${azuread_service_principal.main.application_id}
@@ -13,13 +13,13 @@ AZURE_RESOURCE_GROUP=${data.azurerm_resource_group.kubernetes.name}
 EOF
 }
 
-output "ark-storagelocation" {
+output "velero_storagelocation" {
   description = "Velero BackupStorageLocation CRD"
-  value       = "${local.velero-storagelocation}"
+  value       = "${local.velero_storagelocation}"
 }
 
 locals {
-  velero-storagelocation = <<EOF
+  velero_storagelocation = <<EOF
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
@@ -34,13 +34,13 @@ spec:
 EOF
 }
 
-output "velero-volumesnapshotlocation" {
+output "velero_volumesnapshotlocation" {
   description = "Velero VolumeSnapshotLocation CRD"
-  value       = "${local.velero-volumesnapshotlocation}"
+  value       = "${local.velero_volumesnapshotlocation}"
 }
 
 locals {
-  velero-volumesnapshotlocation = <<EOF
+  velero_volumesnapshotlocation = <<EOF
 apiVersion: velero.io/v1
 kind: VolumeSnapshotLocation
 metadata:
