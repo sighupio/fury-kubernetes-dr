@@ -28,7 +28,6 @@ resource "azurerm_storage_account" "main" {
 
 resource "azurerm_storage_container" "main" {
   name                  = "velero"
-  resource_group_name   = "${data.azurerm_resource_group.velero.name}"
   storage_account_name  = "${azurerm_storage_account.main.name}"
   container_access_type = "private"
 }
