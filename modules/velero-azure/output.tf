@@ -30,7 +30,7 @@ spec:
     bucket: ${azurerm_storage_container.main.name}
   config:
     resourceGroup: ${data.azurerm_resource_group.velero.name}
-    storageAccount: ${azurerm_storage_account.main.id}
+    storageAccount: ${azurerm_storage_account.main.name}
 EOF
 }
 
