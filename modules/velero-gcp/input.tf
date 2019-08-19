@@ -5,7 +5,3 @@ variable bucket_prefix {
 variable name {}
 variable env {}
 
-provider "google" {
-    version = "2.0.0"
-}
-
