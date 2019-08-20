@@ -49,6 +49,6 @@ spec:
   provider: azure
   config:
     apiTimeout: 4m0s
-    resouceGroup: ${data.azurerm_resource_group.kubernetes.name}
+    resourceGroup: ${data.azurerm_resource_group.kubernetes.name}
 EOF
 }
