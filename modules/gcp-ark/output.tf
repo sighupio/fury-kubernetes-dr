@@ -20,5 +20,5 @@ EOF
 }
 
 output "crd-velero" {
-    value = "${local.crd-velero}"
+  value = "${local.crd-velero}"
 }

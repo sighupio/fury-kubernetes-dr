@@ -1,5 +1,5 @@
 variable bucket_prefix {
-    default = "velero"
+  default = "velero"
 }
 
 variable name {}
