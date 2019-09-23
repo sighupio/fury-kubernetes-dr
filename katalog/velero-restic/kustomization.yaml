@@ -1,0 +1,7 @@
+namespace: kube-system
+
+bases:
+- ../velero 
+
+resources:
+- daemonset.yml
