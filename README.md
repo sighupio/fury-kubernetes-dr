@@ -21,3 +21,15 @@ Following packages are included in Fury Kubernetes Disaster Recovery modules:
 - [aws-ark](modules/aws-ark): Creates AWS resources and kubernetes CRDs needed to persist backups.
 - [azure-ark](modules/azure-ark): Creates Azure resources and kubernetes CRDs needed to persist backups.
 - [gcp-ark](modules/gcp-ark): Creates GCP resources and kubernetes CRDs needed to persist backups.
+
+
+## Compatibility
+
+| Module Version / Kubernetes Version | 1.14.X             | 1.15.X             | 1.16.X             |
+|-------------------------------------|:------------------:|:------------------:|:------------------:|
+| v1.0.0                              |                    |                    |                    |
+| v1.1.0                              |                    |                    |                    |
+
+- :white_check_mark: Compatible
+- :warning: Has issues
+- :x: Incompatible
