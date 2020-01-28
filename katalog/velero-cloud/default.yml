@@ -1,0 +1,22 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: full
+spec:
+  schedule: "0 1 * * *"
+  template:
+    includedNamespaces:
+    - '*'
+    excludedNamespaces: null
+    includedResources:
+    - '*'
+    excludedResources: null
+    includeClusterResources: true
+    labelSelector: null
+    snapshotVolumes: true
+    storageLocation: default
+    volumeSnapshotLocations:
+    - default
+    ttl: 720h0m0s
+    hooks:
+      resources: []
