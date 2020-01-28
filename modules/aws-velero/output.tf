@@ -6,24 +6,24 @@ aws_secret_access_key=${aws_iam_access_key.velero_backup.secret}
 EOF
 
   backup_storage_location  = <<EOF
-apiVersion: ark.heptio.com/v1
+apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
   name: default
 spec:
-  provider: aws
+  provider: velero.io/aws
   objectStorage:
     bucket: ${aws_s3_bucket.backup_bucket.bucket}
   config:
     region: ${var.aws_region}
 EOF
   volume_snapshot_location = <<EOF
-apiVersion: ark.heptio.com/v1
+apiVersion: velero.io/v1
 kind: VolumeSnapshotLocation
 metadata:
   name: default
 spec:
-  provider: aws
+  provider: velero.io/aws
   config:
     region: ${var.aws_region}
 EOF
