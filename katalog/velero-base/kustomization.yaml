@@ -1,8 +1,9 @@
 namespace: kube-system
 
+bases:
+  - ../base
+
 resources:
-  - crds.yaml
-  - rbac.yaml
   - deployment.yaml
   - service.yaml
   - serviceMonitor.yaml

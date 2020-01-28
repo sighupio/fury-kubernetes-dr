@@ -1,7 +1,11 @@
 namespace: kube-system
 
 bases:
-- ../velero 
+- ../base
+
+images:
+  - name: velero/velero
+    newTag: v1.2.0
 
 resources:
-- daemonset.yml
+  - daemonset.yml

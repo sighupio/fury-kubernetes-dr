@@ -8,6 +8,7 @@ spec:
   selector:
     matchLabels:
       name: restic
+  updateStrategy: {}
   template:
     metadata:
       labels:
@@ -37,8 +38,8 @@ spec:
           value: /credentials/cloud
         - name: AWS_SHARED_CREDENTIALS_FILE
           value: /credentials/cloud
-        image: gcr.io/heptio-images/velero:v1.0.0
-        imagePullPolicy: IfNotPresent
+        image: velero/velero
+        imagePullPolicy: Always
         name: restic
         resources:
           requests:
@@ -64,3 +65,4 @@ spec:
       - name: cloud-credentials
         secret:
           secretName: cloud-credentials
+          optional: false
