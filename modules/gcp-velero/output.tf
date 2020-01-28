@@ -1,8 +1,6 @@
 locals {
   cloud_credentials = <<EOF
-TODO
-TBD
-TODO
+${google_service_account_key.velero.private_key}
 EOF
 
   backup_storage_location  = <<EOF
