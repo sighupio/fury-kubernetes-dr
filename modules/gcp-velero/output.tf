@@ -6,23 +6,23 @@ TODO
 EOF
 
   backup_storage_location  = <<EOF
-apiVersion: ark.heptio.com/v1
+apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
   name: default
 spec:
-  provider: gcp
+  provider: velero.io/gcp
   objectStorage:
     bucket: ${google_storage_bucket.main.name}
     prefix: ${var.bucket_prefix}
 EOF
   volume_snapshot_location = <<EOF
-apiVersion: ark.heptio.com/v1
+apiVersion: velero.io/v1
 kind: VolumeSnapshotLocation
 metadata:
   name: default
 spec:
-  provider: gcp
+  provider: velero.io/gcp
 EOF
 }
 
