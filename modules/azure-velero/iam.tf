@@ -1,5 +1,5 @@
 resource "azuread_application" "main" {
-  name = "${var.name}-${var.env}-ark"
+  name = "${var.name}-${var.env}-velero"
 }
 
 resource "azuread_service_principal" "main" {
@@ -33,7 +33,7 @@ resource "azurerm_role_assignment" "aks" {
   principal_id         = "${azuread_service_principal.main.id}"
 }
 
-resource "azurerm_role_assignment" "ark" {
+resource "azurerm_role_assignment" "velero" {
   scope                = "${azurerm_storage_account.main.id}"
   role_definition_name = "Contributor"
   principal_id         = "${azuread_service_principal.main.id}"
