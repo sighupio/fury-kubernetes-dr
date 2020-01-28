@@ -8,6 +8,11 @@ variable "environment" {
 
 variable "backup_bucket_name" {}
 
+variable "azure_cloud_name" {
+  description = "available azure_cloud_name values: AzurePublicCloud, AzureUSGovernmentCloud, AzureChinaCloud, AzureGermanCloud"
+  default     = "AzurePublicCloud"
+}
+
 variable "aks_resource_group_name" {
   type        = "string"
   description = "Resource group name of AKS cluster to backup"
