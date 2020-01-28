@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "main" {
-  name          = "velero-${var.name}-${var.env}"
+  name          = "${var.backup_bucket_name}"
   location      = "EU"
   storage_class = "MULTI_REGIONAL"
 }
