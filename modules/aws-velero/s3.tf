@@ -1,5 +1,5 @@
-resource "aws_s3_bucket" "ark-backup" {
-  bucket = "${var.ark_backup_bucket_name}"
+resource "aws_s3_bucket" "backup_bucket" {
+  bucket = "${var.backup_bucket_name}"
   acl    = "private"
 
   versioning {
@@ -15,7 +15,8 @@ resource "aws_s3_bucket" "ark-backup" {
   }
 
   tags {
-    Name        = "${var.ark_backup_bucket_name}"
-    Environment = "Production"
+    Name        = "${var.backup_bucket_name}"
+    ClusterName = "${var.cluster_name}"
+    Environment = "${var.environment}"
   }
 }

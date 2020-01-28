@@ -1,20 +1,20 @@
-resource "aws_iam_user" "ark-backup" {
-  name = "${var.cluster_name}-${var.environment}-ark-backup"
+resource "aws_iam_user" "velero_backup_user" {
+  name = "${var.cluster_name}-${var.environment}-velero-backup"
   path = "/"
 }
 
-resource "aws_iam_policy_attachment" "ark-backup" {
-  name       = "${var.cluster_name}-${var.environment}-ark-backup"
-  users      = ["${aws_iam_user.ark-backup.name}"]
-  policy_arn = "${aws_iam_policy.ark-backup.arn}"
+resource "aws_iam_policy_attachment" "velero_backup" {
+  name       = "${var.cluster_name}-${var.environment}-velero-backup"
+  users      = ["${aws_iam_user.velero_backup_user.name}"]
+  policy_arn = "${aws_iam_policy.velero_backup.arn}"
 }
 
-resource "aws_iam_access_key" "ark-backup" {
-  user = "${aws_iam_user.ark-backup.name}"
+resource "aws_iam_access_key" "velero_backup" {
+  user = "${aws_iam_user.velero_backup_user.name}"
 }
 
-resource "aws_iam_policy" "ark-backup" {
-  name = "${var.cluster_name}-${var.environment}-ark-backup"
+resource "aws_iam_policy" "velero_backup" {
+  name = "${var.cluster_name}-${var.environment}-velero-backup"
 
   policy = <<EOF
 {
@@ -41,14 +41,14 @@ resource "aws_iam_policy" "ark-backup" {
                  "s3:AbortMultipartUpload",
                  "s3:ListMultipartUploadParts"
              ],
-            "Resource": "${aws_s3_bucket.ark-backup.arn}/*"
+            "Resource": "${aws_s3_bucket.backup_bucket.arn}/*"
          },
          {
              "Effect": "Allow",
              "Action": [
                  "s3:ListBucket"
              ],
-            "Resource": "${aws_s3_bucket.ark-backup.arn}"
+            "Resource": "${aws_s3_bucket.backup_bucket.arn}"
          }
      ]
 }
