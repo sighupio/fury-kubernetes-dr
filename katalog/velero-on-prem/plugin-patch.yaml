@@ -8,7 +8,7 @@ spec:
       initContainers:
       - image: velero/velero-plugin-for-aws:v1.0.0
         imagePullPolicy: Always
-        name: velero-plugin-for-aws
+        name: velero-plugin
         resources: {}
         volumeMounts:
         - mountPath: /target
