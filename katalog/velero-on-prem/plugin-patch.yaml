@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velero
+spec:
+  template:
+    spec:
+      initContainers:
+      - image: velero/velero-plugin-for-aws:v1.0.0
+        imagePullPolicy: Always
+        name: velero-plugin-for-aws
+        resources: {}
+        volumeMounts:
+        - mountPath: /target
+          name: plugins
+      - name: wait-for-minio-setup
+        image: groundnuty/k8s-wait-for:v1.2
+        imagePullPolicy: Always
+        args: ["job", "$(MINIO_SETUP_JOB_NAME)"]

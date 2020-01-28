@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: velero
   labels:
-    k8s-app: velero
+    app: velero
 spec:
   endpoints:
   - interval: 30s

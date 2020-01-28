@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: sleep
+  name: sleep
+spec:
+  containers:
+  - command:
+    - "/bin/bash"
+    - "-c"
+    - "sleep 3600"
+    image: ubuntu
+    name: sleep
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+
