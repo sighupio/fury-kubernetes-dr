@@ -2,11 +2,6 @@
 
 load ./../helper
 
-
-# apk add curl
-# curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
-# tar -zxf velero.tar.gz
-# mv velero*/velero /usr/local/bin/velero
 @test "Trigger backup" {
     info
     backup() {
@@ -41,5 +36,14 @@ load ./../helper
         kubectl get service velero -n kube-system
     }
     run test
+    [ "$status" -eq 0 ]
+}
+
+@test "Delete backup" {
+    info
+    delete(){
+        velero backup delete backup-e2e --confirm -n kube-system
+    }
+    run delete
     [ "$status" -eq 0 ]
 }
