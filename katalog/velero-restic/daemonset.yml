@@ -2,18 +2,17 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
-    component: velero
-  name: restic
+    app: velero-restic
+  name: velero-restic
 spec:
   selector:
     matchLabels:
-      name: restic
+      app: velero-restic
   updateStrategy: {}
   template:
     metadata:
       labels:
-        component: velero
-        name: restic
+        app: velero-restic
     spec:
       containers:
       - args:
@@ -65,4 +64,3 @@ spec:
       - name: cloud-credentials
         secret:
           secretName: cloud-credentials
-          optional: false
