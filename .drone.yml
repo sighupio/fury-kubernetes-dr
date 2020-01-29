@@ -1,0 +1,96 @@
+---
+kind: pipeline
+name: e2e-kubernetes-1.16
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: init
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ clone ]
+    settings:
+      action: cluster-116
+      pipeline_id: cluster-116
+      instance_path: /shared
+      aws_default_region:
+        from_secret: aws_region
+      aws_access_key_id:
+        from_secret: aws_access_key_id
+      aws_secret_access_key:
+        from_secret: aws_secret_access_key
+      terraform_tf_states_bucket_name:
+        from_secret: terraform_tf_states_bucket_name
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: test-install
+    image: quay.io/sighup/e2e-testing:1.1.0_0.1.3_2.16.1_1.4.0_1.16.3_3.2.2_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-116
+      - bats -t katalog/tests/velero/velero-install.sh
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: test-backup-restore
+    image: quay.io/sighup/e2e-testing:1.1.0_0.1.3_2.16.1_1.4.0_1.16.3_3.2.2_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-install ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-116
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - tar -zxf velero.tar.gz
+      - mv velero*/velero /usr/local/bin/velero
+      - bats -t katalog/tests/velero/velero-backup.sh
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: destroy
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
+    pull: always
+    depends_on: [ test-backup-restore ]
+    settings:
+      action: destroy
+      pipeline_id: cluster-116
+      aws_default_region:
+        from_secret: aws_region
+      aws_access_key_id:
+        from_secret: aws_access_key_id
+      aws_secret_access_key:
+        from_secret: aws_secret_access_key
+      terraform_tf_states_bucket_name:
+        from_secret: terraform_tf_states_bucket_name
+    when:
+      status:
+      - success
+      - failure
+
+volumes:
+- name: shared
+  temp: {}
+
