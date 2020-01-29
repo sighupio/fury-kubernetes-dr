@@ -26,3 +26,21 @@ load ./../helper
     [ "$status" -eq 0 ]
 }
 
+@test "Deploy Velero Restic" {
+    deploy() {
+        apply katalog/velero-restic
+    }
+    run deploy
+    [ "$status" -eq 0 ]
+}
+
+@test "Velero is Running" {
+    info
+    test() {
+        kubectl get pods -l app=velero-restic -o json -n kube-system |jq '.items[].status.containerStatuses[].ready' | uniq | grep -q true
+    }
+    loop_it test 60 5
+    status=${loop_it_result}
+    [ "$status" -eq 0 ]
+}
+
