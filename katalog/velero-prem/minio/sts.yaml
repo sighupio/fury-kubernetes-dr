@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: minio
+      k8s-app: minio
   template:
     metadata:
       labels:
-        app: minio
+        k8s-app: minio
     spec:
       securityContext:
         runAsNonRoot: true

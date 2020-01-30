@@ -6,10 +6,9 @@ spec:
   template:
     spec:
       initContainers:
-      - image: velero/velero-plugin-for-aws:v1.0.0
+      - image: velero/velero-plugin-for-aws
         imagePullPolicy: Always
         name: velero-plugin
-        resources: {}
         volumeMounts:
         - mountPath: /target
           name: plugins

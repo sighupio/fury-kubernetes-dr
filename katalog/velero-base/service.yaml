@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: velero
   labels:
-    app: velero
+    k8s-app: velero
 spec:
   ports:
   - name: metrics
@@ -11,4 +11,4 @@ spec:
     protocol: TCP
     targetPort: metrics
   selector:
-    app: velero
+    k8s-app: velero

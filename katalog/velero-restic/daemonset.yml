@@ -2,17 +2,16 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
-    app: velero-restic
+    k8s-app: velero-restic
   name: velero-restic
 spec:
   selector:
     matchLabels:
-      app: velero-restic
-  updateStrategy: {}
+      k8s-app: velero-restic
   template:
     metadata:
       labels:
-        app: velero-restic
+        k8s-app: velero-restic
     spec:
       containers:
       - args:

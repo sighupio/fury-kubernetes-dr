@@ -9,7 +9,6 @@ spec:
       - image: velero/velero-plugin-for-gcp
         imagePullPolicy: Always
         name: velero-plugin
-        resources: {}
         volumeMounts:
         - mountPath: /target
           name: plugins
