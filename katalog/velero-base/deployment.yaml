@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: velero
+    k8s-app: velero
   name: velero
 spec:
   selector:
     matchLabels:
-      app: velero
+      k8s-app: velero
   strategy: {}
   template:
     metadata:
       labels:
-        app: velero
+        k8s-app: velero
     spec:
       containers:
       - args:

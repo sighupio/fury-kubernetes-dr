@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: velero
   labels:
-    app: velero
+    k8s-app: velero
 spec:
   endpoints:
   - interval: 30s
@@ -14,4 +14,4 @@ spec:
     - kube-system
   selector:
     matchLabels:
-      app: velero
+      k8s-app: velero

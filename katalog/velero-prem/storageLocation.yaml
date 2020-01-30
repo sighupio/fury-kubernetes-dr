@@ -2,7 +2,7 @@ apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
   labels:
-    app: velero
+    k8s-app: velero
   name: default
 spec:
   config:

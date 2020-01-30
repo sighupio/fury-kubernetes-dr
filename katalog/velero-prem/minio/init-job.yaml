@@ -3,12 +3,12 @@ kind: Job
 metadata:
   name: minio-setup
   labels:
-    app: minio-setup
+    k8s-app: minio-setup
 spec:
   template:
     metadata:
       labels:
-        app: minio-setup
+        k8s-app: minio-setup
     spec:
       serviceAccountName: wait-for-minio
       serviceAccount: wait-for-minio

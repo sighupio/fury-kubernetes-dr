@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: minio
   labels:
-    app: minio
+    k8s-app: minio
 spec:
   publishNotReadyAddresses: true
   clusterIP: None
@@ -11,4 +11,4 @@ spec:
     - port: 9000
       name: minio
   selector:
-    app: minio
+    k8s-app: minio
