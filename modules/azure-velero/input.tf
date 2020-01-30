@@ -1,8 +1,8 @@
-variable "cluster_name" {
+variable "name" {
   type = "string"
 }
 
-variable "environment" {
+variable "env" {
   type = "string"
 }
 

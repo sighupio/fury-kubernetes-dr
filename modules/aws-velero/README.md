@@ -9,7 +9,7 @@ module "aws-velero" {
     source = "../vendor/modules/aws-velero"
     cluster_name = "pippo"
     environment = "production"
-    aws_region = "eu-west-1"
+    region = "eu-west-1"
     backup_bucket_name = "sighup-pluto"
 }
 ```
