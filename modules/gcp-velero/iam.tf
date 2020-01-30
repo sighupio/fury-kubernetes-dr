@@ -1,7 +1,7 @@
 resource "google_service_account" "velero" {
   project      = "${var.project}"
-  account_id   = "${var.cluster_name}-velero"
-  display_name = "Velero account for ${var.cluster_name}"
+  account_id   = "${var.name}-velero"
+  display_name = "Velero account for ${var.name}"
 }
 
 resource "google_service_account_key" "velero" {
