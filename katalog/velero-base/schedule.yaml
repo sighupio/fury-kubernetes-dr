@@ -19,4 +19,3 @@ spec:
     ttl: 720h0m0s
     hooks:
       resources: []
-    
