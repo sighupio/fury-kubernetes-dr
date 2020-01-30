@@ -1,13 +1,13 @@
 locals {
-  cloud_credentials = <<EOF
+  cloud_credentials        = <<EOF
 AZURE_SUBSCRIPTION_ID=${data.azurerm_client_config.main.subscription_id}
 AZURE_TENANT_ID=${data.azurerm_client_config.main.tenant_id}
 AZURE_CLIENT_ID=${azuread_service_principal.main.application_id}
 AZURE_CLIENT_SECRET=${azuread_service_principal_password.main.value}
 AZURE_RESOURCE_GROUP=${data.azurerm_resource_group.aks.name}
-AZURE_CLOUD_NAME=AzurePublicCloud
+AZURE_CLOUD_NAME=${var.azure_cloud_name}
 EOF
-  backup_storage_location = <<EOF
+  backup_storage_location  = <<EOF
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
@@ -34,13 +34,16 @@ EOF
 }
 
 output "cloud_credentials" {
-  value = "${local.cloud_credentials}"
+  description = "Velero required file with credentials"
+  value       = "${local.cloud_credentials}"
 }
 
 output "backup_storage_location" {
-  value = "${local.backup_storage_location}"
+  description = "Velero Cloud BackupStorageLocation CRD"
+  value       = "${local.backup_storage_location}"
 }
 
 output "volume_snapshot_location" {
-  value = "${local.volume_snapshot_location}"
+  description = "Velero Cloud VolumeSnapshotLocation CRD"
+  value       = "${local.volume_snapshot_location}"
 }

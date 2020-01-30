@@ -1,21 +1,39 @@
-# aws-velero
+# AWS Velero
 
-This module is useful to create all the things necessary for velero to work and to be provisioned
+This terraform module provides an easy way to generate Velero required cloud resources (S3 and IAM) to backup
+kubernetes objects and trigger volume snapshot.
+
+## Inputs
+
+| Name                 | Description                          | Type     | Default | Required |
+| -------------------- | ------------------------------------ | -------- | ------- | :------: |
+| backup\_bucket\_name | Backup Bucket Name                   | `string` | n/a     |   yes    |
+| env                  | Environment Name                     | `string` | n/a     |   yes    |
+| name                 | Cluster Name                         | `string` | n/a     |   yes    |
+| region               | AWS Region where colocate the bucket | `string` | n/a     |   yes    |
+
+## Outputs
+
+| Name                       | Description                             |
+| -------------------------- | --------------------------------------- |
+| backup\_storage\_location  | Velero Cloud BackupStorageLocation CRD  |
+| cloud\_credentials         | Velero required file with credentials   |
+| volume\_snapshot\_location | Velero Cloud VolumeSnapshotLocation CRD |
 
 ## Usage
 
 ```hcl
-module "aws-velero" {
-    source = "../vendor/modules/aws-velero"
-    name = "pippo"
-    env = "production"
-    region = "eu-west-1"
-    backup_bucket_name = "sighup-pluto"
+module "velero" {
+  source             = "../vendor/modules/aws-velero"
+  name               = "my-cluster"
+  env                = "staging"
+  backup_bucket_name = "my-cluster-staging-velero"
+  region             = "eu-west-1"
 }
 ```
 
 ## Links
 
+- https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.0.0#setup
 - https://github.com/vmware-tanzu/velero-plugin-for-aws/blob/v1.0.0/backupstoragelocation.md
 - https://github.com/vmware-tanzu/velero-plugin-for-aws/blob/v1.0.0/volumesnapshotlocation.md
-- https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.0.0#setup

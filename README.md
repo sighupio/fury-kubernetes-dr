@@ -1,6 +1,4 @@
-# fury-kubernetes-dr
-
-This repo contains packages to use in case of Disaster Recovery.
+# Fury Kubernetes DR *(Disaster Recovery)*
 
 ## Disaster Recovery Packages
 
@@ -8,7 +6,7 @@ Following packages are included in Fury Kubernetes Disaster Recovery katalog:
 
 - [velero](katalog/velero): Velero (formerly Heptio Ark) gives you tools to
 back up and restore your Kubernetes cluster resources and persistent volumes. Version: **1.2.0**
-- [velero-restic](katalog/velero-restic): Velero has support for backing up and restoring
+- [velero-restic](katalog/velero/velero-restic): Velero has support for backing up and restoring
 Kubernetes volumes using a free open-source backup tool called restic. Version: **1.2.0**
 
 Following packages are included in Fury Kubernetes Disaster Recovery modules:
@@ -24,7 +22,13 @@ Following packages are included in Fury Kubernetes Disaster Recovery modules:
 |-------------------------------------|:------------------:|:------------------:|:------------------:|
 | v1.0.0                              |                    |                    |                    |
 | v1.1.0                              |                    |                    |                    |
+| v1.2.0                              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 - :white_check_mark: Compatible
 - :warning: Has issues
 - :x: Incompatible
+
+
+## License
+
+For license details please see [LICENSE](./LICENSE)

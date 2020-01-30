@@ -4,7 +4,7 @@ resource "google_storage_bucket" "main" {
   bucket_policy_only = true
   location           = "EU"
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 
@@ -16,8 +16,7 @@ resource "google_storage_bucket_iam_binding" "velero_bucket_iam" {
     "serviceAccount:${google_service_account.velero.email}"
   ]
 
-  # don't destroy buckets containing backup data if re-creating a cluster
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }

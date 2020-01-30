@@ -1,5 +1,0 @@
-namespace: kube-system
-
-resources:
-  - crds.yaml
-  - rbac.yaml

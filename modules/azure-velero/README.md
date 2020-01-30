@@ -1,17 +1,34 @@
-# azure-velero
+# Azure Velero
 
-This module si useful to create all the needed resources for velero to be
-provisioned and work with Azure.
+This terraform module provides an easy way to generate Velero required cloud resources (Object Storage and Credentials)
+to backup kubernetes objects and trigger volume snapshots.
 
-| WARNING: This module is meant to work with velero versions from 1 upwards. |
-| --- |
+## Inputs
+
+| Name                          | Description                                                                                                      | Type     | Default              | Required |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------- | -------------------- | :------: |
+| aks\_resource\_group\_name    | Resource group name of AKS cluster to backup                                                                     | `string` | n/a                  |   yes    |
+| azure\_cloud\_name            | available azure\_cloud\_name values: AzurePublicCloud, AzureUSGovernmentCloud, AzureChinaCloud, AzureGermanCloud | `string` | `"AzurePublicCloud"` |    no    |
+| backup\_bucket\_name          | Backup Bucket Name                                                                                               | `string` | n/a                  |   yes    |
+| env                           | Environment Name                                                                                                 | `string` | n/a                  |   yes    |
+| name                          | Cluster Name                                                                                                     | `string` | n/a                  |   yes    |
+| velero\_resource\_group\_name | Resouce group in which to create velero resources                                                                | `string` | n/a                  |   yes    |
+
+## Outputs
+
+| Name                       | Description                             |
+| -------------------------- | --------------------------------------- |
+| backup\_storage\_location  | Velero Cloud BackupStorageLocation CRD  |
+| cloud\_credentials         | Velero required file with credentials   |
+| volume\_snapshot\_location | Velero Cloud VolumeSnapshotLocation CRD |
 
 ## Usage
+
 ```hcl
-module "azure-velero" {
+module "velero" {
   source                     = "../vendor/modules/azure-velero"
-  cluster_name               = "sighup"
-  env                = "production"
+  name                       = "sighup"
+  env                        = "production"
   backup_bucket_name         = "sighup-production-cluster-backup"
   aks_resource_group_name    = "XXX"
   velero_resource_group_name = "XXX"
