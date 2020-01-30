@@ -1,5 +1,5 @@
 variable "project" {}
 
-variable "cluster_name" {}
-variable "environment" {}
+variable "name" {}
+variable "env" {}
 variable "backup_bucket_name" {}

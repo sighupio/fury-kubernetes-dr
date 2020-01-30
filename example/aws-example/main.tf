@@ -13,8 +13,8 @@ variable "environment" {
 
 module "velero" {
   source             = "../../modules/aws-velero"
-  cluster_name       = "${var.my_cluster_name}"
-  environment        = "${var.environment}"
+  name               = "${var.my_cluster_name}"
+  env                = "${var.environment}"
   backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero"
   aws_region         = "${var.region}"
 }
