@@ -11,7 +11,7 @@ provisioned and work with Azure.
 module "azure-velero" {
   source                     = "../vendor/modules/azure-velero"
   cluster_name               = "sighup"
-  environment                = "production"
+  env                = "production"
   backup_bucket_name         = "sighup-production-cluster-backup"
   aks_resource_group_name    = "XXX"
   velero_resource_group_name = "XXX"

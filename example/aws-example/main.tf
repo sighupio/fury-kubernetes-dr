@@ -16,7 +16,7 @@ module "velero" {
   name               = "${var.my_cluster_name}"
   env                = "${var.environment}"
   backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero"
-  aws_region         = "${var.region}"
+  region             = "${var.region}"
 }
 
 output "cloud_credentials" {

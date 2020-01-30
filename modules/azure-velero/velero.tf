@@ -13,7 +13,7 @@ resource "azurerm_storage_account" "main" {
   tags {
     Name        = "${var.name}${var.env}velero"
     ClusterName = "${var.cluster_name}"
-    Environment = "${var.environment}"
+    Environment = "${var.env}"
   }
 }
 
