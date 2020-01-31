@@ -38,6 +38,8 @@ spec:
           value: /credentials/cloud
         image: velero/velero
         imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
         name: restic
         resources:
           requests:

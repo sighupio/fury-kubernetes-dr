@@ -9,6 +9,8 @@ spec:
       - image: velero/velero-plugin-for-microsoft-azure
         imagePullPolicy: Always
         name: velero-plugin
+        securityContext:
+          allowPrivilegeEscalation: false
         volumeMounts:
         - mountPath: /target
           name: plugins
