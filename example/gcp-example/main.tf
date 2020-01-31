@@ -1,3 +1,7 @@
+provider "google" {
+  version = "~> 3.6"
+}
+
 variable "gcp_project" {}
 variable "my_cluster_name" {}
 variable "environment" {
