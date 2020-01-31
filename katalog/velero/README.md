@@ -35,7 +35,7 @@ as this feature deploys [a `ServiceMonitor` definition](velero-base/serviceMonit
 
 ## Server deployment
 
-Every velero deployment, does not matter if is on premises or in any of the supported cloud has preconfigured an
+Every velero deployment, does not matter if on premises or in any of the supported cloud, has preconfigured a
 [schedule](velero-base/schedule.yaml) to backup all cluster manifests in an object storage. The backup is triggered
 every 15 minutes.
 
