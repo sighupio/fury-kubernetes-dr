@@ -30,7 +30,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-install
@@ -47,7 +46,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore
@@ -67,11 +65,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: init-aws
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -104,7 +101,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: apply-aws-configuration
@@ -123,7 +119,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore-aws
@@ -143,11 +138,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: destroy-aws
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -179,7 +173,7 @@ steps:
       - failure
 
   - name: init-gcp
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -216,7 +210,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: apply-gcp-configuration
@@ -236,7 +229,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore-gcp
@@ -256,11 +248,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: destroy-gcp
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -351,7 +342,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-install
@@ -368,7 +358,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore
@@ -388,11 +377,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: init-aws
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -425,7 +413,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: apply-aws-configuration
@@ -444,7 +431,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore-aws
@@ -464,11 +450,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: destroy-aws
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -500,7 +485,7 @@ steps:
       - failure
 
   - name: init-gcp
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -537,7 +522,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: apply-gcp-configuration
@@ -557,7 +541,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore-gcp
@@ -577,11 +560,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: destroy-gcp
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -672,7 +654,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-install
@@ -689,7 +670,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore
@@ -709,11 +689,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: init-aws
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -746,7 +725,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: apply-aws-configuration
@@ -765,7 +743,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore-aws
@@ -785,11 +762,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: destroy-aws
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -821,7 +797,7 @@ steps:
       - failure
 
   - name: init-gcp
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared
@@ -858,7 +834,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: apply-gcp-configuration
@@ -878,7 +853,6 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: test-backup-restore-gcp
@@ -898,11 +872,10 @@ steps:
       ref:
         include:
           - refs/heads/hotfix-*
-          - refs/heads/feature/deprecate-and-update
           - refs/tags/**
 
   - name: destroy-gcp
-    image: hashicorp/terraform:0.11.14
+    image: hashicorp/terraform:0.12.16
     pull: always
     volumes:
     - name: shared

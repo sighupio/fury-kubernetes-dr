@@ -29,7 +29,7 @@ Velero consists of:
 ## Requirements
 
 Velero requires to have already deployed the [prometheus-operator](https://github.com/coreos/prometheus-operator) CRDs
-as this feature deploys [a `ServiceMonitor` definition](velero-base/serviceMonitor.yaml). It can be deployed using the 
+as this feature deploys [a `ServiceMonitor` definition](velero-base/serviceMonitor.yaml). It can be deployed using the
 [fury-kubernetes-monitoring](https://github.com/sighupio/fury-kubernetes-monitoring) KFD core module.
 
 
@@ -42,7 +42,7 @@ every 15 minutes.
 
 ### Velero on premises
 
-The [velero-prem](./velero-prem/) feature deploys a [MinIO](https://min.io/) instance in the same cluster as 
+The [velero-prem](./velero-prem/) feature deploys a [MinIO](https://min.io/) instance in the same cluster as
 object storage backend that Velero can use to store backup data.
 
 *Example `kustomization.yaml` file*
@@ -56,7 +56,8 @@ bases:
 
 ### Velero in AWS
 
-The AWS deployment alternative requires to have created `cloud-credentials` secret in the `kube-system` namespace.
+The [AWS deployment alternative](./velero-aws) requires to have created `cloud-credentials` secret in the
+`kube-system` namespace.
 You can find a [terraform module](../../modules/aws-velero) designed to create all necessary cloud resources
 to make velero works in AWS.
 
@@ -91,7 +92,8 @@ More information about the [AWS Velero Plugin](https://github.com/vmware-tanzu/v
 
 ### Velero in GCP
 
-The GCP deployment alternative requires to have created `cloud-credentials` secret in the `kube-system` namespace.
+The [GCP deployment alternative](./velero-gcp) requires to have created `cloud-credentials` secret in the
+`kube-system` namespace.
 You can find a [terraform module](../../modules/gcp-velero) designed to create all necessary cloud resources
 to make velero works in GCP.
 
@@ -111,7 +113,8 @@ More information about the [GCP Velero Plugin](https://github.com/vmware-tanzu/v
 
 ### Velero in Azure
 
-The Azure deployment alternative requires to have created `cloud-credentials` secret in the `kube-system` namespace.
+The [Azure deployment alternative](./velero-azure) requires to have created `cloud-credentials` secret in the
+`kube-system` namespace.
 You can find a [terraform module](../../modules/azure-velero) designed to create all necessary cloud resources
 to make velero works in Azure.
 

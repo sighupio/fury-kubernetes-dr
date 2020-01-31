@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "backup_bucket" {
     }
   }
 
-  tags {
+  tags = {
     Name        = "${var.backup_bucket_name}"
     ClusterName = "${var.name}"
     Environment = "${var.env}"

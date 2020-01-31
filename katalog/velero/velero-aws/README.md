@@ -15,7 +15,7 @@ This Velero deployment is ready to be deployed in any AWS cluster as it includes
 This deployment requires to have previously created the following resources:
 
 - `cloud-credentials` Kubernetes Secret in the `kube-system` namespace.
-- `manifests` BackupStorageLocation in the `kube-system` namespace.
+- `default` BackupStorageLocation in the `kube-system` namespace.
 
 
 ### Cloud Credentials

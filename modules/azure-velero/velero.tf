@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "main" {
   enable_https_traffic_only = true
   account_replication_type  = "GRS"
 
-  tags {
+  tags = {
     Name        = "${var.name}${var.env}velero"
     ClusterName = "${var.cluster_name}"
     Environment = "${var.env}"
