@@ -2,6 +2,7 @@
 resource "google_storage_bucket" "main" {
   name               = "${var.backup_bucket_name}"
   bucket_policy_only = true
+  project            = "${var.project}"
   location           = "EU"
   lifecycle {
     prevent_destroy = false

@@ -1,6 +1,6 @@
 locals {
   cloud_credentials = <<EOF
-${google_service_account_key.velero.private_key}
+${base64decode(google_service_account_key.velero.private_key)}
 EOF
 
   backup_storage_location  = <<EOF
@@ -12,7 +12,7 @@ spec:
   provider: velero.io/gcp
   objectStorage:
     bucket: ${google_storage_bucket.main.name}
-    prefix: ${var.bucket_prefix}
+    prefix: velero
 EOF
   volume_snapshot_location = <<EOF
 apiVersion: velero.io/v1

@@ -178,10 +178,127 @@ steps:
       - success
       - failure
 
+  - name: init-gcp
+    image: hashicorp/terraform:0.11.14
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-aws ]
+    environment:
+      GCP_PROJECT:
+        from_secret: gcp_project
+      GCP_CREDENTIALS: 
+        from_secret: gcp_credentials
+      GCP_REGION:
+        from_secret: gcp_region
+      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
+      CI_PIPELINE_NUMBER: cluster-116-gcp
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
+      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
+      - cd example/gcp-example
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+        --backend-config="region=$${GCP_REGION}"
+      - terraform apply
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+        --var="gcp_project"=$${GCP_PROJECT}
+      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: apply-gcp-configuration
+    image: quay.io/sighup/e2e-testing:1.1.0_0.1.3_2.16.1_1.4.0_1.16.3_3.2.2_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init-gcp ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-116
+      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
+      - kubectl rollout restart deploy velero -n kube-system
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: test-backup-restore-gcp
+    image: quay.io/sighup/e2e-testing:1.1.0_0.1.3_2.16.1_1.4.0_1.16.3_3.2.2_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ apply-gcp-configuration ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-116
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - tar -zxf velero.tar.gz
+      - mv velero*/velero /usr/local/bin/velero
+      - bats -t katalog/tests/velero/velero-backup.sh
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: destroy-gcp
+    image: hashicorp/terraform:0.11.14
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-gcp ]
+    environment:
+      GCP_PROJECT:
+        from_secret: gcp_project
+      GCP_CREDENTIALS: 
+        from_secret: gcp_credentials
+      GCP_REGION:
+        from_secret: gcp_region
+      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
+      CI_PIPELINE_NUMBER: cluster-116-gcp
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - cd example/gcp-example
+      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
+      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+        --backend-config="region=$${GCP_REGION}"
+      - terraform destroy
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+        --var="gcp_project"=$${GCP_PROJECT}
+    when:
+      status:
+      - success
+      - failure
+
   - name: destroy
     image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
     pull: always
-    depends_on: [ test-backup-restore-aws ]
+    depends_on: [ test-backup-restore-gcp ]
     settings:
       action: destroy
       pipeline_id: cluster-116
@@ -382,10 +499,127 @@ steps:
       - success
       - failure
 
+  - name: init-gcp
+    image: hashicorp/terraform:0.11.14
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-aws ]
+    environment:
+      GCP_PROJECT:
+        from_secret: gcp_project
+      GCP_CREDENTIALS: 
+        from_secret: gcp_credentials
+      GCP_REGION:
+        from_secret: gcp_region
+      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
+      CI_PIPELINE_NUMBER: cluster-115-gcp
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
+      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
+      - cd example/gcp-example
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+        --backend-config="region=$${GCP_REGION}"
+      - terraform apply
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+        --var="gcp_project"=$${GCP_PROJECT}
+      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: apply-gcp-configuration
+    image: quay.io/sighup/e2e-testing:1.1.0_0.1.3_2.16.1_1.4.0_1.15.6_3.2.2_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init-gcp ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-115
+      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
+      - kubectl rollout restart deploy velero -n kube-system
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: test-backup-restore-gcp
+    image: quay.io/sighup/e2e-testing:1.1.0_0.1.3_2.16.1_1.4.0_1.15.6_3.2.2_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ apply-gcp-configuration ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-115
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - tar -zxf velero.tar.gz
+      - mv velero*/velero /usr/local/bin/velero
+      - bats -t katalog/tests/velero/velero-backup.sh
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: destroy-gcp
+    image: hashicorp/terraform:0.11.14
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-gcp ]
+    environment:
+      GCP_PROJECT:
+        from_secret: gcp_project
+      GCP_CREDENTIALS: 
+        from_secret: gcp_credentials
+      GCP_REGION:
+        from_secret: gcp_region
+      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
+      CI_PIPELINE_NUMBER: cluster-115-gcp
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - cd example/gcp-example
+      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
+      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+        --backend-config="region=$${GCP_REGION}"
+      - terraform destroy
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+        --var="gcp_project"=$${GCP_PROJECT}
+    when:
+      status:
+      - success
+      - failure
+
   - name: destroy
     image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
     pull: always
-    depends_on: [ test-backup-restore-aws ]
+    depends_on: [ test-backup-restore-gcp ]
     settings:
       action: destroy
       pipeline_id: cluster-115
@@ -586,10 +820,127 @@ steps:
       - success
       - failure
 
+  - name: init-gcp
+    image: hashicorp/terraform:0.11.14
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-aws ]
+    environment:
+      GCP_PROJECT:
+        from_secret: gcp_project
+      GCP_CREDENTIALS: 
+        from_secret: gcp_credentials
+      GCP_REGION:
+        from_secret: gcp_region
+      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
+      CI_PIPELINE_NUMBER: cluster-114-gcp
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
+      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
+      - cd example/gcp-example
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+        --backend-config="region=$${GCP_REGION}"
+      - terraform apply
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+        --var="gcp_project"=$${GCP_PROJECT}
+      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: apply-gcp-configuration
+    image: quay.io/sighup/e2e-testing:1.1.0_0.1.3_2.16.1_1.4.0_1.14.9_3.2.2_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init-gcp ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-114
+      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
+      - kubectl -n kube-system patch deployment velero -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: test-backup-restore-gcp
+    image: quay.io/sighup/e2e-testing:1.1.0_0.1.3_2.16.1_1.4.0_1.14.9_3.2.2_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ apply-gcp-configuration ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-114
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - tar -zxf velero.tar.gz
+      - mv velero*/velero /usr/local/bin/velero
+      - bats -t katalog/tests/velero/velero-backup.sh
+    when:
+      ref:
+        include:
+          - refs/heads/hotfix-*
+          - refs/heads/feature/deprecate-and-update
+          - refs/tags/**
+
+  - name: destroy-gcp
+    image: hashicorp/terraform:0.11.14
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-gcp ]
+    environment:
+      GCP_PROJECT:
+        from_secret: gcp_project
+      GCP_CREDENTIALS: 
+        from_secret: gcp_credentials
+      GCP_REGION:
+        from_secret: gcp_region
+      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
+      CI_PIPELINE_NUMBER: cluster-114-gcp
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - cd example/gcp-example
+      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
+      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+        --backend-config="region=$${GCP_REGION}"
+      - terraform destroy
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+        --var="gcp_project"=$${GCP_PROJECT}
+    when:
+      status:
+      - success
+      - failure
+
   - name: destroy
     image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
     pull: always
-    depends_on: [ test-backup-restore-aws ]
+    depends_on: [ test-backup-restore-gcp ]
     settings:
       action: destroy
       pipeline_id: cluster-114

@@ -8,7 +8,8 @@ spec:
   selector:
     matchLabels:
       k8s-app: velero
-  strategy: {}
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
