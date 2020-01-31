@@ -1,16 +1,16 @@
 variable "name" {
-  type        = "string"
+  type        = string
   description = "Cluster Name"
 }
 variable "env" {
-  type        = "string"
+  type        = string
   description = "Environment Name"
 }
 variable "backup_bucket_name" {
-  type        = "string"
+  type        = string
   description = "Backup Bucket Name"
 }
 variable "region" {
-  type        = "string"
+  type        = string
   description = "AWS Region where colocate the bucket"
 }

@@ -5,12 +5,12 @@ resource "aws_iam_user" "velero_backup_user" {
 
 resource "aws_iam_policy_attachment" "velero_backup" {
   name       = "${var.name}-${var.env}-velero-backup"
-  users      = ["${aws_iam_user.velero_backup_user.name}"]
-  policy_arn = "${aws_iam_policy.velero_backup.arn}"
+  users      = [aws_iam_user.velero_backup_user.name]
+  policy_arn = aws_iam_policy.velero_backup.arn
 }
 
 resource "aws_iam_access_key" "velero_backup" {
-  user = "${aws_iam_user.velero_backup_user.name}"
+  user = aws_iam_user.velero_backup_user.name
 }
 
 resource "aws_iam_policy" "velero_backup" {

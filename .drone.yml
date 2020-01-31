@@ -184,8 +184,6 @@ steps:
         from_secret: gcp_project
       GCP_CREDENTIALS: 
         from_secret: gcp_credentials
-      GCP_REGION:
-        from_secret: gcp_region
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: cluster-116-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -198,7 +196,6 @@ steps:
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-        --backend-config="region=$${GCP_REGION}"
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
@@ -262,8 +259,6 @@ steps:
         from_secret: gcp_project
       GCP_CREDENTIALS: 
         from_secret: gcp_credentials
-      GCP_REGION:
-        from_secret: gcp_region
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: cluster-116-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -276,7 +271,6 @@ steps:
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-        --backend-config="region=$${GCP_REGION}"
       - terraform destroy
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
@@ -496,8 +490,6 @@ steps:
         from_secret: gcp_project
       GCP_CREDENTIALS: 
         from_secret: gcp_credentials
-      GCP_REGION:
-        from_secret: gcp_region
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: cluster-115-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -510,7 +502,6 @@ steps:
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-        --backend-config="region=$${GCP_REGION}"
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
@@ -574,8 +565,6 @@ steps:
         from_secret: gcp_project
       GCP_CREDENTIALS: 
         from_secret: gcp_credentials
-      GCP_REGION:
-        from_secret: gcp_region
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: cluster-115-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -588,7 +577,6 @@ steps:
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-        --backend-config="region=$${GCP_REGION}"
       - terraform destroy
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
@@ -808,8 +796,6 @@ steps:
         from_secret: gcp_project
       GCP_CREDENTIALS: 
         from_secret: gcp_credentials
-      GCP_REGION:
-        from_secret: gcp_region
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: cluster-114-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -822,7 +808,6 @@ steps:
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-        --backend-config="region=$${GCP_REGION}"
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
@@ -886,8 +871,6 @@ steps:
         from_secret: gcp_project
       GCP_CREDENTIALS: 
         from_secret: gcp_credentials
-      GCP_REGION:
-        from_secret: gcp_region
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: cluster-114-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -900,7 +883,6 @@ steps:
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-        --backend-config="region=$${GCP_REGION}"
       - terraform destroy
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"

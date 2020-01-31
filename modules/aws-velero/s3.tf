@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "backup_bucket" {
-  bucket        = "${var.backup_bucket_name}"
+  bucket        = var.backup_bucket_name
   acl           = "private"
   force_destroy = true
 
@@ -16,8 +16,8 @@ resource "aws_s3_bucket" "backup_bucket" {
   }
 
   tags = {
-    Name        = "${var.backup_bucket_name}"
-    ClusterName = "${var.name}"
-    Environment = "${var.env}"
+    Name        = var.backup_bucket_name
+    ClusterName = var.name
+    Environment = var.env
   }
 }

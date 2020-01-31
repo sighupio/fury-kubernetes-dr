@@ -1,17 +1,17 @@
 variable "project" {
   description = "GCP Project where colocate the bucket"
-  type        = "string"
+  type        = string
 }
 
 variable "name" {
-  type        = "string"
+  type        = string
   description = "Cluster Name"
 }
 variable "env" {
-  type        = "string"
+  type        = string
   description = "Environment Name"
 }
 variable "backup_bucket_name" {
-  type        = "string"
+  type        = string
   description = "Backup Bucket Name"
 }
