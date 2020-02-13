@@ -4,6 +4,7 @@ resource "google_storage_bucket" "main" {
   bucket_policy_only = true
   project            = var.project
   location           = "EU"
+  force_destroy      = true
   lifecycle {
     prevent_destroy = false
   }
