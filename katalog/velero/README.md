@@ -42,7 +42,7 @@ every 15 minutes.
 
 ### Velero on premises
 
-The [velero-prem](./velero-prem/) feature deploys a [MinIO](https://min.io/) instance in the same cluster as
+The [velero-on-prem](./velero-on-prem/) feature deploys a [MinIO](https://min.io/) instance in the same cluster as
 object storage backend that Velero can use to store backup data.
 
 *Example `kustomization.yaml` file*
@@ -51,7 +51,7 @@ object storage backend that Velero can use to store backup data.
 namespace: kube-system
 
 bases:
-  - katalog/velero/velero-prem
+  - katalog/velero/velero-on-prem
 ```
 
 ### Velero in AWS

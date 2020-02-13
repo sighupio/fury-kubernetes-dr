@@ -10,7 +10,7 @@ load ./../helper
 
 @test "Deploy Velero on Prem" {
     deploy() {
-        apply katalog/velero/velero-prem
+        apply katalog/velero/velero-on-prem
     }
     run deploy
     [ "$status" -eq 0 ]

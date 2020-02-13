@@ -15,7 +15,7 @@ case.
 
 This deployment requires to have previously deployed a velero instance. Choose one option:
 
-- [velero on premises](../velero-prem)
+- [velero on premises](../velero-on-prem)
 - [velero AWS](../velero-aws)
 - [velero GCP](../velero-gcp)
 - [velero Azure](../velero-azure)

@@ -15,7 +15,7 @@ This directory contains common components needed to deploy Velero.
 
 This directory does not provide any functionality by itself. Please refer to the different Velero deployment options:
 
-- [Velero On Prem](../velero-prem/README.md)
+- [Velero On Prem](../velero-on-prem/README.md)
 - [Velero AWS](../velero-aws/README.md)
 - [Velero GCP](../velero-gcp/README.md)
 - [Velero Azure](../velero-azure/README.md)
