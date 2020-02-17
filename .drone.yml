@@ -334,6 +334,7 @@ steps:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
       - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
     when:
       ref:
@@ -759,6 +760,7 @@ steps:
       - export KUBECONFIG=/shared/kube/kubeconfig-115
       - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
     when:
       ref:
@@ -1184,6 +1186,7 @@ steps:
       - export KUBECONFIG=/shared/kube/kubeconfig-114
       - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
     when:
       ref:
