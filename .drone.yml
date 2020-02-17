@@ -288,7 +288,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-gcp ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-116-azure
+      CI_PIPELINE_NUMBER: cluster116azure
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
@@ -368,7 +368,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-azure ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-116-azure
+      CI_PIPELINE_NUMBER: cluster116azure
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
@@ -713,7 +713,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-gcp ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-115-azure
+      CI_PIPELINE_NUMBER: cluster115azure
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
@@ -793,7 +793,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-azure ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-115-azure
+      CI_PIPELINE_NUMBER: cluster115azure
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
@@ -1138,7 +1138,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-gcp ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-114-azure
+      CI_PIPELINE_NUMBER: cluster114azure
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
@@ -1218,7 +1218,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-azure ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-114-azure
+      CI_PIPELINE_NUMBER: cluster114azure
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
