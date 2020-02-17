@@ -5,7 +5,7 @@ load ./../helper
 @test "Trigger backup" {
     info
     backup() {
-        velero backup create backup-e2e --from-schedule manifests -n kube-system --wait
+        timeout 120 velero backup create backup-e2e --from-schedule manifests -n kube-system --wait
     }
     run backup
     [ "$status" -eq 0 ]
@@ -23,7 +23,7 @@ load ./../helper
 @test "Restore backup" {
     info
     backup() {
-        velero restore create --from-backup backup-e2e -n kube-system --wait
+        timeout 120 velero restore create --from-backup backup-e2e -n kube-system --wait
     }
     run backup
     [ "$status" -eq 0 ]
