@@ -1,0 +1,13 @@
+namespace: kube-system
+
+bases:
+  - ../velero-base
+  - ../velero-cloud
+
+images:
+  - name: velero/velero-plugin-for-microsoft-azure
+    newTag: v1.0.0
+
+patchesStrategicMerge:
+  - plugin-patch.yaml
+

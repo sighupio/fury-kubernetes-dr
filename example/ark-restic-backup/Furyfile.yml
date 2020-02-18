@@ -1,6 +1,0 @@
-bases:
-  - name: addons/ark
-    version: master
-  - name: addons/ark-restic
-    version: master
-

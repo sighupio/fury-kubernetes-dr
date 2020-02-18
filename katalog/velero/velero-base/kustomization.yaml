@@ -1,0 +1,13 @@
+namespace: kube-system
+
+resources:
+  - crds.yaml
+  - rbac.yaml
+  - deployment.yaml
+  - service.yaml
+  - serviceMonitor.yaml
+  - schedule.yaml
+
+images:
+  - name: velero/velero
+    newTag: v1.2.0

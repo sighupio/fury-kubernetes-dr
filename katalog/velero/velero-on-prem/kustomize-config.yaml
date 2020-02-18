@@ -1,0 +1,5 @@
+varReference:
+- path: spec/objectStorage/bucket
+  kind: BackupStorageLocation
+- path: spec/config/s3Url
+  kind: BackupStorageLocation

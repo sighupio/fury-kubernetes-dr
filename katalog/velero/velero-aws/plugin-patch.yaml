@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velero
+spec:
+  template:
+    spec:
+      initContainers:
+      - image: velero/velero-plugin-for-aws
+        imagePullPolicy: Always
+        name: velero-plugin
+        securityContext:
+          allowPrivilegeEscalation: false
+        volumeMounts:
+        - mountPath: /target
+          name: plugins

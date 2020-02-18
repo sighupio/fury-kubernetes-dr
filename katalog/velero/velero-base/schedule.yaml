@@ -1,0 +1,21 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: manifests
+spec:
+  schedule: "*/15 * * * *"
+  template:
+    includedNamespaces:
+    - '*'
+    excludedNamespaces: null
+    includedResources:
+    - '*'
+    excludedResources: null
+    includeClusterResources: true
+    labelSelector: null
+    snapshotVolumes: false
+    storageLocation: default
+    volumeSnapshotLocations: []
+    ttl: 720h0m0s
+    hooks:
+      resources: []
