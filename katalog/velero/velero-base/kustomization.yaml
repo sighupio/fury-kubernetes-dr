@@ -10,4 +10,4 @@ resources:
 
 images:
   - name: velero/velero
-    newTag: v1.2.0
+    newTag: v1.3.1
