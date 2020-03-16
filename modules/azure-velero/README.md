@@ -3,6 +3,11 @@
 This terraform module provides an easy way to generate Velero required cloud resources (Object Storage and Credentials)
 to backup kubernetes objects and trigger volume snapshots.
 
+## Provider
+
+This module is compatible with `azurerm` terraform provider version:
+[`1.44.0`](https://github.com/terraform-providers/terraform-provider-azurerm/tree/v1.44.0)
+
 ## Inputs
 
 | Name                          | Description                                                                                                      | Type     | Default              | Required |
