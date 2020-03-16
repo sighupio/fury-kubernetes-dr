@@ -18,8 +18,8 @@ module "velero" {
   name                       = var.my_cluster_name
   env                        = var.environment
   backup_bucket_name         = "${var.my_cluster_name}-${var.environment}-velero"
-  aks_resource_group_name    = "e2e-testing"
-  velero_resource_group_name = "e2e-testing"
+  aks_resource_group_name    = "sighup-e2e-testing"
+  velero_resource_group_name = "sighup-e2e-testing"
 }
 
 output "cloud_credentials" {
