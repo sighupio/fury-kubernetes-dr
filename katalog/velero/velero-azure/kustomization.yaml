@@ -6,7 +6,7 @@ bases:
 
 images:
   - name: velero/velero-plugin-for-microsoft-azure
-    newTag: v1.0.0
+    newTag: v1.0.1
 
 patchesStrategicMerge:
   - plugin-patch.yaml

@@ -148,4 +148,4 @@ bases:
   - katalog/velero/velero-restic
 ```
 
-More information about [Velero Restic integration](https://velero.io/docs/v1.2.0/restic/)
+More information about [Velero Restic integration](https://velero.io/docs/v1.3.1/restic/)

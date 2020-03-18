@@ -8,7 +8,7 @@ platform:
 
 steps:
   - name: init
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.1
     pull: always
     volumes:
     - name: shared
@@ -57,7 +57,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -130,7 +130,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -237,7 +237,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -351,7 +351,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -401,7 +401,7 @@ steps:
       - failure
 
   - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.1
     pull: always
     depends_on: [ test-backup-restore-azure ]
     settings:
@@ -434,7 +434,7 @@ platform:
 
 steps:
   - name: init
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.1
     pull: always
     volumes:
     - name: shared
@@ -483,7 +483,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-115
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -556,7 +556,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-115
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -663,7 +663,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-115
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -777,7 +777,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-115
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -827,7 +827,7 @@ steps:
       - failure
 
   - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.1
     pull: always
     depends_on: [ test-backup-restore-azure ]
     settings:
@@ -860,7 +860,7 @@ platform:
 
 steps:
   - name: init
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.1
     pull: always
     volumes:
     - name: shared
@@ -909,7 +909,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-114
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -982,7 +982,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-114
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1089,7 +1089,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-114
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1203,7 +1203,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-114
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.2.0/velero-v1.2.0-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1253,7 +1253,7 @@ steps:
       - failure
 
   - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.0-rc4
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.2.1
     pull: always
     depends_on: [ test-backup-restore-azure ]
     settings:
