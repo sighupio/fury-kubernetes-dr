@@ -1,4 +1,5 @@
 namespace: kube-system
 
 resources:
-  - default.yml
+  - full.yaml
+  - manifests.yaml
