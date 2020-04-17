@@ -10,6 +10,7 @@
     - [Velero in GCP](#velero-in-gcp)
     - [Velero in Azure](#velero-in-azure)
     - [Velero Restic](#velero-restic)
+    - [Velero schedule](#velero-schedule)
 
 ___
 
@@ -35,9 +36,8 @@ as this feature deploys [a `ServiceMonitor` definition](velero-base/serviceMonit
 
 ## Server deployment
 
-Every velero deployment, does not matter if on premises or in any of the supported cloud, has preconfigured a
-[schedule](velero-base/schedule.yaml) to backup all cluster manifests in an object storage. The backup is triggered
-every 15 minutes.
+Every velero deployment, does not matter if on premises or in any of the supported cloud, can configure
+[schedules](#velero-schedule) to backup all cluster manifests and/or cluster persistence volumes.
 
 
 ### Velero on premises
@@ -149,3 +149,21 @@ bases:
 ```
 
 More information about [Velero Restic integration](https://velero.io/docs/v1.3.1/restic/)
+
+### Velero schedule
+
+This module contains a couple of useful [velero schedules](velero-schedules) to perform automatic backups of cluster manifests and/or
+persistence volumes.
+
+Feel free to deploy these schedules if fits in your business:
+
+```yaml
+namespace: kube-system
+
+bases:
+  - katalog/velero/velero-aws
+  - katalog/velero/velero-schedules
+```
+
+More information about
+[velero schedules](https://github.com/vmware-tanzu/velero/blob/master/site/docs/master/api-types/schedule.md)

@@ -44,3 +44,10 @@ load ./../helper
     [ "$status" -eq 0 ]
 }
 
+@test "Deploy Velero Schedules" {
+    deploy() {
+        apply katalog/velero/velero-schedules
+    }
+    run deploy
+    [ "$status" -eq 0 ]
+}
