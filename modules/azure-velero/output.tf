@@ -29,7 +29,7 @@ spec:
   provider: velero.io/azure
   config:
     apiTimeout: 4m0s
-    resouceGroup: ${data.azurerm_resource_group.velero.name}
+    resourceGroup: ${data.azurerm_resource_group.velero.name}
 EOF
 }
 
