@@ -33,6 +33,12 @@ resource "azurerm_role_assignment" "aks" {
   principal_id         = azuread_service_principal.main.id
 }
 
+resource "azurerm_role_assignment" "snapshot" {
+  scope                = data.azurerm_resource_group.velero.id
+  role_definition_name = "Contributor"
+  principal_id         = azuread_service_principal.main.id
+}
+
 resource "azurerm_role_assignment" "velero" {
   scope                = azurerm_storage_account.main.id
   role_definition_name = "Contributor"
