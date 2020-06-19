@@ -27,6 +27,7 @@ load ./../helper
 }
 
 @test "Deploy Velero Restic" {
+    info
     deploy() {
         apply katalog/velero/velero-restic
     }
@@ -45,6 +46,7 @@ load ./../helper
 }
 
 @test "Deploy Velero Schedules" {
+    info
     deploy() {
         apply katalog/velero/velero-schedules
     }
