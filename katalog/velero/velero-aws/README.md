@@ -1,12 +1,12 @@
 # Velero AWS
 
-This Velero deployment is ready to be deployed in any AWS cluster as it includes the 
+This Velero deployment is ready to be deployed in any AWS cluster as it includes the
 [AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.0.0).
 
 ## Image repository and tag
 
 - Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.0.0`
-- Velero AWS Plugin repository: 
+- Velero AWS Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-aws](https://github.com/vmware-tanzu/velero-plugin-for-aws).
 
 
@@ -37,6 +37,7 @@ Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
 $ kubectl create secret generic cloud-credentials --from-file=cloud=/tmp/cloud_credentials.conf --dry-run -o yaml | kubectl apply -f - -n kube-system
+# omitted output
 ```
 
 
@@ -68,6 +69,7 @@ Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
 $ kubectl apply -f /tmp/backup_storage_location.yaml -n kube-system
+# omitted output
 ```
 
 ## Deployment
@@ -76,8 +78,9 @@ You can deploy Velero AWS by running following command in the root of this proje
 
 ```bash
 $ kustomize build | kubectl apply -f -
+# omitted output
 ```
 
-# License 
+## License
 
 For license details please see [LICENSE](../../../LICENSE)

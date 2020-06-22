@@ -42,6 +42,6 @@ module "velero" {
 
 ## Links
 
-- https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/v1.0.0/backupstoragelocation.md
-- https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/v1.0.0/volumesnapshotlocation.md
-- https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/tree/v1.0.0#create-azure-storage-account-and-blob-container
+- [https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/v1.0.0/backupstoragelocation.md](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/v1.0.0/backupstoragelocation.md)
+- [https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/v1.0.0/volumesnapshotlocation.md](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/v1.0.0/volumesnapshotlocation.md)
+- [https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/tree/v1.0.0#create-azure-storage-account-and-blob-container](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/tree/v1.0.0#create-azure-storage-account-and-blob-container)

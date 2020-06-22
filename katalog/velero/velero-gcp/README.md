@@ -1,12 +1,12 @@
 # Velero GCP
 
-This Velero deployment is ready to be deployed in any GCP cluster as it includes the 
+This Velero deployment is ready to be deployed in any GCP cluster as it includes the
 [GCP Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-gcp/tree/v1.0.0).
 
 ## Image repository and tag
 
 - Velero GCP Plugin image: `velero/velero-plugin-for-gcp:v1.0.0`
-- Velero GCP Plugin repository: 
+- Velero GCP Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-gcp](https://github.com/vmware-tanzu/velero-plugin-for-gcp).
 
 
@@ -47,6 +47,7 @@ Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
 $ kubectl create secret generic cloud-credentials --from-file=cloud=/tmp/cloud_credentials.json --dry-run -o yaml | kubectl apply -f - -n kube-system
+# omitted output
 ```
 
 
@@ -77,6 +78,7 @@ Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
 $ kubectl apply -f /tmp/backup_storage_location.yaml -n kube-system
+# omitted output
 ```
 
 ## Deployment
@@ -85,8 +87,9 @@ You can deploy Velero GCP by running following command in the root of this proje
 
 ```bash
 $ kustomize build | kubectl apply -f -
+# omitted output
 ```
 
-# License 
+## License
 
 For license details please see [LICENSE](../../../LICENSE)

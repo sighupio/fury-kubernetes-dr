@@ -57,6 +57,7 @@ Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
 $ kubectl apply -f /tmp/volume_snapshot_location.yaml -n kube-system
+# omitted output
 ```
 
 ### *Default* BackupStorageLocation
@@ -72,8 +73,11 @@ and [azure](../../../modules/azure-velero)) that creates it as terraform output:
 
 ```bash
 $ terraform init
+# omitted output
 $ terraform apply
+# omitted output
 $ terraform output backup_storage_location > /tmp/backup_storage_location.yaml
+# omitted output
 $ cat /tmp/backup_storage_location.yaml
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
@@ -90,10 +94,11 @@ Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
 $ kubectl apply -f /tmp/backup_storage_location.yaml -n kube-system
+# omitted output
 ```
 
 If you choose to deploy the [velero on prem package](../velero-on-prem), this resource is preconfigured in the cluster.
 
-# License 
+## License
 
 For license details please see [LICENSE](../../../LICENSE)

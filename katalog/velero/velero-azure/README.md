@@ -1,12 +1,12 @@
 # Velero Azure
 
-This Velero deployment is ready to be deployed in any Azure cluster as it includes the 
+This Velero deployment is ready to be deployed in any Azure cluster as it includes the
 [Azure Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/tree/v1.0.0).
 
 ## Image repository and tag
 
 - Velero Azure Plugin image: `velero/velero-plugin-for-microsoft-azure:v1.0.0`
-- Velero Azure Plugin repository: 
+- Velero Azure Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure).
 
 
@@ -25,8 +25,11 @@ by this deployment including the Cloud Credentials file.
 
 ```bash
 $ terraform init
+# omitted output
 $ terraform apply
+# omitted output
 $ terraform output cloud_credentials > /tmp/cloud_credentials.env
+# omitted output
 $ cat /tmp/cloud_credentials.env
 AZURE_SUBSCRIPTION_ID=id
 AZURE_TENANT_ID=id
@@ -40,6 +43,7 @@ Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
 $ kubectl create secret generic cloud-credentials --from-file=cloud=/tmp/cloud_credentials.env --dry-run -o yaml | kubectl apply -f - -n kube-system
+# omitted output
 ```
 
 
@@ -72,6 +76,7 @@ Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
 $ kubectl apply -f /tmp/backup_storage_location.yaml -n kube-system
+# omitted output
 ```
 
 ## Deployment
@@ -80,8 +85,9 @@ You can deploy Velero Azure by running following command in the root of this pro
 
 ```bash
 $ kustomize build | kubectl apply -f -
+# omitted output
 ```
 
-# License 
+## License
 
 For license details please see [LICENSE](../../../LICENSE)

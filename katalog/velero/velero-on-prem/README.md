@@ -6,7 +6,7 @@ the [AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tr
 ## Image repository and tag
 
 - Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.0.0`
-- Velero AWS Plugin repository: 
+- Velero AWS Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-aws](https://github.com/vmware-tanzu/velero-plugin-for-aws).
 - MinIO image: `minio/minio:RELEASE.2020-01-25T02-50-51Z`
 - MinIO client image: `minio/mc:RELEASE.2020-01-25T03-02-19Z`
@@ -19,6 +19,7 @@ You can deploy Velero AWS by running following command in the root of this proje
 
 ```bash
 $ kustomize build | kubectl apply -f -
+# omitted output
 ```
 
 ### Important Notes
@@ -28,6 +29,6 @@ waits for MinIO instance to be fully configured and ready.
 
 You can see it in [plugin-patch.yaml](./plugin-patch.yaml) and [minio/init-job.yaml](minio/init-job.yaml).
 
-# License 
+## License
 
 For license details please see [LICENSE](../../../LICENSE)
