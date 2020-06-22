@@ -14,7 +14,9 @@ steps:
     environment:
       RUN_LOCAL: "true"
     commands:
+      - cp -a $(pwd)/rules/. /action/lib/.automation/
       - cp -a $(pwd)/. /tmp/lint/
+      - rm -rf /tmp/lint/rules
       - /action/lib/linter.sh
 
 ---
