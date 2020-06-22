@@ -1,6 +1,28 @@
 ---
 kind: pipeline
+name: policeman
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: lint
+    image: github/super-linter
+    pull: always
+    depends_on: [ clone ]
+    environment:
+      RUN_LOCAL: "true"
+    commands:
+      - cp -a $(pwd)/. /tmp/lint/
+      - /action/lib/linter.sh
+
+---
+kind: pipeline
 name: e2e-kubernetes-1.16
+
+depends_on:
+  - policeman
 
 platform:
   os: linux
@@ -385,6 +407,9 @@ volumes:
 kind: pipeline
 name: e2e-kubernetes-1.17
 
+depends_on:
+  - policeman
+
 platform:
   os: linux
   arch: amd64
@@ -767,6 +792,9 @@ volumes:
 ---
 kind: pipeline
 name: e2e-kubernetes-1.18
+
+depends_on:
+  - policeman
 
 platform:
   os: linux
