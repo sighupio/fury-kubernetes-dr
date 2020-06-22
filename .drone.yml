@@ -8,16 +8,8 @@ platform:
 
 steps:
   - name: lint
-    image: github/super-linter
+    image: quay.io/sighup/policeman
     pull: always
-    depends_on: [ clone ]
-    environment:
-      RUN_LOCAL: "true"
-    commands:
-      - cp -a $(pwd)/rules/. /action/lib/.automation/
-      - cp -a $(pwd)/. /tmp/lint/
-      - rm -rf /tmp/lint/rules
-      - /action/lib/linter.sh
 
 ---
 kind: pipeline
