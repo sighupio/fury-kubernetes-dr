@@ -1,6 +1,6 @@
 # Velero Restic
 
-Velero has support for backing up and restoring Kubernetes volumes using a free open-source backup tool called 
+Velero has support for backing up and restoring Kubernetes volumes using a free open-source backup tool called
 [restic](https://github.com/restic/restic). This support is considered beta quality. Please see the list of
 [limitations](https://velero.io/docs/master/restic/#limitations) to understand if it currently fits your use
 case.
@@ -27,8 +27,9 @@ You can deploy Velero AWS by running following command in the root of this proje
 
 ```bash
 $ kustomize build | kubectl apply -f -
+# omitted output
 ```
 
-# License 
+## License
 
 For license details please see [LICENSE](../../../LICENSE)

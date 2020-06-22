@@ -67,13 +67,18 @@ You can find and example terraform project using the [aws-velero](../../modules/
 ```bash
 $ cd example/aws-example
 $ terraform init
+# omitted output
 $ terraform apply --var="my_cluster_name=kubernetes-cluster-and-velero"
+# omitted output
 $ terraform output cloud_credentials > /tmp/cloud_credentials.config
 $ terraform output volume_snapshot_location > /tmp/volume_snapshot_location.yaml
 $ terraform output backup_storage_location > /tmp/backup_storage_location.yaml
 $ kubectl apply -f /tmp/cloud_credentials.config -n kube-system
+# omitted output
 $ kubectl apply -f /tmp/volume_snapshot_location.yaml -n kube-system
+# omitted output
 $ kubectl apply -f /tmp/backup_storage_location.yaml -n kube-system
+# omitted output
 ```
 
 Then, you will be able to deploy the velero AWS deployment.
