@@ -28,19 +28,22 @@ resource "azuread_service_principal_password" "main" {
 }
 
 resource "azurerm_role_assignment" "aks" {
-  scope                = data.azurerm_resource_group.aks.id
-  role_definition_name = "Contributor"
-  principal_id         = azuread_service_principal.main.id
+  scope                            = data.azurerm_resource_group.aks.id
+  role_definition_name             = "Contributor"
+  principal_id                     = azuread_service_principal.main.id
+  skip_service_principal_aad_check = true
 }
 
 resource "azurerm_role_assignment" "snapshot" {
-  scope                = data.azurerm_resource_group.velero.id
-  role_definition_name = "Contributor"
-  principal_id         = azuread_service_principal.main.id
+  scope                            = data.azurerm_resource_group.velero.id
+  role_definition_name             = "Contributor"
+  principal_id                     = azuread_service_principal.main.id
+  skip_service_principal_aad_check = true
 }
 
 resource "azurerm_role_assignment" "velero" {
-  scope                = azurerm_storage_account.main.id
-  role_definition_name = "Contributor"
-  principal_id         = azuread_service_principal.main.id
+  scope                            = azurerm_storage_account.main.id
+  role_definition_name             = "Contributor"
+  principal_id                     = azuread_service_principal.main.id
+  skip_service_principal_aad_check = true
 }
