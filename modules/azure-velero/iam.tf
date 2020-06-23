@@ -3,7 +3,8 @@ resource "azuread_application" "main" {
 }
 
 resource "azuread_service_principal" "main" {
-  application_id = azuread_application.main.application_id
+  application_id               = azuread_application.main.application_id
+  app_role_assignment_required = true
 }
 
 resource "random_string" "main" {

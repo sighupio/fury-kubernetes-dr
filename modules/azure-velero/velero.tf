@@ -5,13 +5,13 @@ provider "azurerm" {
 }
 
 resource "azurerm_storage_account" "main" {
-  name                      = "${var.name}${var.env}velero"
-  resource_group_name       = data.azurerm_resource_group.velero.name
-  location                  = data.azurerm_resource_group.velero.location
-  account_kind              = "BlobStorage"
-  account_tier              = "Standard"
-  account_replication_type  = "GRS"
-  access_tier               = "Hot"
+  name                     = "${var.name}${var.env}velero"
+  resource_group_name      = data.azurerm_resource_group.velero.name
+  location                 = data.azurerm_resource_group.velero.location
+  account_kind             = "BlobStorage"
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+  access_tier              = "Hot"
   # https://github.com/terraform-providers/terraform-provider-azurerm/releases/tag/v2.0.0
   # Data Source: azurerm_storage_account - removing the enable_blob_encryption field since this is no longer configurable by Azure (#5668)
   # enable_blob_encryption    = true
