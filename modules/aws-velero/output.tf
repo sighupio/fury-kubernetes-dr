@@ -13,6 +13,17 @@ stringData:
     aws_secret_access_key=${aws_iam_access_key.velero_backup.secret}
 EOF
 
+  service_account = <<EOF
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: ${element(coalescelist(aws_iam_role.velero_backup.*.arn, [""]), 0)}
+  name: velero
+  namespace: kube-system
+EOF
+
   backup_storage_location  = <<EOF
 ---
 apiVersion: velero.io/v1
@@ -44,6 +55,11 @@ EOF
 output "cloud_credentials" {
   description = "Velero required file with credentials"
   value       = local.cloud_credentials
+}
+
+output "service_account" {
+  description = "Velero ServiceAccount"
+  value = local.service_account
 }
 
 output "backup_storage_location" {
