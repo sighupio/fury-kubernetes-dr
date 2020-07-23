@@ -4,10 +4,12 @@ ${base64decode(google_service_account_key.velero.private_key)}
 EOF
 
   backup_storage_location  = <<EOF
+---
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
   name: default
+  namespace: kube-system
 spec:
   provider: velero.io/gcp
   objectStorage:
@@ -15,10 +17,12 @@ spec:
     prefix: velero
 EOF
   volume_snapshot_location = <<EOF
+---
 apiVersion: velero.io/v1
 kind: VolumeSnapshotLocation
 metadata:
   name: default
+  namespace: kube-system
 spec:
   provider: velero.io/gcp
 EOF
