@@ -1,9 +1,3 @@
-provider "azurerm" {
-  version = "=2.10"
-  features {
-  }
-}
-
 resource "azurerm_storage_account" "main" {
   name                     = "${var.name}${var.env}velero"
   resource_group_name      = data.azurerm_resource_group.velero.name
