@@ -1,7 +1,7 @@
 # Azure Velero
 
 This terraform module provides an easy way to generate Velero required cloud resources (Object Storage and Credentials)
-to backup kubernetes objects and trigger volume snapshots.
+to backup Kubernetes objects and trigger volume snapshots.
 
 ## Provider
 

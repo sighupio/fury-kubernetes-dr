@@ -1,6 +1,13 @@
 locals {
   cloud_credentials = <<EOF
-${base64decode(google_service_account_key.velero.private_key)}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloud-credentials
+  namespace: kube-system
+type: Opaque
+data:
+  cloud: ${google_service_account_key.velero.private_key}
 EOF
 
   backup_storage_location  = <<EOF

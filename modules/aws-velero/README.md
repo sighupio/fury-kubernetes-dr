@@ -1,7 +1,7 @@
 # AWS Velero
 
 This terraform module provides an easy way to generate Velero required cloud resources (S3 and IAM) to backup
-kubernetes objects and trigger volume snapshot.
+Kubernetes objects and trigger volume snapshots.
 
 ## Inputs
 

@@ -2,6 +2,11 @@ terraform {
   backend "azurerm" {}
 }
 
+provider "azurerm" {
+  version = "2.10"
+  features {}
+}
+
 variable "my_cluster_name" {
 
 }
