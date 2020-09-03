@@ -106,7 +106,7 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -119,7 +119,7 @@ steps:
     depends_on: [ init-aws ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
 
@@ -197,7 +197,7 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -210,7 +210,7 @@ steps:
     depends_on: [ init-gcp ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
@@ -296,7 +296,7 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -309,7 +309,7 @@ steps:
     depends_on: [ init-azure ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
@@ -492,7 +492,7 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -505,7 +505,7 @@ steps:
     depends_on: [ init-aws ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-117
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
 
@@ -583,7 +583,7 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -596,7 +596,7 @@ steps:
     depends_on: [ init-gcp ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-117
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
@@ -682,7 +682,7 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -695,7 +695,7 @@ steps:
     depends_on: [ init-azure ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-117
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
@@ -878,7 +878,7 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -891,7 +891,7 @@ steps:
     depends_on: [ init-aws ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kubectl -n kube-system patch deployment velero -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"
 
@@ -969,7 +969,7 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -982,7 +982,7 @@ steps:
     depends_on: [ init-gcp ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl -n kube-system patch deployment velero -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"
@@ -1068,7 +1068,7 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.config
+      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
       - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
       - terraform output backup_storage_location > /shared/backup_storage_location.yaml
 
@@ -1081,7 +1081,7 @@ steps:
     depends_on: [ init-azure ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - kubectl create secret generic cloud-credentials --from-file=cloud=/shared/cloud_credentials.config --dry-run -o yaml | kubectl apply -f - -n kube-system
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl -n kube-system patch deployment velero -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"

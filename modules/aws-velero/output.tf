@@ -1,8 +1,16 @@
 locals {
   cloud_credentials = <<EOF
-[default]
-aws_access_key_id=${aws_iam_access_key.velero_backup.id}
-aws_secret_access_key=${aws_iam_access_key.velero_backup.secret}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloud-credentials
+  namespace: kube-system
+type: Opaque
+stringData:
+  cloud: |-
+    [default]
+    aws_access_key_id=${aws_iam_access_key.velero_backup.id}
+    aws_secret_access_key=${aws_iam_access_key.velero_backup.secret}
 EOF
 
   backup_storage_location  = <<EOF
