@@ -1,11 +1,11 @@
 # Velero GCP
 
 This Velero deployment is ready to be deployed in any GCP cluster as it includes the
-[GCP Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-gcp/tree/v1.0.0).
+[GCP Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-gcp/tree/v1.1.0).
 
 ## Image repository and tag
 
-- Velero GCP Plugin image: `velero/velero-plugin-for-gcp:v1.0.0`
+- Velero GCP Plugin image: `velero/velero-plugin-for-gcp:v1.1.0`
 - Velero GCP Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-gcp](https://github.com/vmware-tanzu/velero-plugin-for-gcp).
 
@@ -26,28 +26,15 @@ by this deployment including the Cloud Credentials file.
 ```bash
 $ terraform init
 $ terraform apply
-$ terraform output cloud_credentials > /tmp/cloud_credentials.json
-$ cat /tmp/cloud_credentials.json
-{
-  "type": "service_account",
-  "project_id": "sighup",
-  "private_key_id": "",
-  "private_key": "",
-  "client_email": "drone",
-  "client_id": "",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/drone-e2e%40sighup-main.iam.gserviceaccount.com"
-}
-
+$ terraform output cloud_credentials > /tmp/cloud_credentials.yaml
+# omitted output
 ```
 
 Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
-$ kubectl create secret generic cloud-credentials --from-file=cloud=/tmp/cloud_credentials.json --dry-run -o yaml | kubectl apply -f - -n kube-system
-# omitted output
+$ kubectl apply -f /tmp/cloud_credentials.yaml -n kube-system
+secret/cloud-credentials created
 ```
 
 
@@ -83,7 +70,7 @@ $ kubectl apply -f /tmp/backup_storage_location.yaml -n kube-system
 
 ## Deployment
 
-You can deploy Velero GCP by running following command in the root of this project:
+You can deploy Velero GCP by running the following command in the root of this project:
 
 ```bash
 $ kustomize build | kubectl apply -f -

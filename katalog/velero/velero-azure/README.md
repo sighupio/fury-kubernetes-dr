@@ -1,11 +1,11 @@
 # Velero Azure
 
 This Velero deployment is ready to be deployed in any Azure cluster as it includes the
-[Azure Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/tree/v1.0.0).
+[Azure Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/tree/v1.1.0).
 
 ## Image repository and tag
 
-- Velero Azure Plugin image: `velero/velero-plugin-for-microsoft-azure:v1.0.0`
+- Velero Azure Plugin image: `velero/velero-plugin-for-microsoft-azure:v1.1.0`
 - Velero Azure Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure).
 
@@ -28,22 +28,15 @@ $ terraform init
 # omitted output
 $ terraform apply
 # omitted output
-$ terraform output cloud_credentials > /tmp/cloud_credentials.env
+$ terraform output cloud_credentials > /tmp/cloud_credentials.yaml
 # omitted output
-$ cat /tmp/cloud_credentials.env
-AZURE_SUBSCRIPTION_ID=id
-AZURE_TENANT_ID=id
-AZURE_CLIENT_ID=id
-AZURE_CLIENT_SECRET=my-secret
-AZURE_RESOURCE_GROUP=123
-AZURE_CLOUD_NAME=AzurePublicCloud
 ```
 
 Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
-$ kubectl create secret generic cloud-credentials --from-file=cloud=/tmp/cloud_credentials.env --dry-run -o yaml | kubectl apply -f - -n kube-system
-# omitted output
+$ kubectl apply -f /tmp/cloud_credentials.yaml -n kube-system
+secret/cloud-credentials created
 ```
 
 
@@ -81,7 +74,7 @@ $ kubectl apply -f /tmp/backup_storage_location.yaml -n kube-system
 
 ## Deployment
 
-You can deploy Velero Azure by running following command in the root of this project:
+You can deploy Velero Azure by running the following command in the root of this project:
 
 ```bash
 $ kustomize build | kubectl apply -f -

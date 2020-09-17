@@ -1,11 +1,11 @@
 # Velero AWS
 
 This Velero deployment is ready to be deployed in any AWS cluster as it includes the
-[AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.0.0).
+[AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.1.0).
 
 ## Image repository and tag
 
-- Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.0.0`
+- Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.1.0`
 - Velero AWS Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-aws](https://github.com/vmware-tanzu/velero-plugin-for-aws).
 
@@ -26,18 +26,14 @@ by this deployment including the Cloud Credentials file.
 ```bash
 $ terraform init
 $ terraform apply
-$ terraform output cloud_credentials > /tmp/cloud_credentials.conf
-$ cat /tmp/cloud_credentials.conf
-[default]
-aws_access_key_id=AKIAEXAMPLE
-aws_secret_access_key=aosidaoidhqwd09uuqwda-asd
+$ terraform output cloud_credentials > /tmp/cloud_credentials.yaml
 ```
 
 Then you are ready to apply this file in the `kube-system` namespace:
 
 ```bash
-$ kubectl create secret generic cloud-credentials --from-file=cloud=/tmp/cloud_credentials.conf --dry-run -o yaml | kubectl apply -f - -n kube-system
-# omitted output
+$ kubectl apply -f /tmp/cloud_credentials.yaml -n kube-system
+secret/cloud-credentials created
 ```
 
 
@@ -74,7 +70,7 @@ $ kubectl apply -f /tmp/backup_storage_location.yaml -n kube-system
 
 ## Deployment
 
-You can deploy Velero AWS by running following command in the root of this project:
+You can deploy Velero AWS by running the following command in the root of this project:
 
 ```bash
 $ kustomize build | kubectl apply -f -
