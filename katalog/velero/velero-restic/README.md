@@ -7,7 +7,7 @@ case.
 
 ## Image repository and tag
 
-- Velero Restic image: `velero/velero:v1.3.1`
+- Velero Restic image: `velero/velero:v1.5.1`
 - Velero Restic repository: [https://github.com/vmware-tanzu/velero](https://github.com/vmware-tanzu/velero).
 
 
@@ -23,7 +23,7 @@ This deployment requires to have previously deployed a velero instance. Choose o
 
 ## Deployment
 
-You can deploy Velero AWS by running following command in the root of this project:
+You can deploy Velero AWS by running the following command in the root of this project:
 
 ```bash
 $ kustomize build | kubectl apply -f -
