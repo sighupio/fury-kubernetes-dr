@@ -25,8 +25,11 @@ by this deployment including the Cloud Credentials file.
 
 ```bash
 $ terraform init
+# omitted output
 $ terraform apply
+# omitted output
 $ terraform output cloud_credentials > /tmp/cloud_credentials.yaml
+# omitted output
 ```
 
 Then you are ready to apply this file in the `kube-system` namespace:
