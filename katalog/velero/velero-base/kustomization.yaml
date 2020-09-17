@@ -4,6 +4,9 @@
 
 namespace: kube-system
 
+bases:
+  - dashboards
+
 resources:
   - crds.yaml
   - rbac.yaml
