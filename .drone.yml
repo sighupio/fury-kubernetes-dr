@@ -74,7 +74,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -132,7 +132,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -224,7 +224,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -323,7 +323,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -460,7 +460,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-117
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -518,7 +518,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-117
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -610,7 +610,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-117
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -709,7 +709,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-117
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -846,7 +846,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -904,7 +904,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -996,7 +996,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1095,7 +1095,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.3.1/velero-v1.3.1-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.1/velero-v1.5.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh

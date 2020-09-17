@@ -38,9 +38,9 @@ vars:
 
 images:
   - name: minio/minio
-    newTag: RELEASE.2020-01-25T02-50-51Z
+    newTag: RELEASE.2020-09-17T04-49-20Z
   - name: minio/mc
-    newTag: RELEASE.2020-01-25T03-02-19Z
+    newTag: RELEASE.2020-09-03T00-08-28Z
 
 generatorOptions:
   disableNameSuffixHash: true
