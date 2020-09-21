@@ -1,18 +1,3 @@
-resource "aws_iam_user" "velero_backup_user" {
-  name = "${var.name}-${var.env}-velero-backup"
-  path = "/"
-}
-
-resource "aws_iam_policy_attachment" "velero_backup" {
-  name       = "${var.name}-${var.env}-velero-backup"
-  users      = [aws_iam_user.velero_backup_user.name]
-  policy_arn = aws_iam_policy.velero_backup.arn
-}
-
-resource "aws_iam_access_key" "velero_backup" {
-  user = aws_iam_user.velero_backup_user.name
-}
-
 resource "aws_iam_policy" "velero_backup" {
   name = "${var.name}-${var.env}-velero-backup"
 
@@ -53,4 +38,32 @@ resource "aws_iam_policy" "velero_backup" {
      ]
 }
 EOF
+}
+
+resource "aws_iam_role" "velero_backup" {
+  name = "${var.name}-${var.env}-velero-backup"
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${var.oidc_provider_url}"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "${var.oidc_provider_url}:sub": "system:serviceaccount:kube-system:velero"
+                }
+            }
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "velero_backup" {
+  role = aws_iam_role.velero_backup.name
+  policy_arn = aws_iam_policy.velero_backup.arn
 }

@@ -1,16 +1,31 @@
 locals {
-  cloud_credentials = <<EOF
+  service_account = <<EOF
+---
 apiVersion: v1
-kind: Secret
+kind: ServiceAccount
 metadata:
-  name: cloud-credentials
+  annotations:
+    eks.amazonaws.com/role-arn: ${aws_iam_role.velero_backup.arn}
+  name: velero
   namespace: kube-system
-type: Opaque
-stringData:
-  cloud: |-
-    [default]
-    aws_access_key_id=${aws_iam_access_key.velero_backup.id}
-    aws_secret_access_key=${aws_iam_access_key.velero_backup.secret}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velero
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: velero
+        volumeMounts:
+        - name: cloud-credentials
+          mountPath: /credentials
+          $patch: delete
+      volumes:
+      - name: cloud-credentials
+        $patch: delete
 EOF
 
   backup_storage_location  = <<EOF
@@ -41,9 +56,9 @@ spec:
 EOF
 }
 
-output "cloud_credentials" {
-  description = "Velero required file with credentials"
-  value       = local.cloud_credentials
+output "kubernetes_patches" {
+  description = "Velero Kubernetes resources patches"
+  value = local.service_account
 }
 
 output "backup_storage_location" {

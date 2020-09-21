@@ -8,6 +8,12 @@ variable "env" {
   description = "Environment Name"
 }
 
+variable "oidc_provider_url" {
+  type = string
+  description = "URL of OIDC issuer discovery document"
+  default = ""
+}
+
 variable "backup_bucket_name" {
   type        = string
   description = "Backup Bucket Name"
