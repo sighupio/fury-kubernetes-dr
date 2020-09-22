@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+ * Use of this source code is governed by a BSD-style
+ * license that can be found in the LICENSE file.
+ */
+
 resource "aws_iam_policy" "velero_backup" {
   name = "${var.name}-${var.env}-velero-backup"
 
