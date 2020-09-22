@@ -9,9 +9,11 @@ back up and restore your Kubernetes cluster resources and persistent volumes. Ve
 - [velero-restic](katalog/velero/velero-restic): Velero has support for backing up and restoring
 Kubernetes volumes using a free open-source backup tool called restic. Version: **1.5.1**
 
-Following packages are included in Fury Kubernetes Disaster Recovery modules:
+The following packages are included in Fury Kubernetes Disaster Recovery modules:
 
 - [aws-velero](modules/aws-velero): Creates AWS resources and Kubernetes CRDs needed to persist backups.
+- [eks-velero](modules/eks-velero): Creates AWS resources and Kubernetes CRDs needed to persist backups
+from an eks cluster.
 - [azure-velero](modules/azure-velero): Creates Azure resources and Kubernetes CRDs needed to persist backups.
 - [gcp-velero](modules/gcp-velero): Creates GCP resources and Kubernetes CRDs needed to persist backups.
 
