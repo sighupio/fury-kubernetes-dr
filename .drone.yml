@@ -27,6 +27,8 @@ steps:
   - name: lint
     image: quay.io/sighup/policeman
     pull: always
+    environment:
+      VALIDATE_TERRAFORM_TERRASCAN: "false"
     depends_on:
       - clone
 

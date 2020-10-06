@@ -53,15 +53,15 @@ EOF
 
 output "cloud_credentials" {
   description = "Velero required file with credentials"
-  value       = "${local.cloud_credentials}"
+  value       = local.cloud_credentials
 }
 
 output "backup_storage_location" {
   description = "Velero Cloud BackupStorageLocation CRD"
-  value       = "${local.backup_storage_location}"
+  value       = local.backup_storage_location
 }
 
 output "volume_snapshot_location" {
   description = "Velero Cloud VolumeSnapshotLocation CRD"
-  value       = "${local.volume_snapshot_location}"
+  value       = local.volume_snapshot_location
 }
