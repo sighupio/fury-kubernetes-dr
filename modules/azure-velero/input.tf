@@ -36,9 +36,9 @@ variable "velero_resource_group_name" {
 data "azurerm_client_config" "main" {}
 
 data "azurerm_resource_group" "velero" {
-  name = "${var.velero_resource_group_name}"
+  name = var.velero_resource_group_name
 }
 
 data "azurerm_resource_group" "aks" {
-  name = "${var.aks_resource_group_name}"
+  name = var.aks_resource_group_name
 }
