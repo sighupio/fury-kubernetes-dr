@@ -29,6 +29,7 @@ from an eks cluster.
 | v1.3.1                              | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |
 | v1.4.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | v1.5.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |
+| v1.5.1                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |
 
 - :white_check_mark: Compatible
 - :warning: Has issues
