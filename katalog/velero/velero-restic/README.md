@@ -7,7 +7,7 @@ case.
 
 ## Image repository and tag
 
-- Velero Restic image: `velero/velero:v1.5.1`
+- Velero Restic image: `velero/velero:v1.5.2`
 - Velero Restic repository: [https://github.com/vmware-tanzu/velero](https://github.com/vmware-tanzu/velero).
 
 

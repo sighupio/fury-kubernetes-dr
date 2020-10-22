@@ -6,7 +6,7 @@ namespace: kube-system
 
 images:
   - name: velero/velero
-    newTag: v1.5.1
+    newTag: v1.5.2
 
 resources:
   - daemonset.yml
