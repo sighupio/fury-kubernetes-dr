@@ -6,11 +6,11 @@
 
 # Create a unique GCS bucket per cluster
 resource "google_storage_bucket" "main" {
-  name               = var.backup_bucket_name
-  bucket_policy_only = true
-  project            = var.project
-  location           = "EU"
-  force_destroy      = true
+  name                        = var.backup_bucket_name
+  uniform_bucket_level_access = true
+  project                     = var.project
+  location                    = "EU"
+  force_destroy               = true
   lifecycle {
     prevent_destroy = false
   }
