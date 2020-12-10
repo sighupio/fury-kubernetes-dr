@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "backup_bucket" {
   force_destroy = true
 
   versioning {
-    enabled = true
+    enabled = false
   }
 
   server_side_encryption_configuration {
