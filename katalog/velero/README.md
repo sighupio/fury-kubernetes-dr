@@ -5,7 +5,7 @@
 - [Velero](#velero)
   - [Requirements](#requirements)
   - [Server deployment](#server-deployment)
-    - [Velero on premises](#velero-on-premises)
+    - [Velero on-premises](#velero-on-premises)
     - [Velero in AWS](#velero-in-aws)
     - [Velero in GCP](#velero-in-gcp)
     - [Velero in Azure](#velero-in-azure)
@@ -14,7 +14,7 @@
 
 ___
 
-Velero *(formerly Heptio Ark)* gives you tools to back up and restore your Kubernetes cluster resources and persistent
+Velero *(formerly Heptio Ark)* gives you tool to back up and restore your Kubernetes cluster resources and persistent
 volumes. You can run Velero with a cloud provider or on-premises. Velero lets you:
 
 - Take backups of your cluster and restore in case of loss.
@@ -36,11 +36,11 @@ as this feature deploys [a `ServiceMonitor` definition](velero-base/serviceMonit
 
 ## Server deployment
 
-Every velero deployment, does not matter if on premises or in any of the supported cloud, can configure
-[schedules](#velero-schedule) to backup all cluster manifests and/or cluster persistence volumes.
+Every velero deployment, does not matter if on-premises or in any of the supported cloud, can configure
+[schedules](#velero-schedule) to back up all cluster manifests and/or cluster persistence volumes.
 
 
-### Velero on premises
+### Velero on-premises
 
 The [velero-on-prem](./velero-on-prem/) feature deploys a [MinIO](https://min.io/) instance in the same cluster as
 object storage backend that Velero can use to store backup data.
