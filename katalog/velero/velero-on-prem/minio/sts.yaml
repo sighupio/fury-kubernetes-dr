@@ -28,7 +28,7 @@ spec:
         envFrom:
         - secretRef:
             name: minio-credentials
-        image: minio/minio:latests
+        image: minio/minio
         securityContext:
           allowPrivilegeEscalation: false
         args:
