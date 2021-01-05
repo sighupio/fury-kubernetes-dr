@@ -16,4 +16,5 @@ resources:
 
 images:
   - name: velero/velero
+    newName: reg.sighup.io/sighupio/fury/velero/velero
     newTag: v1.5.2
