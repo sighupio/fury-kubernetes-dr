@@ -14,7 +14,7 @@ Kubernetes objects and trigger volume snapshots.
 | -------------------- | -------------------------------------- | ------------- | ------- | :------: |
 | backup\_bucket\_name | Backup Bucket Name                     | `string`      | n/a     |   yes    |
 | oidc\_provider\_url  | EKS OIDC issuer discovery document URL | `string`      | n/a     |   yes    |
-| tags                 | AWS Region where colocate the bucket   | `map(string)` | `{}`    |   no     |
+| tags                 | Custom tags to apply to resources      | `map(string)` | `{}`    |   no     |
 
 ## Outputs
 

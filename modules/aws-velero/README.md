@@ -8,7 +8,7 @@ Kubernetes objects and trigger volume snapshots.
 | Name                 | Description                            | Type          | Default | Required |
 | -------------------- | -------------------------------------- | ------------- | ------- | :------: |
 | backup\_bucket\_name | Backup Bucket Name                     | `string`      | n/a     |   yes    |
-| tags                 | AWS Region where colocate the bucket   | `map(string)` | `{}`    |   no     |
+| tags                 | Custom tags to apply to resources      | `map(string)` | `{}`    |   no     |
 
 ## Outputs
 
@@ -22,8 +22,9 @@ Kubernetes objects and trigger volume snapshots.
 
 ```hcl
 module "velero" {
-  source             = "../vendor/modules/aws-velero"
+  source             = "../vendor/modules/gcp-velero"
   backup_bucket_name = "my-cluster-staging-velero"
+  project            = "sighup-staging"
   tags               = {
     "my-key": "my-value"
   }
