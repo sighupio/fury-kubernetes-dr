@@ -6,8 +6,8 @@
 
 resource "google_service_account" "velero" {
   project      = var.project
-  account_id   = "${var.name}-${var.env}-velero"
-  display_name = "Velero account for ${var.name} at ${var.env}"
+  account_id   = "${var.backup_bucket_name}-velero"
+  display_name = "Velero account for ${var.backup_bucket_name}"
 }
 
 resource "google_service_account_key" "velero" {

@@ -29,6 +29,7 @@ spec:
     bucket: ${google_storage_bucket.main.name}
     prefix: velero
 EOF
+
   volume_snapshot_location = <<EOF
 ---
 apiVersion: velero.io/v1

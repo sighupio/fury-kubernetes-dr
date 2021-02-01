@@ -20,7 +20,7 @@ locals {
 }
 
 module "velero" {
-  source             = "path/to/dr/eks-velero"
+  source             = "../vendor/modules/eks-velero"
   name               = "my-cluster"
   env                = "test"
   backup_bucket_name = "my-cluster-velero"
@@ -37,7 +37,7 @@ locals {
 }
 
 module "velero" {
-  source             = "path/to/dr/eks-velero"
+  source             = "../vendor/modules/eks-velero"
   backup_bucket_name = "my-cluster-velero"
   oidc_provider_url  = local.eks_oidc_issuer
   tags               = {
@@ -68,6 +68,33 @@ New interface:
 module "velero" {
   source             = "../vendor/modules/aws-velero"
   backup_bucket_name = "my-cluster-staging-velero"
+  tags               = {
+    "my-key": "my-value"
+  }
+}
+```
+
+### modules/gcp-velero
+
+Old interface:
+
+```hcl
+module "velero" {
+  source             = "../vendor/modules/gcp-velero"
+  name               = "my-cluster"
+  env                = "staging"
+  backup_bucket_name = "my-cluster-staging-velero"
+  project            = "sighup-staging"
+}
+```
+
+New interface:
+
+```hcl
+module "velero" {
+  source             = "../vendor/modules/gcp-velero"
+  backup_bucket_name = "my-cluster-staging-velero"
+  project            = "sighup-staging"
   tags               = {
     "my-key": "my-value"
   }

@@ -14,6 +14,8 @@ resource "google_storage_bucket" "main" {
   lifecycle {
     prevent_destroy = false
   }
+
+  labels = var.tags
 }
 
 resource "google_storage_bucket_iam_binding" "velero_bucket_iam" {
