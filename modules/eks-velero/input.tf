@@ -5,9 +5,9 @@
  */
 
 variable "oidc_provider_url" {
-  type = string
+  type        = string
   description = "URL of OIDC issuer discovery document"
-  default = ""
+  default     = ""
 }
 
 variable "backup_bucket_name" {

@@ -19,7 +19,7 @@ stringData:
     aws_secret_access_key=${aws_iam_access_key.velero_backup.secret}
 EOF
 
-  backup_storage_location  = <<EOF
+  backup_storage_location = <<EOF
 ---
 apiVersion: velero.io/v1
 kind: BackupStorageLocation

@@ -12,7 +12,7 @@ Replace the module interface to match the new one.
 
 ### modules/eks-velero
 
-Old interface: 
+Old interface:
 
 ```hcl
 locals {
@@ -38,7 +38,7 @@ locals {
 
 module "velero" {
   source             = "path/to/dr/eks-velero"
-  backup_bucket_name = "my-cluster-velero"   
+  backup_bucket_name = "my-cluster-velero"
   oidc_provider_url  = local.eks_oidc_issuer
   tags               = {
       "cluster" : "my-cluster",
@@ -53,7 +53,13 @@ module "velero" {
 Old interface:
 
 ```hcl
-
+module "velero" {
+  source             = "../vendor/modules/aws-velero"
+  name               = "my-cluster"
+  env                = "staging"
+  backup_bucket_name = "my-cluster-staging-velero"
+  region             = "eu-west-1"
+}
 ```
 
 New interface:

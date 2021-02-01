@@ -34,7 +34,7 @@ spec:
         $patch: delete
 EOF
 
-  backup_storage_location  = <<EOF
+  backup_storage_location = <<EOF
 ---
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
@@ -65,7 +65,7 @@ EOF
 
 output "kubernetes_patches" {
   description = "Velero Kubernetes resources patches"
-  value = local.service_account
+  value       = local.service_account
 }
 
 output "backup_storage_location" {
