@@ -5,7 +5,7 @@
  */
 
 resource "azuread_application" "main" {
-  name = "${var.name}-${var.env}-velero"
+  name = "${var.backup_bucket_name}-velero"
 }
 
 resource "azuread_service_principal" "main" {

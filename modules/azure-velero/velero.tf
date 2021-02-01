@@ -5,7 +5,7 @@
  */
 
 resource "azurerm_storage_account" "main" {
-  name                     = "${var.name}${var.env}velero"
+  name                     = "${var.backup_bucket_name}velero"
   resource_group_name      = data.azurerm_resource_group.velero.name
   location                 = data.azurerm_resource_group.velero.location
   account_kind             = "BlobStorage"
@@ -17,11 +17,7 @@ resource "azurerm_storage_account" "main" {
   # enable_blob_encryption    = true
   enable_https_traffic_only = true
 
-  tags = {
-    Name        = "${var.name}${var.env}velero"
-    ClusterName = var.name
-    Environment = var.env
-  }
+  tags = var.tags
 }
 
 resource "azurerm_storage_container" "main" {

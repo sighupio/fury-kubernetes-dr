@@ -4,7 +4,10 @@ This new release simplifies the interface of the current modules.
 
 ## Changelog
 
-- Simplify interface for `dr/eks` module
+- Simplify interface for `eks-velero` module
+- Simplify interface for `aws-velero` module
+- Simplify interface for `gcp-velero` module
+- Simplify interface for `azure-velero` module
 
 ## Upgrade path
 
@@ -96,6 +99,35 @@ module "velero" {
   backup_bucket_name = "my-cluster-staging-velero"
   project            = "sighup-staging"
   tags               = {
+    "my-key": "my-value"
+  }
+}
+```
+
+### modules/azure-velero
+
+Old interface:
+
+```hcl
+module "velero" {
+  source                     = "../vendor/modules/azure-velero"
+  name                       = "sighup"
+  env                        = "production"
+  backup_bucket_name         = "sighup-production-cluster-backup"
+  aks_resource_group_name    = "XXX"
+  velero_resource_group_name = "XXX"
+}
+```
+
+New interface:
+
+```hcl
+module "velero" {
+  source                     = "../vendor/modules/azure-velero"
+  backup_bucket_name         = "sighup-production-cluster-backup"
+  aks_resource_group_name    = "XXX"
+  velero_resource_group_name = "XXX"
+  tags                       = {
     "my-key": "my-value"
   }
 }
