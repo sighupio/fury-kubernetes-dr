@@ -4,16 +4,6 @@
  * license that can be found in the LICENSE file.
  */
 
-variable "name" {
-  type        = string
-  description = "Cluster Name"
-}
-
-variable "env" {
-  type        = string
-  description = "Environment Name"
-}
-
 variable "oidc_provider_url" {
   type = string
   description = "URL of OIDC issuer discovery document"
@@ -25,9 +15,10 @@ variable "backup_bucket_name" {
   description = "Backup Bucket Name"
 }
 
-variable "region" {
-  type        = string
-  description = "AWS Region where colocate the bucket"
+variable "tags" {
+  type        = map(string)
+  description = "Custom tags to apply to resources"
+  default     = {}
 }
 
 data "aws_caller_identity" "current" {}

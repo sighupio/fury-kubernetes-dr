@@ -46,8 +46,9 @@ spec:
   objectStorage:
     bucket: ${aws_s3_bucket.backup_bucket.bucket}
   config:
-    region: ${var.region}
+    region: ${aws_s3_bucket.backup_bucket.region}
 EOF
+
   volume_snapshot_location = <<EOF
 ---
 apiVersion: velero.io/v1
@@ -58,7 +59,7 @@ metadata:
 spec:
   provider: velero.io/aws
   config:
-    region: ${var.region}
+    region: ${aws_s3_bucket.backup_bucket.region}
 EOF
 }
 
