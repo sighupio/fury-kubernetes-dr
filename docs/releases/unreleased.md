@@ -10,7 +10,7 @@ This new release simplifies the interface of the current modules.
 
 Replace the module interface to match the new one.
 
-### dr/eks 
+### modules/eks-velero
 
 Old interface: 
 
@@ -44,6 +44,26 @@ module "velero" {
       "cluster" : "my-cluster",
       "env"     : "test",
       "any-key" : "any-value"
+  }
+}
+```
+
+### modules/aws-velero
+
+Old interface:
+
+```hcl
+
+```
+
+New interface:
+
+```hcl
+module "velero" {
+  source             = "../vendor/modules/aws-velero"
+  backup_bucket_name = "my-cluster-staging-velero"
+  tags               = {
+    "my-key": "my-value"
   }
 }
 ```
