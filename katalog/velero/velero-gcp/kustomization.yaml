@@ -9,7 +9,7 @@ bases:
 
 images:
   - name: velero/velero-plugin-for-gcp
-    newName: reg.sighup.io/sighupio/fury/velero/velero-plugin-for-gcp
+    newName: registry.sighup.io/fury/velero/velero-plugin-for-gcp
     newTag: v1.1.0
 
 patchesStrategicMerge:
