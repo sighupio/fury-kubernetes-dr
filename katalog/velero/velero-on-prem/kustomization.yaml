@@ -2,13 +2,14 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 namespace: kube-system
 
 configurations:
   - kustomize-config.yaml
-
-bases:
-  - ../velero-base
 
 images:
   - name: velero/velero-plugin-for-aws
@@ -23,5 +24,6 @@ patchesStrategicMerge:
   - plugin-patch.yaml
 
 resources:
+  - ../velero-base
   - minio/
   - storageLocation.yaml
