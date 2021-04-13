@@ -26,8 +26,10 @@ metadata:
 spec:
   provider: velero.io/gcp
   objectStorage:
-    bucket: ${google_storage_bucket.main.name}
+    bucket: ${google_storage_bucket.velero.name}
     prefix: velero
+  config:
+    serviceAccount: ${google_service_account.velero.email}
 EOF
 
   volume_snapshot_location = <<EOF

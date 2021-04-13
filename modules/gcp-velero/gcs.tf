@@ -5,7 +5,7 @@
  */
 
 # Create a unique GCS bucket per cluster
-resource "google_storage_bucket" "main" {
+resource "google_storage_bucket" "velero" {
   name                        = var.backup_bucket_name
   uniform_bucket_level_access = true
   project                     = var.project
@@ -19,7 +19,7 @@ resource "google_storage_bucket" "main" {
 }
 
 resource "google_storage_bucket_iam_binding" "velero_bucket_iam" {
-  bucket = google_storage_bucket.main.name
+  bucket = google_storage_bucket.velero.name
   role   = "roles/storage.objectAdmin"
 
   members = [
