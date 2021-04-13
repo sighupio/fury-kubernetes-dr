@@ -5,7 +5,7 @@
  */
 
 resource "aws_iam_policy" "velero_backup" {
-  name = "${var.name}-${var.env}-velero-backup"
+  name = "${var.backup_bucket_name}-velero-policy"
 
   policy = <<EOF
 {
@@ -47,7 +47,7 @@ EOF
 }
 
 resource "aws_iam_role" "velero_backup" {
-  name = "${var.name}-${var.env}-velero-backup"
+  name               = "${var.backup_bucket_name}-velero-role"
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -70,6 +70,6 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "velero_backup" {
-  role = aws_iam_role.velero_backup.name
+  role       = aws_iam_role.velero_backup.name
   policy_arn = aws_iam_policy.velero_backup.arn
 }

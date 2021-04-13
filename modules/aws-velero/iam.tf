@@ -5,12 +5,13 @@
  */
 
 resource "aws_iam_user" "velero_backup_user" {
-  name = "${var.name}-${var.env}-velero-backup"
+  name = "${var.backup_bucket_name}-velero-backup"
   path = "/"
+  tags = var.tags
 }
 
 resource "aws_iam_policy_attachment" "velero_backup" {
-  name       = "${var.name}-${var.env}-velero-backup"
+  name       = "${var.backup_bucket_name}-velero-backup"
   users      = [aws_iam_user.velero_backup_user.name]
   policy_arn = aws_iam_policy.velero_backup.arn
 }
@@ -20,7 +21,7 @@ resource "aws_iam_access_key" "velero_backup" {
 }
 
 resource "aws_iam_policy" "velero_backup" {
-  name = "${var.name}-${var.env}-velero-backup"
+  name = "${var.backup_bucket_name}-velero-backup"
 
   policy = <<EOF
 {

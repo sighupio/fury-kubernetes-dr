@@ -4,14 +4,6 @@
  * license that can be found in the LICENSE file.
  */
 
-variable "name" {
-  type        = string
-  description = "Cluster Name"
-}
-variable "env" {
-  type        = string
-  description = "Environment Name"
-}
 variable "backup_bucket_name" {
   type        = string
   description = "Backup Bucket Name"
@@ -31,6 +23,12 @@ variable "aks_resource_group_name" {
 variable "velero_resource_group_name" {
   type        = string
   description = "Resouce group in which to create velero resources"
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "Custom tags to apply to resources"
+  default     = {}
 }
 
 data "azurerm_client_config" "main" {}

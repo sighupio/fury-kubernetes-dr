@@ -10,14 +10,13 @@ This module is compatible with `azurerm` terraform provider version:
 
 ## Inputs
 
-| Name                          | Description                                                                                                      | Type     | Default              | Required |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------- | -------------------- | :------: |
-| aks\_resource\_group\_name    | Resource group name of AKS cluster to backup                                                                     | `string` | n/a                  |   yes    |
-| azure\_cloud\_name            | available azure\_cloud\_name values: AzurePublicCloud, AzureUSGovernmentCloud, AzureChinaCloud, AzureGermanCloud | `string` | `"AzurePublicCloud"` |    no    |
-| backup\_bucket\_name          | Backup Bucket Name                                                                                               | `string` | n/a                  |   yes    |
-| env                           | Environment Name                                                                                                 | `string` | n/a                  |   yes    |
-| name                          | Cluster Name                                                                                                     | `string` | n/a                  |   yes    |
-| velero\_resource\_group\_name | Resouce group in which to create velero resources                                                                | `string` | n/a                  |   yes    |
+| Name                          | Description                                                                                                      | Type          | Default              | Required |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | -------------------- | :------: |
+| aks\_resource\_group\_name    | Resource group name of AKS cluster to backup                                                                     | `string`      | n/a                  |   yes    |
+| azure\_cloud\_name            | available azure\_cloud\_name values: AzurePublicCloud, AzureUSGovernmentCloud, AzureChinaCloud, AzureGermanCloud | `string`      | `"AzurePublicCloud"` |   no     |
+| backup\_bucket\_name          | Backup Bucket Name                                                                                               | `string`      | n/a                  |   yes    |
+| velero\_resource\_group\_name | Resouce group in which to create velero resources                                                                | `string`      | n/a                  |   yes    |
+| tags                          | Custom tags to apply to resources                                                                                | `map(string)` | `{}`                 |   no     |
 
 ## Outputs
 
@@ -32,11 +31,12 @@ This module is compatible with `azurerm` terraform provider version:
 ```hcl
 module "velero" {
   source                     = "../vendor/modules/azure-velero"
-  name                       = "sighup"
-  env                        = "production"
   backup_bucket_name         = "sighup-production-cluster-backup"
   aks_resource_group_name    = "XXX"
   velero_resource_group_name = "XXX"
+  tags                       = {
+    "my-key": "my-value"
+  }
 }
 ```
 

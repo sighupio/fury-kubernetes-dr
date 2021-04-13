@@ -19,7 +19,7 @@ stringData:
     aws_secret_access_key=${aws_iam_access_key.velero_backup.secret}
 EOF
 
-  backup_storage_location  = <<EOF
+  backup_storage_location = <<EOF
 ---
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
@@ -31,8 +31,9 @@ spec:
   objectStorage:
     bucket: ${aws_s3_bucket.backup_bucket.bucket}
   config:
-    region: ${var.region}
+    region: ${aws_s3_bucket.backup_bucket.region}
 EOF
+
   volume_snapshot_location = <<EOF
 ---
 apiVersion: velero.io/v1
@@ -43,7 +44,7 @@ metadata:
 spec:
   provider: velero.io/aws
   config:
-    region: ${var.region}
+    region: ${aws_s3_bucket.backup_bucket.region}
 EOF
 }
 

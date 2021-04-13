@@ -10,13 +10,11 @@ Kubernetes objects and trigger volume snapshots.
 
 ## Inputs
 
-| Name                 | Description                            | Type     | Default | Required |
-| -------------------- | -------------------------------------- | -------- | ------- | :------: |
-| backup\_bucket\_name | Backup Bucket Name                     | `string` | n/a     |   yes    |
-| env                  | Environment Name                       | `string` | n/a     |   yes    |
-| name                 | Cluster Name                           | `string` | n/a     |   yes    |
-| oidc\_provider\_url  | EKS OIDC issuer discovery document URL | `string` | n/a     |   yes    |
-| region               | AWS Region where colocate the bucket   | `string` | n/a     |   yes    |
+| Name                 | Description                            | Type          | Default | Required |
+| -------------------- | -------------------------------------- | ------------- | ------- | :------: |
+| backup\_bucket\_name | Backup Bucket Name                     | `string`      | n/a     |   yes    |
+| oidc\_provider\_url  | EKS OIDC issuer discovery document URL | `string`      | n/a     |   yes    |
+| tags                 | Custom tags to apply to resources      | `map(string)` | `{}`    |   no     |
 
 ## Outputs
 
@@ -35,11 +33,11 @@ data "aws_eks_cluster" "this" {
 
 module "velero" {
   source             = "../vendor/modules/eks-velero"
-  name               = "my-cluster"
-  env                = "staging"
   backup_bucket_name = "my-cluster-staging-velero"
   oidc_provider_url  = replace(data.aws_eks_cluster.this.identity.0.oidc.0.issuer, "https://", "")
-  region             = "eu-west-1"
+  tags = {
+    "my-key": "my-value"
+  }
 }
 ```
 

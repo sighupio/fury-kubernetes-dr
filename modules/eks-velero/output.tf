@@ -34,7 +34,7 @@ spec:
         $patch: delete
 EOF
 
-  backup_storage_location  = <<EOF
+  backup_storage_location = <<EOF
 ---
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
@@ -46,8 +46,9 @@ spec:
   objectStorage:
     bucket: ${aws_s3_bucket.backup_bucket.bucket}
   config:
-    region: ${var.region}
+    region: ${aws_s3_bucket.backup_bucket.region}
 EOF
+
   volume_snapshot_location = <<EOF
 ---
 apiVersion: velero.io/v1
@@ -58,13 +59,13 @@ metadata:
 spec:
   provider: velero.io/aws
   config:
-    region: ${var.region}
+    region: ${aws_s3_bucket.backup_bucket.region}
 EOF
 }
 
 output "kubernetes_patches" {
   description = "Velero Kubernetes resources patches"
-  value = local.service_account
+  value       = local.service_account
 }
 
 output "backup_storage_location" {

@@ -21,6 +21,7 @@ stringData:
     AZURE_RESOURCE_GROUP=${data.azurerm_resource_group.aks.name}
     AZURE_CLOUD_NAME=${var.azure_cloud_name}
 EOF
+
   backup_storage_location  = <<EOF
 ---
 apiVersion: velero.io/v1
@@ -36,6 +37,7 @@ spec:
     resourceGroup: ${data.azurerm_resource_group.velero.name}
     storageAccount: ${azurerm_storage_account.main.name}
 EOF
+
   volume_snapshot_location = <<EOF
 ---
 apiVersion: velero.io/v1
