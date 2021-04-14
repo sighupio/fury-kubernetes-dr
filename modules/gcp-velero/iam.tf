@@ -21,7 +21,7 @@ locals {
 
 resource "google_service_account" "velero" {
   project      = var.project
-  account_id   = var.google_service_account_name
+  account_id   = var.gcp_service_account_name
   display_name = "Service account for Velero"
 }
 
@@ -30,7 +30,7 @@ resource "google_service_account_key" "velero" {
 }
 
 resource "google_project_iam_custom_role" "velero-role" {
-  role_id     = "${replace(var.google_service_account_name, "-", "_")}_role"
+  role_id     = var.gcp_custom_role_name
   title       = "Velero Role"
   description = "Custom role to assign to velero sa to allow it to create snapshots"
   permissions = var.workload_identity ? concat(local.velero_role_permissions, ["iam.serviceAccounts.signBlob"]) : local.velero_role_permissions
