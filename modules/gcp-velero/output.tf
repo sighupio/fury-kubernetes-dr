@@ -43,34 +43,37 @@ spec:
   provider: velero.io/gcp
 EOF
 
-  kubernetes_service_account = <<EOF
+  kubernetes_service_account_patch = <<EOF
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  annottions:
+  name: velero
+  annotations:
     iam.gke.io/gcp-service-account: ${google_service_account.velero.email}
-  namespace: kube-system
-  name: ${var.workload_identity_kubernetes_service_account}
 EOF
 }
 
 output "cloud_credentials" {
   description = "Velero required file with credentials in case no workload identity is used"
   value       = var.workload_identity ? null : local.cloud_credentials
+  sensitive   = true
 }
 
 output "backup_storage_location" {
   description = "Velero Cloud BackupStorageLocation CRD"
   value       = local.backup_storage_location
+  sensitive   = true
 }
 
 output "volume_snapshot_location" {
   description = "Velero Cloud VolumeSnapshotLocation CRD"
   value       = local.volume_snapshot_location
+  sensitive   = true
 }
 
-output "kubernetes_service_account" {
-  description = "Kubernetes service account to deploy to use workload identity"
-  value       = var.workload_identity ? local.velero_kubernetes_service_account : null
-
+output "kubernetes_service_account_patch" {
+  description = "Patch for the Kubernetes service account to use workload identity"
+  value       = var.workload_identity ? local.kubernetes_service_account_patch : null
+  sensitive   = true
 }

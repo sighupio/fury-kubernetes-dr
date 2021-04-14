@@ -32,12 +32,6 @@ variable "workload_identity" {
   default     = true
 }
 
-variable "workload_identity_kubernetes_service_account" {
-  type        = string
-  description = "Name of the kubernetes service account that will use the workload identity"
-  default     = "velero-sa"
-}
-
 variable "tags" {
   type        = map(string)
   description = "Custom tags to apply to resources"

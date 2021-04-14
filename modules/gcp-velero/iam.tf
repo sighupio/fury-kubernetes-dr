@@ -46,7 +46,7 @@ resource "google_project_iam_member" "project" {
 resource "google_service_account_iam_binding" "roles" {
   count = var.workload_identity ? 1 : 0
   members = [
-    "serviceAccount:niccolo-raspa-test-project.svc.id.goog[kube-system/${var.workload_identity_kubernetes_service_account}]",
+    "serviceAccount:${var.project}.svc.id.goog[kube-system/velero]",
   ]
   role               = "roles/iam.workloadIdentityUser"
   service_account_id = google_service_account.velero.id
