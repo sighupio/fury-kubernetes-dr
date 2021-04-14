@@ -43,7 +43,7 @@ spec:
   provider: velero.io/gcp
 EOF
 
-  velero_kubernetes_service_account = <<EOF
+  kubernetes_service_account = <<EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -70,7 +70,7 @@ output "volume_snapshot_location" {
 }
 
 output "kubernetes_service_account" {
-  description = "Service account to create in the GKE cluster to use workload identity"
+  description = "Kubernetes service account to deploy to use workload identity"
   value       = var.workload_identity ? local.velero_kubernetes_service_account : null
 
 }

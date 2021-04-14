@@ -14,16 +14,16 @@ variable "backup_bucket_name" {
   description = "Backup Bucket Name"
 }
 
-variable "tags" {
-  type        = map(string)
-  description = "Custom tags to apply to resources"
-  default     = {}
-}
-
-variable "google_service_account_name" {
+variable "gcp_service_account_name" {
   type        = string
   description = "Name of the gcp service account to create for velero"
   default     = "velero-sa"
+}
+
+variable "gcp_custom_role_name" {
+  type        = string
+  description = "Name of the gcp custom role to assign to the gcp service account"
+  default     = "velero_role" 
 }
 
 variable "workload_identity" {
@@ -34,6 +34,12 @@ variable "workload_identity" {
 
 variable "workload_identity_kubernetes_service_account" {
   type        = string
-  description = "Name of the service account in kubernetes that will use the workload identity"
+  description = "Name of the kubernetes service account that will use the workload identity"
   default     = "velero-sa"
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "Custom tags to apply to resources"
+  default     = {}
 }
