@@ -52,6 +52,30 @@ metadata:
   annotations:
     iam.gke.io/gcp-service-account: ${google_service_account.velero.email}
 EOF
+
+  deployment_patch = <<EOF
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velero
+spec:
+  template:
+    spec:
+      containers:
+      - name: velero
+        volumeMounts:
+        - name: cloud-credentials
+          mountPath: /credentials
+          $patch: delete
+        env:
+        - name: GOOGLE_APPLICATIONS_CREDENTIALS
+          value: /credentials/cloud
+          $patch: delete
+      volumes:
+      - name: cloud-credentials
+        $patch: delete
+EOF
 }
 
 output "cloud_credentials" {
@@ -75,5 +99,11 @@ output "volume_snapshot_location" {
 output "kubernetes_service_account_patch" {
   description = "Patch for the Kubernetes service account to use workload identity"
   value       = var.workload_identity ? local.kubernetes_service_account_patch : null
+  sensitive   = true
+}
+
+output "deployment_patch" {
+  description = "Patch to remove credentials in velero deployment"
+  value       = var.workload_identity ? local.deployment_patch : null
   sensitive   = true
 }

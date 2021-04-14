@@ -29,7 +29,7 @@ variable "gcp_custom_role_name" {
 variable "workload_identity" {
   type        = bool
   description = "Flag to specify if velero should use workload identity instead of credentials"
-  default     = true
+  default     = false
 }
 
 variable "tags" {
