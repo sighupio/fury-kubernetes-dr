@@ -53,7 +53,7 @@ metadata:
     iam.gke.io/gcp-service-account: ${google_service_account.velero.email}
 EOF
 
-  deployment_patch = <<EOF
+  remove_velero_credentials_patch = <<EOF
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -69,7 +69,32 @@ spec:
           mountPath: /credentials
           $patch: delete
         env:
-        - name: GOOGLE_APPLICATIONS_CREDENTIALS
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /credentials/cloud
+          $patch: delete
+      volumes:
+      - name: cloud-credentials
+        $patch: delete
+EOF
+
+  remove_restic_credentials_patch = <<EOF
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: velero-restic
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: restic
+        volumeMounts:
+        - name: cloud-credentials
+          mountPath: /credentials
+          $patch: delete
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /credentials/cloud
           $patch: delete
       volumes:
@@ -102,8 +127,14 @@ output "kubernetes_service_account_patch" {
   sensitive   = true
 }
 
-output "deployment_patch" {
+output "remove_velero_credentials_patch" {
   description = "Patch to remove credentials in velero deployment"
-  value       = var.workload_identity ? local.deployment_patch : null
+  value       = var.workload_identity ? local.remove_velero_credentials_patch : null
+  sensitive   = true
+}
+
+output "remove_restic_credentials_patch" {
+  description = "Patch to remove credentials in restic deployment"
+  value       = var.workload_identity ? local.remove_restic_credentials_patch : null
   sensitive   = true
 }
