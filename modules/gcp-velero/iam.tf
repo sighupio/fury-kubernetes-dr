@@ -29,7 +29,7 @@ resource "google_service_account_key" "velero" {
   service_account_id = google_service_account.velero.name
 }
 
-resource "google_project_iam_custom_role" "velero-role" {
+resource "google_project_iam_custom_role" "velero_role" {
   role_id     = var.gcp_custom_role_name
   title       = "Velero Role"
   description = "Custom role to assign to velero sa to allow it to create snapshots"
@@ -38,7 +38,7 @@ resource "google_project_iam_custom_role" "velero-role" {
 
 resource "google_project_iam_member" "project" {
   project = var.project
-  role    = google_project_iam_custom_role.velero-role.id
+  role    = google_project_iam_custom_role.velero_role.id
   member  = "serviceAccount:${google_service_account.velero.email}"
 }
 
