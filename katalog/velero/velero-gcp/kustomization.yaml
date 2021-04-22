@@ -14,6 +14,9 @@ images:
   - name: velero/velero-plugin-for-gcp
     newName: registry.sighup.io/fury/velero/velero-plugin-for-gcp
     newTag: v1.1.0
+  - name: velero/velero-plugin-for-csi
+    newName: registry.sighup.io/fury/velero/velero-plugin-for-csi
+    newTag: v0.1.2
 
 patchesStrategicMerge:
   - plugin-patch.yaml
