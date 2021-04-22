@@ -26,7 +26,7 @@ metadata:
 spec:
   provider: velero.io/gcp
   objectStorage:
-    bucket: ${google_storage_bucket.velero.name}
+    bucket: ${google_storage_bucket.main.name}
     prefix: velero
   config:
     serviceAccount: ${google_service_account.velero.email}
@@ -128,13 +128,13 @@ output "kubernetes_service_account_patch" {
 }
 
 output "remove_velero_credentials_patch" {
-  description = "Patch to remove credentials in velero deployment"
+  description = "Patch to remove service account credentials in velero"
   value       = var.workload_identity ? local.remove_velero_credentials_patch : null
   sensitive   = true
 }
 
 output "remove_restic_credentials_patch" {
-  description = "Patch to remove credentials in restic deployment"
+  description = "Patch to remove service account credentials in velero restic"
   value       = var.workload_identity ? local.remove_restic_credentials_patch : null
   sensitive   = true
 }
