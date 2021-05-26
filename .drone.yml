@@ -33,7 +33,7 @@ steps:
       - clone
 
   - name: render
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.8_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     depends_on:
       - clone
@@ -96,7 +96,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.19_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -107,7 +107,7 @@ steps:
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.19_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -115,7 +115,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -152,7 +152,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.19_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -165,7 +165,7 @@ steps:
       - kubectl -n kube-system patch deployment velero -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"
 
   - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.19_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -173,7 +173,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -243,7 +243,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.19_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -257,7 +257,7 @@ steps:
       - kubectl -n kube-system patch deployment velero -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"
 
   - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.19_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -265,7 +265,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -342,7 +342,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.19_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -356,7 +356,7 @@ steps:
       - kubectl -n kube-system patch deployment velero -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"
 
   - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.19_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.18.19_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -364,7 +364,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-118
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -490,7 +490,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.11_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -501,7 +501,7 @@ steps:
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.11_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -509,7 +509,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-119
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -546,7 +546,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.11_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -559,7 +559,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.11_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -567,7 +567,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-119
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -637,7 +637,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.11_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -651,7 +651,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.11_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -659,7 +659,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-119
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -736,7 +736,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.11_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -750,7 +750,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.11_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -758,7 +758,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-119
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -883,7 +883,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.7_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -894,7 +894,7 @@ steps:
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.7_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -902,7 +902,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-120
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -939,7 +939,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.7_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -952,7 +952,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.7_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -960,7 +960,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-120
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1030,7 +1030,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.7_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1044,7 +1044,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.7_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1052,7 +1052,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-120
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1129,7 +1129,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.7_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1143,7 +1143,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.7_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1151,7 +1151,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-120
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1276,7 +1276,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.21.1_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1287,7 +1287,7 @@ steps:
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.21.1_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1295,7 +1295,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1332,7 +1332,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.21.1_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1345,7 +1345,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.21.1_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1353,7 +1353,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1423,7 +1423,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.21.1_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1437,7 +1437,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.21.1_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1445,7 +1445,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1522,7 +1522,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.21.1_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1536,7 +1536,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.21.1_3.2.2_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1544,7 +1544,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.5.2/velero-v1.5.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
