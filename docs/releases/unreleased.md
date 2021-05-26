@@ -9,6 +9,9 @@ This new release simplifies the interface of the current modules.
 - Simplify interface for `gcp-velero` module
 - Simplify interface for `azure-velero` module
 - Update required terraform version to 0.15.4
+- Kubernetes support:
+  - Deprecate Kubernetes 1.17 support.
+  - Kubernetes 1.20 is considered stable.
 
 ## Upgrade path
 
