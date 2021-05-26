@@ -19,9 +19,10 @@ variable "environment" {
 }
 
 module "velero" {
-  source             = "../../modules/gcp-velero"
-  backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero"
-  project            = var.gcp_project
+  source                   = "../../modules/gcp-velero"
+  backup_bucket_name       = "${var.my_cluster_name}-${var.environment}-velero"
+  gcp_service_account_name = "${var.my_cluster_name}-${var.environment}-velero"
+  project                  = var.gcp_project
 }
 
 output "cloud_credentials" {
