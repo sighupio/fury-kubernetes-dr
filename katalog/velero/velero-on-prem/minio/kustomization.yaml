@@ -47,13 +47,13 @@ vars:
 images:
   - name: minio/minio
     newName: registry.sighup.io/fury/minio
-    newTag: RELEASE.2020-09-17T04-49-20Z
+    newTag: RELEASE.2021-05-26T00-22-46Z
   - name: minio/mc
     newName: registry.sighup.io/fury/minio/mc
-    newTag: RELEASE.2020-09-03T00-08-28Z
+    newTag: RELEASE.2021-05-18T03-39-44Z
   - name: groundnuty/k8s-wait-for
     newName: registry.sighup.io/fury/groundnuty/k8s-wait-for
-    newTag: v1.2
+    newTag: v1.4
 
 generatorOptions:
   disableNameSuffixHash: true
