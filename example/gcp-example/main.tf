@@ -22,6 +22,7 @@ module "velero" {
   source                   = "../../modules/gcp-velero"
   backup_bucket_name       = "${var.my_cluster_name}-${var.environment}-velero"
   gcp_service_account_name = "${var.my_cluster_name}-${var.environment}-velero"
+  gcp_custom_role_name     = replace("${var.my_cluster_name}-${var.environment}-velero", "-", "_")
   project                  = var.gcp_project
 }
 
