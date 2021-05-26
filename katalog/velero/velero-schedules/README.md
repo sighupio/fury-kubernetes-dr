@@ -43,7 +43,7 @@ and [azure](../../../modules/azure-velero)) that creates it as terraform output:
 ```bash
 $ terraform init
 $ terraform apply
-$ terraform output volume_snapshot_location > /tmp/volume_snapshot_location.yaml
+$ terraform output -raw volume_snapshot_location > /tmp/volume_snapshot_location.yaml
 $ cat /tmp/volume_snapshot_location.yaml
 apiVersion: velero.io/v1
 kind: VolumeSnapshotLocation
@@ -76,7 +76,7 @@ $ terraform init
 # omitted output
 $ terraform apply
 # omitted output
-$ terraform output backup_storage_location > /tmp/backup_storage_location.yaml
+$ terraform output -raw backup_storage_location > /tmp/backup_storage_location.yaml
 # omitted output
 $ cat /tmp/backup_storage_location.yaml
 apiVersion: velero.io/v1

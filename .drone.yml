@@ -121,7 +121,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: init-aws
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -147,9 +147,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.17.2_3.2.2_2.4.1
@@ -179,7 +179,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-aws
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -211,7 +211,7 @@ steps:
       - failure
 
   - name: init-gcp
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -238,9 +238,9 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.17.2_3.2.2_2.4.1
@@ -271,7 +271,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-gcp
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -304,7 +304,7 @@ steps:
       - failure
 
   - name: init-azure
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -337,9 +337,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.17.2_3.2.2_2.4.1
@@ -370,7 +370,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-azure
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -515,7 +515,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: init-aws
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -541,9 +541,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.0_3.2.2_2.4.1
@@ -573,7 +573,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-aws
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -605,7 +605,7 @@ steps:
       - failure
 
   - name: init-gcp
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -632,9 +632,9 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.0_3.2.2_2.4.1
@@ -665,7 +665,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-gcp
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -698,7 +698,7 @@ steps:
       - failure
 
   - name: init-azure
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -731,9 +731,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.0_3.2.2_2.4.1
@@ -764,7 +764,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-azure
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -909,7 +909,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: init-aws
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -935,9 +935,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.0_3.3.0_2.4.1
@@ -967,7 +967,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-aws
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -999,7 +999,7 @@ steps:
       - failure
 
   - name: init-gcp
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1026,9 +1026,9 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.0_3.3.0_2.4.1
@@ -1059,7 +1059,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-gcp
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1092,7 +1092,7 @@ steps:
       - failure
 
   - name: init-azure
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1125,9 +1125,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.0_3.3.0_2.4.1
@@ -1158,7 +1158,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-azure
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1302,7 +1302,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: init-aws
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1328,9 +1328,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.0_3.3.0_2.4.1
@@ -1360,7 +1360,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-aws
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1392,7 +1392,7 @@ steps:
       - failure
 
   - name: init-gcp
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1419,9 +1419,9 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.0_3.3.0_2.4.1
@@ -1452,7 +1452,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-gcp
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1485,7 +1485,7 @@ steps:
       - failure
 
   - name: init-azure
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared
@@ -1518,9 +1518,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output backup_storage_location > /shared/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.0_3.3.0_2.4.1
@@ -1551,7 +1551,7 @@ steps:
       - bats -t katalog/tests/velero/velero-backup.sh
 
   - name: destroy-azure
-    image: hashicorp/terraform:0.12.16
+    image: hashicorp/terraform:0.15.4
     pull: always
     volumes:
     - name: shared

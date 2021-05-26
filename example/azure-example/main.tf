@@ -6,10 +6,14 @@
 
 terraform {
   backend "azurerm" {}
+  required_version = "0.15.4"
+  required_providers {
+    azurerm = "2.60.0"
+    azuread = "1.5.0"
+  }
 }
 
 provider "azurerm" {
-  version = "2.10"
   features {}
 }
 
@@ -22,9 +26,7 @@ variable "environment" {
 
 module "velero" {
   source                     = "../../modules/azure-velero"
-  name                       = var.my_cluster_name
-  env                        = var.environment
-  backup_bucket_name         = "${var.my_cluster_name}-${var.environment}-velero"
+  backup_bucket_name         = "${var.my_cluster_name}${var.environment}"
   aks_resource_group_name    = "sighup-e2e-testing"
   velero_resource_group_name = "sighup-e2e-testing-velero"
 }

@@ -8,10 +8,11 @@ This new release simplifies the interface of the current modules.
 - Simplify interface for `aws-velero` module
 - Simplify interface for `gcp-velero` module
 - Simplify interface for `azure-velero` module
+- Update required terraform version to 0.15.4
 
 ## Upgrade path
 
-Replace the module interface to match the new one.
+Replace the module interface to match the new one. Ensure you are running terraform 0.15.4.
 
 ### modules/eks-velero
 
