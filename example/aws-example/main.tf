@@ -6,11 +6,14 @@
 
 terraform {
   backend "s3" {}
+  required_version = "0.15.4"
+  required_providers {
+    aws = "3.37.0"
+  }
 }
 
 provider "aws" {
-  region  = var.region
-  version = "~> 2.47"
+  region = var.region
 }
 
 variable "region" {
@@ -24,10 +27,7 @@ variable "environment" {
 
 module "velero" {
   source             = "../../modules/aws-velero"
-  name               = var.my_cluster_name
-  env                = var.environment
   backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero"
-  region             = var.region
 }
 
 output "cloud_credentials" {

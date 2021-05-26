@@ -5,7 +5,7 @@
  */
 
 resource "azuread_application" "main" {
-  name = "${var.backup_bucket_name}-velero"
+  display_name = "${var.backup_bucket_name}-velero"
 }
 
 resource "azuread_service_principal" "main" {
@@ -13,18 +13,8 @@ resource "azuread_service_principal" "main" {
   app_role_assignment_required = true
 }
 
-resource "random_string" "main" {
-  length  = 36
-  special = false
-
-  keepers = {
-    service_principal = azuread_service_principal.main.id
-  }
-}
-
 resource "azuread_service_principal_password" "main" {
   service_principal_id = azuread_service_principal.main.id
-  value                = random_string.main.result
   end_date             = timeadd(timestamp(), "8760h")
 
   # This stops be 'end_date' changing on each run and causing a new password to be set

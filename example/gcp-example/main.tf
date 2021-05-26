@@ -6,10 +6,10 @@
 
 terraform {
   backend "gcs" {}
-}
-
-provider "google" {
-  version = "~> 3.6"
+  required_version = "0.15.4"
+  required_providers {
+    google = "3.55.0"
+  }
 }
 
 variable "gcp_project" {}
@@ -20,8 +20,6 @@ variable "environment" {
 
 module "velero" {
   source             = "../../modules/gcp-velero"
-  name               = var.my_cluster_name
-  env                = var.environment
   backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero"
   project            = var.gcp_project
 }

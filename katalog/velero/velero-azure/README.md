@@ -28,7 +28,7 @@ $ terraform init
 # omitted output
 $ terraform apply
 # omitted output
-$ terraform output cloud_credentials > /tmp/cloud_credentials.yaml
+$ terraform output -raw cloud_credentials > /tmp/cloud_credentials.yaml
 # omitted output
 ```
 
@@ -50,7 +50,7 @@ Again, the terraform module provided with this deployment creates it as terrafor
 ```bash
 $ terraform init
 $ terraform apply
-$ terraform output backup_storage_location > /tmp/backup_storage_location.yaml
+$ terraform output -raw backup_storage_location > /tmp/backup_storage_location.yaml
 $ cat /tmp/backup_storage_location.yaml
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
