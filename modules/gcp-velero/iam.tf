@@ -30,6 +30,7 @@ resource "google_service_account_key" "velero" {
 }
 
 resource "google_project_iam_custom_role" "velero_role" {
+  project     = var.project
   role_id     = var.gcp_custom_role_name
   title       = "Velero Role"
   description = "Custom role to assign to velero sa to allow it to create snapshots"
