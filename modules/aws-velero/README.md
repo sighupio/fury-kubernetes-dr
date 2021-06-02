@@ -22,9 +22,8 @@ Kubernetes objects and trigger volume snapshots.
 
 ```hcl
 module "velero" {
-  source             = "../vendor/modules/gcp-velero"
+  source             = "../vendor/modules/aws-velero"
   backup_bucket_name = "my-cluster-staging-velero"
-  project            = "sighup-staging"
   tags               = {
     "my-key": "my-value"
   }

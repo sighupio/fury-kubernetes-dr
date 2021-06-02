@@ -5,11 +5,11 @@ the [AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tr
 
 ## Image repository and tag
 
-- Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.1.0`
+- Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.2.0`
 - Velero AWS Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-aws](https://github.com/vmware-tanzu/velero-plugin-for-aws).
-- MinIO image: `minio/minio:RELEASE.2020-09-17T04-49-20Z`
-- MinIO client image: `minio/mc:RELEASE.2020-09-03T00-08-28Z`
+- MinIO image: `minio/minio:RELEASE.2021-05-26T00-22-46Z`
+- MinIO client image: `minio/mc:RELEASE.2021-05-18T03-39-44Z`
 - MinIO repository: [https://github.com/minio/minio](https://github.com/minio/minio)
 
 
