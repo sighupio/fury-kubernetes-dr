@@ -6,7 +6,7 @@ to backup Kubernetes objects and trigger volume snapshots.
 ## Inputs
 
 | Name                     | Description                                                                   | Type          | Default         | Required |
-|--------------------------|-------------------------------------------------------------------------------|---------------|-----------------|--:-:-----|
+|--------------------------|-------------------------------------------------------------------------------|---------------|-----------------|----------|
 | backup\_bucket\_name     | Backup Bucket Name                                                            | `string`      | `n/a`           | yes      |
 | project                  | GCP Project where colocate the bucket                                         | `string`      | `n/a`           | yes      |
 | gcp_service_account_name | Name of the gcp service account to create for velero                          | `string`      | `"velero-sa"`   | yes      |
