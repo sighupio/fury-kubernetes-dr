@@ -9,8 +9,8 @@ load ./../helper
 
 @test "Applying Monitoring" {
     info
-    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.9.0/katalog/prometheus-operator/crd-servicemonitor.yml
-    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.9.0/katalog/prometheus-operator/crd-rule.yml
+    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/sync_kube_prom/katalog/prometheus-operator/crd-servicemonitor.yml
+    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/sync_kube_prom/katalog/prometheus-operator/crd-rule.yml
 }
 
 @test "Deploy Velero Base" {
