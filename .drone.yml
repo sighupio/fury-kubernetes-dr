@@ -34,6 +34,7 @@ steps:
       VALIDATE_KUBERNETES_KUBEVAL: "false"
       # Some duplicated code is intended.
       VALIDATE_JSCPD: "false"
+      VALIDATE_TERRAFORM_TFLINT: "false"
     depends_on:
       - clone
 

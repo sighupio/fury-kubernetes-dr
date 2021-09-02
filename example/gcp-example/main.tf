@@ -18,11 +18,15 @@ variable "environment" {
   default = "testing"
 }
 
+resource "random_id" "random_role_id_suffix" {
+  byte_length = 2
+}
+
 module "velero" {
   source                   = "../../modules/gcp-velero"
   backup_bucket_name       = "${var.my_cluster_name}-${var.environment}-velero"
   gcp_service_account_name = "${var.my_cluster_name}-${var.environment}-velero"
-  gcp_custom_role_name     = replace("${var.my_cluster_name}-${var.environment}-velero", "-", "_")
+  gcp_custom_role_name     = replace("${var.my_cluster_name}-${var.environment}-${random_id.random_role_id_suffix.hex}", "-", "_")
   project                  = var.gcp_project
 }
 
