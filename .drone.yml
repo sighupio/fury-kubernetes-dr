@@ -7,7 +7,7 @@ name: license
 
 steps:
   - name: check
-    image: docker.io/library/golang:1.14.3
+    image: docker.io/library/golang:1.16
     pull: always
     commands:
       - go get -u github.com/google/addlicense
@@ -34,6 +34,7 @@ steps:
       VALIDATE_KUBERNETES_KUBEVAL: "false"
       # Some duplicated code is intended.
       VALIDATE_JSCPD: "false"
+      VALIDATE_TERRAFORM_TFLINT: "false"
     depends_on:
       - clone
 
