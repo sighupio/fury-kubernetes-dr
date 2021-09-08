@@ -32,7 +32,7 @@ from an eks cluster.
 | v1.5.1                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:          |                    |                    |                    |
 | v1.6.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:          |                    |                    |
 | v1.7.0                              |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:          |                    |
-| v1.8.0                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| v1.8.0                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:          |
 
 - :white_check_mark: Compatible
 - :warning: Has issues
@@ -43,6 +43,8 @@ from an eks cluster.
 - :warning: : module version: `v1.6.0` and Kubernetes Version: `1.20.x`. It works as expected. Marked as warning
 because it is not officially supported by [SIGHUP](https://sighup.io).
 - :warning: : module version: `v1.7.0` and Kubernetes Version: `1.21.x`. It works as expected. Marked as warning
+because it is not officially supported by [SIGHUP](https://sighup.io).
+- :warning: : module version: `v1.8.0` and Kubernetes Version: `1.22.x`. It works as expected. Marked as warning
 because it is not officially supported by [SIGHUP](https://sighup.io).
 
 ## License
