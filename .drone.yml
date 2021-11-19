@@ -35,6 +35,7 @@ steps:
       # Some duplicated code is intended.
       VALIDATE_JSCPD: "false"
       VALIDATE_TERRAFORM_TFLINT: "false"
+      VALIDATE_DOCKERFILE: "false"
     depends_on:
       - clone
 
