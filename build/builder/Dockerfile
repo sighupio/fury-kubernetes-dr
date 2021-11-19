@@ -21,9 +21,13 @@ COPY . .
 
 RUN npm install -g embedme@1.22.0 && /entrypoint.sh && embedme --verify "**/*.md"
 
-FROM golang:1.16 as license
+FROM golang:1.16 as add-license-requirement
 
-RUN go get -u github.com/google/addlicense
+RUN go get -u github.com/google/addlicense && addlicense -c "SIGHUP s.r.l" -v -l bsd .
+
+FROM golang:1.16 as check-license
+
+RUN go get -u github.com/google/addlicense && mkdir /app
 
 RUN mkdir /app
 WORKDIR /app
