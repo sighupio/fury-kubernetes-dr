@@ -35,3 +35,10 @@ WORKDIR /app
 COPY . .
 
 RUN addlicense -c "SIGHUP s.r.l" -v -l bsd --check .
+
+FROM python:3.9-alpine as bumpversion-requirement
+
+# hadolint ignore=DL3018
+RUN apk add git --no-cache && pip --no-cache-dir install bump2version==1.0.1
+
+ENTRYPOINT ["/usr/local/bin/bumpversion"]
