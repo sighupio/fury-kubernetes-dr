@@ -52,3 +52,10 @@ FROM python:3.9-alpine as bumpversion-requirement
 RUN apk add git --no-cache && pip --no-cache-dir install bump2version==1.0.1
 
 ENTRYPOINT ["/usr/local/bin/bumpversion"]
+
+FROM registry.sighup.io/poc/fury-repo-automations:v0.0.2 as jsonbuilder
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY . .

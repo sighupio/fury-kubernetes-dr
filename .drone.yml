@@ -1659,6 +1659,19 @@ trigger:
       - refs/tags/**
 
 steps:
+  - name: prepare-canonical-json
+    image: registry.sighup.io/poc/fury-repo-automations:v0.0.2
+    pull: always
+    depends_on: [ clone ]
+    commands:
+      - spock build-json -m=fury-kubernetes-dr -r=False -v=${DRONE_TAG}
+    when:
+      event:
+        include:
+          - refs/tags/**
+        exclude:
+          - refs/tags/v**-rc**
+
   - name: prepare-tar-gz
     image: alpine:latest
     pull: always
@@ -1685,6 +1698,7 @@ steps:
     image: plugins/github-release
     pull: always
     depends_on:
+      - prepare-canonical-json
       - prepare-tar-gz
       - prepare-release-notes
     settings:
@@ -1693,6 +1707,7 @@ steps:
       file_exists: overwrite
       files:
         - fury-kubernetes-dr-${DRONE_TAG}.tar.gz
+        - fury-kubernetes-dr-canonical-definition-${DRONE_TAG}.tar.gz
       prerelease: true
       overwrite: true
       title: "Preview ${DRONE_TAG}"

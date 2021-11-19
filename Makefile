@@ -94,3 +94,10 @@ deploy-schedules: check-kustomize check-kubectl
 ## clean-%: Clean the container image resulting from another target. make build clean-build
 clean-%:
 	docker rmi -f ${PROJECTNAME}:local-${*}
+
+jsonbuilder:
+	@docker build --no-cache --pull --target jsonbuilder -f build/builder/Dockerfile -t ${PROJECTNAME}:jsonbuilder .
+
+## build-canonical-json: Build a canonical JSON for any tag of module, only to be run inside a clean working directory
+build-canonical-json: check-docker check-variable-TAG jsonbuilder
+	@docker run -ti --rm -v $(PWD):/app -w /app ${PROJECTNAME}:jsonbuilder build-json -m=$(PROJECTNAME) -v=${TAG} .
