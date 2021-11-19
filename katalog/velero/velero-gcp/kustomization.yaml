@@ -10,6 +10,12 @@ namespace: kube-system
 resources:
   - ../velero-base
 
+commonLabels:
+  module.kfd.sighup.io/name: "dr"
+  module.kfd.sighup.io/version: "v1.8.0"
+  module.kfd.sighup.io/component: "velero-gcp"
+  kfd.sighup.io/source: "kustomize"
+
 images:
   - name: velero/velero-plugin-for-gcp
     newName: registry.sighup.io/fury/velero/velero-plugin-for-gcp

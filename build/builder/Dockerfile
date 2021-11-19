@@ -36,6 +36,16 @@ COPY . .
 
 RUN addlicense -c "SIGHUP s.r.l" -v -l bsd --check .
 
+FROM openpolicyagent/conftest:v0.28.1 as checklabel
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY . .
+
+RUN conftest pull https://raw.githubusercontent.com/sighupio/ci-commons/main/conftest/kustomization/kfd-labels.rego
+RUN conftest test katalog/**/**/kustomization.yaml
+
 FROM python:3.9-alpine as bumpversion-requirement
 
 # hadolint ignore=DL3018
