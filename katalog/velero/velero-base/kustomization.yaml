@@ -8,6 +8,12 @@ kind: Kustomization
 
 namespace: kube-system
 
+commonLabels:
+  module.kfd.sighup.io/name: "dr"
+  module.kfd.sighup.io/version: "v1.8.0"
+  module.kfd.sighup.io/component: "velero-base"
+  kfd.sighup.io/source: "kustomize"
+
 resources:
   - dashboards
   - crds.yaml

@@ -22,6 +22,7 @@ $ make help
   bump-rc                       Bumps the module up by a release candidate (this only adds a tag, and not bump the version in labels)
   add-license                   Add license headers in all files in the project
   check-license                 Check license headers are in-place in all files in the project
+  check-label                   Check if labels are present in all kustomization files
   lint                          Run the policeman over the repository
   deploy-all                    Deploys all the components in the dr module (with velero-on-prem)
   deploy-base                   Deploys the `base` component in the cluster
@@ -121,6 +122,13 @@ resulting from the different targets in the [`Makefile`](Makefile).
 
 The main reason to implement this target is to save disk space. `clean-%v`
 target is automatically called in the targets `lint` and `add-license`.
+
+## Check-label
+
+This targets verifies that required labels for KFD modules exist in each
+kustomization file in the repo. The list of required labels and this
+check can be found
+[here](https://github.com/sighupio/ci-commons/blob/main/conftest/kustomization/kfd-labels.md).
 
 ## Deploy
 
