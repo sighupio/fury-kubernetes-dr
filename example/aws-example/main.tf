@@ -27,7 +27,7 @@ variable "environment" {
 
 module "velero" {
   source             = "../../modules/aws-velero"
-  backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero"
+  backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero-e2e"
 }
 
 output "cloud_credentials" {
