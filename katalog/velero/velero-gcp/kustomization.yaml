@@ -19,10 +19,10 @@ commonLabels:
 images:
   - name: velero/velero-plugin-for-gcp
     newName: registry.sighup.io/fury/velero/velero-plugin-for-gcp
-    newTag: v1.2.1
+    newTag: v1.3.0
   - name: velero/velero-plugin-for-csi
     newName: registry.sighup.io/fury/velero/velero-plugin-for-csi
-    newTag: v0.1.2
+    newTag: v0.2.0
 
 patchesStrategicMerge:
   - plugin-patch.yaml
