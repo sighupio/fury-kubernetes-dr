@@ -5,9 +5,9 @@
 The following packages are included in Fury Kubernetes Disaster Recovery katalog:
 
 - [velero](katalog/velero): Velero (formerly Heptio Ark) gives you a tool to
-back up and restore your Kubernetes cluster resources and persistent volumes. Version: **1.6.3**
+back up and restore your Kubernetes cluster resources and persistent volumes. Version: **1.7.1**
 - [velero-restic](katalog/velero/velero-restic): Velero has support for backing up and restoring
-Kubernetes volumes using a free open-source backup tool called restic. Version: **1.6.3**
+Kubernetes volumes using a free open-source backup tool called restic. Version: **1.7.1**
 
 The following packages are included in Fury Kubernetes Disaster Recovery modules:
 

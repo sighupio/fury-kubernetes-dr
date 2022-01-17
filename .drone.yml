@@ -72,7 +72,6 @@ trigger:
   ref:
     include:
       - refs/heads/master
-      - refs/heads/1.23_upgrade
       - refs/tags/**
 
 steps:
@@ -470,7 +469,6 @@ trigger:
   ref:
     include:
       - refs/heads/master
-      - refs/heads/1.23_upgrade
       - refs/tags/**
 
 steps:
@@ -868,7 +866,6 @@ trigger:
   ref:
     include:
       - refs/heads/master
-      - refs/heads/1.23_upgrade
       - refs/tags/**
 
 steps:
@@ -1267,7 +1264,6 @@ trigger:
   ref:
     include:
       - refs/heads/master
-      - refs/heads/1.23_upgrade
       - refs/tags/**
 
 steps:
