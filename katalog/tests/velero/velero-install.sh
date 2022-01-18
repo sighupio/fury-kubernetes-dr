@@ -18,7 +18,8 @@ load ./../helper
     deploy() {
         apply katalog/velero/velero-on-prem
     }
-    run deploy
+    loop_it deploy 30 10
+    status=${loop_it_result}
     [ "$status" -eq 0 ]
 }
 
