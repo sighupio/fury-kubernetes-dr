@@ -13,15 +13,6 @@ load ./../helper
     kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.13.0-rc/katalog/prometheus-operator/crd-rule.yml
 }
 
-@test "Deploy Velero Base" {
-    info
-    deploy() {
-        apply katalog/velero/velero-base
-    }
-    run deploy
-    [ "$status" -eq 0 ]
-}
-
 @test "Deploy Velero on Prem" {
     info
     deploy() {
