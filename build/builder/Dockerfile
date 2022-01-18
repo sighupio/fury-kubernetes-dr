@@ -44,7 +44,7 @@ WORKDIR /app
 COPY . .
 
 RUN conftest pull https://raw.githubusercontent.com/sighupio/ci-commons/main/conftest/kustomization/kfd-labels.rego
-RUN conftest test katalog/**/**/kustomization.yaml
+RUN conftest test katalog/velero/velero-base/kustomization.yaml
 
 FROM python:3.9-alpine as bumpversion-requirement
 

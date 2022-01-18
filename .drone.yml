@@ -18,7 +18,7 @@ steps:
     pull: always
     commands:
       -  conftest pull https://raw.githubusercontent.com/sighupio/ci-commons/main/conftest/kustomization/kfd-labels.rego
-      -  conftest test katalog/**/**/kustomization.yaml
+      -  conftest test katalog/velero/velero-base/kustomization.yaml
 ---
 kind: pipeline
 name: policeman

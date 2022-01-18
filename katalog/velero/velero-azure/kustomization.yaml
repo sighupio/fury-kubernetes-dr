@@ -8,12 +8,6 @@ kind: Kustomization
 
 namespace: kube-system
 
-commonLabels:
-  module.kfd.sighup.io/name: "dr"
-  module.kfd.sighup.io/version: "v1.9.0"
-  module.kfd.sighup.io/component: "velero-azure"
-  kfd.sighup.io/source: "kustomize"
-
 resources:
   - ../velero-base
 
