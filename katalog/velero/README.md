@@ -6,9 +6,9 @@
   - [Requirements](#requirements)
   - [Server deployment](#server-deployment)
     - [Velero on-premises](#velero-on-premises)
-    - [Velero on AWS](#velero-in-aws)
-    - [Velero on GCP](#velero-in-gcp)
-    - [Velero on Azure](#velero-in-azure)
+    - [Velero on AWS](#velero-on-aws)
+    - [Velero on GCP](#velero-on-gcp)
+    - [Velero on Azure](#velero-on-azure)
     - [Velero Restic](#velero-restic)
     - [Velero schedule](#velero-schedule)
 
@@ -111,7 +111,6 @@ bases:
 
 More information about the [GCP Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-gcp)
 
-
 ### Velero on Azure
 
 The [Azure deployment alternative](./velero-azure) requires to have created `cloud-credentials` secret in the
@@ -131,7 +130,6 @@ bases:
 ```
 
 More information about the [Azure Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure)
-
 
 ### Velero Restic
 
