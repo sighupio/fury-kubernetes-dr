@@ -15,7 +15,7 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 ## Overview
 
-**Kubernetes Fury DR** module is based on [Velero][velero-page] and Velero Restic.
+**Kubernetes Fury DR** module is based on [Velero][velero-page] and [Velero Restic][velero-restic-page].
 
 Velero allows you to:
 
@@ -44,7 +44,7 @@ The velero package contains the following additional components:
 |                     Component                     |                      Description                      |
 | ------------------------------------------------- | ----------------------------------------------------- |
 | [velero-restic](katalog/velero/velero-restic)     | Incremental backup and restore of Kubernetes volumes. |
-| [velero-schedule](katalog/velero/velero-schedule) | Common schedules for backup                           |
+| [velero-schedules](katalog/velero/velero-schedules) | Common schedules for backup                           |
 
 ### Integration with cloud providers
 
@@ -74,18 +74,18 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 | `1.22.x`           | :white_check_mark: | No known issues                                     |
 | `1.23.x`           |     :warning:      | Conformance tests passed. Not officially supported. |
 
-Check the [compatibility matrix][compatibility-matrix] for additional informations about previous releases of the modules.
+Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
 ## Usage
 
 **Kubernetes Fury DR** deployment depends on the environment.
 
-|               Environment               |   Storage Backend    |                  Velero Plugin                  |           Terraform Module           |
-| --------------------------------------- | -------------------- | ----------------------------------------------- | ------------------------------------ |
-| [Velero on AWS](#velero-on-aws)         | S3 Bucket            | [velero-aws](katalog/velero/velero-aws)         | [aws-velero](modules/aws-velero)     |
-| [Velero on GCP](#velero-on-gcp)         | GCS                  | [velero-gcp](katalog/velero/velero-gcp)         | [gcp-velero](modules/gcp-velero)     |
-| [Velero on Azure](#velero-on-azure)     | AZ Storage Container | [velero-azure](katalog/velero/velero-azure)     | [azure-velero](modules/azure-velero) |
-| [Velero on-premise](#velero-on-premise) | MinIo                | [velero-on-prem](katalog/velero/velero-on-prem) | `/`                                  |
+|                Environment                |   Storage Backend    |                  Velero Plugin                  |           Terraform Module           |
+| ----------------------------------------- | -------------------- | ----------------------------------------------- | ------------------------------------ |
+| [Velero on AWS](#velero-on-aws)           | S3 Bucket            | [velero-aws](katalog/velero/velero-aws)         | [aws-velero](modules/aws-velero)     |
+| [Velero on GCP](#velero-on-gcp)           | GCS                  | [velero-gcp](katalog/velero/velero-gcp)         | [gcp-velero](modules/gcp-velero)     |
+| [Velero on Azure](#velero-on-azure)       | AZ Storage Container | [velero-azure](katalog/velero/velero-azure)     | [azure-velero](modules/azure-velero) |
+| [Velero on-premises](#velero-on-premises) | MinIo                | [velero-on-prem](katalog/velero/velero-on-prem) | `/`                                  |
 
 ### Prerequisites
 
@@ -100,7 +100,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 Velero on AWS is based on the [AWS Velero Plugin][velero-aws-plugin-repo].
 
 It requires the secret `cloud-credentials` in the `kube-system` namespace containing a service account with appropriate credentials.
-In alternative, the module supports [authentication via IAM Roles][aws-docs-iam-roles].
+As an alternative, the module supports [authentication via IAM Roles][aws-docs-iam-roles].
 
 To deploy Velero on AWS:
 
@@ -124,7 +124,7 @@ modules:
 
 2. Execute `furyctl vendor -H` to download the packages
 
-3. Inspect the download packages under `./vendor/katalog/velero`.
+3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
 4. Deploy the necessary infrastructure via terraform using the `aws-velero` terraform module:
 
@@ -136,7 +136,7 @@ module "velero" {
 }
 ```
 
-> More information of modules inputs can be found in the [aws-velero](modules/aws-velero) module documentation
+> More information on modules inputs can be found in the [aws-velero](modules/aws-velero) module documentation
 >
 > [Here][kfd-velero-aws-example] you can find an example designed to create all necessary cloud resources for Velero on AWS.
 
@@ -160,7 +160,7 @@ kustomize build . | kubectl apply -f -
 Velero on GCP is based on the [Velero GCP Plugin][velero-gcp-plugin-repo].
 
 It requires the secret `cloud-credentials` in the `kube-system` namespace containing a service account with appropriate credentials.
-In alternative, the module supports workload identity.
+As an alternative, the module supports workload identity.
 
 > Check the required Velero GCP plugin permissions [here][velero-gcp-plugin-repo-permissions]
 
@@ -186,7 +186,7 @@ modules:
 
 2. Execute `furyctl vendor -H` to download the packages
 
-3. Inspect the download packages under `./vendor/katalog/velero`.
+3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
 4. Deploy the necessary infrastructure via terraform using the `gcp-velero` terraform module:
 
@@ -198,7 +198,7 @@ module "velero" {
 }
 ```
 
-> More information of modules inputs can be found in the [gcp-velero](modules/gcp-velero) module documentation
+> More information on modules inputs can be found in the [gcp-velero](modules/gcp-velero) module documentation
 >
 > [Here][kfd-velero-gcp-example] you can find an example designed to create all necessary cloud resources for Velero on GCP.
 
@@ -245,7 +245,7 @@ modules:
 
 2. Execute `furyctl vendor -H` to download the packages
 
-3. Inspect the download packages under `./vendor/katalog/velero`.
+3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
 4. Deploy the necessary infrastructure via terraform using the `azure-velero` terraform module:
 
@@ -257,7 +257,7 @@ module "velero" {
 }
 ```
 
-> More information of modules inputs can be found in the [azure-velero](modules/azure-velero) module documentation
+> More information on modules inputs can be found in the [azure-velero](modules/azure-velero) module documentation
 >
 > [Here][kfd-velero-azure-example] you can find an example designed to create all necessary cloud resources for Velero on Azure.
 
@@ -276,13 +276,13 @@ resources:
 kustomize build . | kubectl apply -f -
 ```
 
-### Velero on-premise
+### Velero on-premises
 
 [velero-on-prem][kfd-velero-on-prem] deploys a [MinIO][minio-page] in-cluster instance as an object storage backend for Velero.
 
 Please note that the MinIO server is running in the same cluster that is being backed up.
 
-To deploy velero on-premise:
+To deploy `velero on-prem`:
 
 1. List the packages you want to deploy and their version in a `Furyfile.yml`
 
@@ -300,7 +300,7 @@ bases:
 
 2. Execute `furyctl vendor -H` to download the packages
 
-3. Inspect the download packages under `./vendor/katalog/velero`.
+3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
 4. Define a `kustomization.yaml` that includes the downloaded resources.
 
@@ -321,6 +321,7 @@ kustomize build . | kubectl apply -f -
 [calico-page]: https://github.com/projectcalico/calico
 [sighup-page]: https://sighup.io
 [velero-page]: https://velero.io
+[velero-restic-page]: https://velero.io/docs/main/restic/
 [minio-page]: https://min.io/
 [terraform-page]: https://www.terraform.io/
 

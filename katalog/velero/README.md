@@ -164,7 +164,6 @@ bases:
   - katalog/velero/velero-schedules
 ```
 
-More information about
-[velero schedules](https://github.com/vmware-tanzu/velero/blob/master/site/docs/master/api-types/schedule.md)
+More information about [velero schedules](https://github.com/vmware-tanzu/velero/blob/master/site/docs/master/api-types/schedule.md)
 
 <!-- </KFD-DOCS> -->
