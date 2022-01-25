@@ -6,13 +6,13 @@
   - [Requirements](#requirements)
   - [Server deployment](#server-deployment)
     - [Velero on-premises](#velero-on-premises)
-    - [Velero in AWS](#velero-in-aws)
-    - [Velero in GCP](#velero-in-gcp)
-    - [Velero in Azure](#velero-in-azure)
+    - [Velero on AWS](#velero-on-aws)
+    - [Velero on GCP](#velero-on-gcp)
+    - [Velero on Azure](#velero-on-azure)
     - [Velero Restic](#velero-restic)
     - [Velero schedule](#velero-schedule)
 
-___
+<!-- <KFD-DOCS> -->
 
 Velero *(formerly Heptio Ark)* gives you tool to back up and restore your Kubernetes cluster resources and persistent
 volumes. You can run Velero with a cloud provider or on-premises. Velero lets you:
@@ -26,19 +26,16 @@ Velero consists of:
 - A server that runs on your cluster
 - A command-line client that runs locally
 
-
 ## Requirements
 
 Velero requires to have already deployed the [prometheus-operator](https://github.com/coreos/prometheus-operator) CRDs
 as this feature deploys [a `ServiceMonitor` definition](velero-base/serviceMonitor.yaml). It can be deployed using the
 [fury-kubernetes-monitoring](https://github.com/sighupio/fury-kubernetes-monitoring) KFD core module.
 
-
 ## Server deployment
 
 Every velero deployment, does not matter if on-premises or in any of the supported cloud, can configure
 [schedules](#velero-schedule) to back up all cluster manifests and/or cluster persistence volumes.
-
 
 ### Velero on-premises
 
@@ -54,7 +51,7 @@ bases:
   - katalog/velero/velero-on-prem
 ```
 
-### Velero in AWS
+### Velero on AWS
 
 The [AWS deployment alternative](./velero-aws) requires to have created `cloud-credentials` secret in the
 `kube-system` namespace.
@@ -94,8 +91,7 @@ bases:
 
 More information about the [AWS Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws)
 
-
-### Velero in GCP
+### Velero on GCP
 
 The [GCP deployment alternative](./velero-gcp) requires to have created `cloud-credentials` secret in the
 `kube-system` namespace.
@@ -115,8 +111,7 @@ bases:
 
 More information about the [GCP Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-gcp)
 
-
-### Velero in Azure
+### Velero on Azure
 
 The [Azure deployment alternative](./velero-azure) requires to have created `cloud-credentials` secret in the
 `kube-system` namespace.
@@ -135,7 +130,6 @@ bases:
 ```
 
 More information about the [Azure Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure)
-
 
 ### Velero Restic
 
@@ -170,5 +164,6 @@ bases:
   - katalog/velero/velero-schedules
 ```
 
-More information about
-[velero schedules](https://github.com/vmware-tanzu/velero/blob/master/site/docs/master/api-types/schedule.md)
+More information about [velero schedules](https://github.com/vmware-tanzu/velero/blob/master/site/docs/master/api-types/schedule.md)
+
+<!-- </KFD-DOCS> -->
