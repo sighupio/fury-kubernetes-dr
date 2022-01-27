@@ -57,7 +57,7 @@ module "velero" {
 }
 ```
 
-To use IAM Roles support for Service Account:
+To use IAM Roles for Service Accounts (IRSA):
 
 ```hcl
 data "aws_eks_cluster" "this" {
@@ -74,4 +74,4 @@ module "velero" {
 }
 ```
 
-For more information about IAM Roles for ServiceAccount to inject AWS credentials inside Velero's pods, click [here](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)
+For more information about IAM Roles for Service Accounts to inject AWS credentials inside Velero's pods, click [here](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)
