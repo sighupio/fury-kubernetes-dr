@@ -1,5 +1,7 @@
 # EKS Velero
 
+> ⚠️ This module is now deprecated in favor of [`aws-velero`](https://github.com/sighupio/fury-kubernetes-dr/tree/master/modules/aws-velero)
+
 This terraform module provides an easy way to generate Velero required cloud resources (S3 and IAM) to backup
 Kubernetes objects and trigger volume snapshots.
 
