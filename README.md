@@ -109,15 +109,15 @@ To deploy Velero on AWS:
 ```yaml
 bases:
   - name: dr/velero/velero-aws
-    version: "v1.9.0"
+    version: "v1.9.1"
   - name: dr/velero/velero-restic
-    version: "v1.9.0"
+    version: "v1.9.1"
   - name: dr/velero/velero-schedules
-    version: "v1.9.0"
+    version: "v1.9.1"
 
 modules:
   - name: dr/aws-velero
-    version: "v1.9.0"
+    version: "v1.9.1"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -171,15 +171,15 @@ To deploy Velero on GCP:
 ```yaml
 bases:
   - name: dr/velero/velero-gcp
-    version: "v1.9.0"
+    version: "v1.9.1"
   - name: dr/velero/velero-restic
-    version: "v1.9.0"
+    version: "v1.9.1"
   - name: dr/velero/velero-schedules
-    version: "v1.9.0"
+    version: "v1.9.1"
 
 modules:
   - name: dr/gcp-velero
-    version: "v1.9.0"
+    version: "v1.9.1"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -230,15 +230,15 @@ To deploy Velero on Azure:
 ```yaml
 bases:
   - name: dr/velero/velero-azure
-    version: "v1.9.0"
+    version: "v1.9.1"
   - name: dr/velero/velero-restic
-    version: "v1.9.0"
+    version: "v1.9.1"
   - name: dr/velero/velero-schedules
-    version: "v1.9.0"
+    version: "v1.9.1"
 
 modules:
   - name: dr/azure-velero
-    version: "v1.9.0"
+    version: "v1.9.1"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -289,11 +289,11 @@ To deploy `velero on-prem`:
 ```yaml
 bases:
   - name: velero/velero-on-prem
-    version: "v1.9.0"
+    version: "v1.9.1"
   - name: velero/velero-restic
-    version: "v1.9.0"
+    version: "v1.9.1"
   - name: velero/velero-schedules
-    version: "v1.9.0"
+    version: "v1.9.1"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
