@@ -63,7 +63,7 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 | [aws-velero](modules/aws-velero)     | Creates AWS resources and Kubernetes CRDs to persist backups.                                                                                                                                                                                 |
 | [azure-velero](modules/azure-velero) | Creates Azure resources and Kubernetes CRDs to persist backups.                                                                                                                                                                               |
 | [gcp-velero](modules/gcp-velero)     | Creates GCP resources and Kubernetes CRDs to persist backups.                                                                                                                                                                                 |
-| [eks-velero](modules/eks-velero)     | (*DEPRECATED*) Creates AWS resources and Kubernetes CRDs to persist backups from an EKS cluster. It uses only **IAM Roles** for ServiceAccount to inject AWS credentials inside Velero’s pods. Now merged in [aws-velero](modules/aws-velero) |
+| [eks-velero](modules/eks-velero)     | (*DEPRECATED*) Creates AWS resources and Kubernetes CRDs to persist backups from an EKS cluster. It uses only **IAM Roles** for ServiceAccount to inject AWS credentials inside Velero's pods. Now merged in [aws-velero](modules/aws-velero) |
 
 ## Compatibility
 
