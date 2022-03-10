@@ -67,7 +67,7 @@ EOF
 
 resource "aws_iam_role" "velero_backup" {
   count = length(var.oidc_provider_url) != 0 ? 1 : 0
-  name = "${var.name}-${var.env}-velero-backup"
+  name = "${var.backup_bucket_name}-velero-backup"
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
