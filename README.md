@@ -122,7 +122,7 @@ modules:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl distribution download -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -184,7 +184,7 @@ modules:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl distribution download -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -243,7 +243,7 @@ modules:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl distribution download -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -298,7 +298,7 @@ bases:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl distribution download -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
