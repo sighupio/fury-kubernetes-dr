@@ -3,7 +3,7 @@
     Kubernetes Fury DR
 </h1>
 
-![Release](https://img.shields.io/github/v/release/sighupio/fury-kubernetes-dr?label=Latest%20Release)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.9.3-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-dr?label=License)
 [![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)](https://kubernetes.slack.com/archives/C0154HYTAQH)
 
