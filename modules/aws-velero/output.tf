@@ -30,6 +30,27 @@ metadata:
   namespace: kube-system
 EOF
 
+  deployment = <<EOF
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velero
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: velero
+        volumeMounts:
+        - name: cloud-credentials
+          mountPath: /credentials
+          $patch: delete
+      volumes:
+      - name: cloud-credentials
+        $patch: delete
+EOF
+
   backup_storage_location = <<EOF
 ---
 apiVersion: velero.io/v1
@@ -62,6 +83,11 @@ EOF
 output "cloud_credentials" {
   description = "Velero required file with credentials"
   value       = local.cloud_credentials
+}
+
+output "deployment" {
+  description = "Velero Deployment Kustomize patch"
+  value = local.deployment
 }
 
 output "backup_storage_location" {
