@@ -15,8 +15,8 @@ type: Opaque
 stringData:
   cloud: |-
     [default]
-    aws_access_key_id=${aws_iam_access_key.velero_backup.0.id}
-    aws_secret_access_key=${aws_iam_access_key.velero_backup.0.secret}
+    aws_access_key_id=${element(coalescelist(aws_iam_access_key.velero_backup.*.id, [""]), 0)}
+    aws_secret_access_key=${element(coalescelist(aws_iam_access_key.velero_backup.*.secret, [""]), 0)}
 EOF
 
     service_account = <<EOF
