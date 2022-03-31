@@ -43,6 +43,8 @@ steps:
       VALIDATE_JSCPD: "false"
       VALIDATE_TERRAFORM_TFLINT: "false"
       VALIDATE_DOCKERFILE: "false"
+      # Disable natural language checks
+      VALIDATE_NATURAL_LANGUAGE: "false"
     depends_on:
       - clone
 

@@ -15,8 +15,8 @@ type: Opaque
 stringData:
   cloud: |-
     [default]
-    aws_access_key_id=${aws_iam_access_key.velero_backup.0.id}
-    aws_secret_access_key=${aws_iam_access_key.velero_backup.0.secret}
+    aws_access_key_id=${element(coalescelist(aws_iam_access_key.velero_backup.*.id, [""]), 0)}
+    aws_secret_access_key=${element(coalescelist(aws_iam_access_key.velero_backup.*.secret, [""]), 0)}
 EOF
 
     service_account = <<EOF
@@ -28,6 +28,27 @@ metadata:
     eks.amazonaws.com/role-arn: ${element(coalescelist(aws_iam_role.velero_backup.*.arn, [""]), 0)}
   name: velero
   namespace: kube-system
+EOF
+
+  deployment = <<EOF
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velero
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: velero
+        volumeMounts:
+        - name: cloud-credentials
+          mountPath: /credentials
+          $patch: delete
+      volumes:
+      - name: cloud-credentials
+        $patch: delete
 EOF
 
   backup_storage_location = <<EOF
@@ -60,8 +81,13 @@ EOF
 }
 
 output "cloud_credentials" {
-  description = "Velero required file with credentials"
+  description = "Velero AWS credentials"
   value       = local.cloud_credentials
+}
+
+output "deployment" {
+  description = "Velero Deployment Kustomize patch"
+  value = local.deployment
 }
 
 output "backup_storage_location" {
@@ -75,6 +101,6 @@ output "volume_snapshot_location" {
 }
 
 output "service_account" {
-  description = "Velero ServiceAccount"
+  description = "Velero ServiceAccount Kustomize patch"
   value = local.service_account
 }

@@ -65,8 +65,8 @@ quite difficult to interpret which is the target version for which a `rc` is
 being created. So the example usage is:
 
 ```bash
-$ TAG=v1.9.2-rc1 make bump-rc
-# This essentially creates a tag `v1.9.2-rc1` which we can  push to github to create a pre-release
+$ TAG=v1.9.3-rc1 make bump-rc
+# This essentially creates a tag `v1.9.3-rc1` which we can  push to github to create a pre-release
 ```
 
 Then, in order to release it(assuming from version `1.8.0` to `1.8.1` - so a
