@@ -81,7 +81,7 @@ EOF
 }
 
 output "cloud_credentials" {
-  description = "Velero required file with credentials"
+  description = "Velero AWS credentials"
   value       = local.cloud_credentials
 }
 
@@ -101,6 +101,6 @@ output "volume_snapshot_location" {
 }
 
 output "service_account" {
-  description = "Velero ServiceAccount"
+  description = "Velero ServiceAccount Kustomize patch"
   value = local.service_account
 }
