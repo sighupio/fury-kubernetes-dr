@@ -48,7 +48,7 @@ object storage backend that Velero can use to store backup data.
 namespace: kube-system
 
 bases:
-  - katalog/velero/velero-on-prem
+  - vendor/katalog/dr/velero/velero-on-prem
 ```
 
 ### Velero on AWS
@@ -86,7 +86,7 @@ Then, you will be able to deploy the velero AWS deployment.
 namespace: kube-system
 
 bases:
-  - katalog/velero/velero-aws
+  - vendor/katalog/dr/velero/velero-aws
 ```
 
 More information about the [AWS Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws)
@@ -106,7 +106,7 @@ Then, you will be able to deploy the velero GCP deployment.
 namespace: kube-system
 
 bases:
-  - katalog/velero/velero-gcp
+  - vendor/katalog/dr/velero/velero-gcp
 ```
 
 More information about the [GCP Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-gcp)
@@ -126,7 +126,7 @@ Then, you will be able to deploy the velero Azure deployment.
 namespace: kube-system
 
 bases:
-  - katalog/velero/velero-azure
+  - vendor/katalog/dr/velero/velero-azure
 ```
 
 More information about the [Azure Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure)
@@ -143,8 +143,8 @@ deployment.
 namespace: kube-system
 
 bases:
-  - katalog/velero/velero-aws
-  - katalog/velero/velero-restic
+  - vendor/katalog/dr/velero/velero-aws
+  - vendor/katalog/dr/velero/velero-restic
 ```
 
 More information about [Velero Restic integration](https://velero.io/docs/v1.3.1/restic/)
@@ -160,8 +160,8 @@ Feel free to deploy these schedules if fits in your business:
 namespace: kube-system
 
 bases:
-  - katalog/velero/velero-aws
-  - katalog/velero/velero-schedules
+  - vendor/katalog/dr/velero/velero-aws
+  - vendor/katalog/dr/velero/velero-schedules
 ```
 
 More information about [velero schedules](https://github.com/vmware-tanzu/velero/blob/master/site/docs/master/api-types/schedule.md)

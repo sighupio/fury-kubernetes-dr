@@ -144,9 +144,9 @@ module "velero" {
 
 ```yaml
 resources:
-- ./vendor/katalog/velero/velero-aws
-- ./vendor/katalog/velero/velero-restic
-- ./vendor/katalog/velero/velero-schedules
+- ./vendor/katalog/dr/velero/velero-aws
+- ./vendor/katalog/dr/velero/velero-restic
+- ./vendor/katalog/dr/velero/velero-schedules
 ```
 
 6. To deploy the packages to your cluster, execute:
@@ -206,9 +206,9 @@ module "velero" {
 
 ```yaml
 resources:
-- ./vendor/katalog/velero/velero-gcp
-- ./vendor/katalog/velero/velero-restic
-- ./vendor/katalog/velero/velero-schedules
+- ./vendor/katalog/dr/velero/velero-gcp
+- ./vendor/katalog/dr/velero/velero-restic
+- ./vendor/katalog/dr/velero/velero-schedules
 ```
 
 6. To deploy the packages to your cluster, execute:
@@ -265,9 +265,9 @@ module "velero" {
 
 ```yaml
 resources:
-- ./vendor/katalog/velero/velero-azure
-- ./vendor/katalog/velero/velero-restic
-- ./vendor/katalog/velero/velero-schedules
+- ./vendor/katalog/dr/velero/velero-azure
+- ./vendor/katalog/dr/velero/velero-restic
+- ./vendor/katalog/dr/velero/velero-schedules
 ```
 
 6. To deploy the packages to your cluster, execute:
@@ -306,9 +306,9 @@ bases:
 
 ```yaml
 resources:
-- ./vendor/katalog/velero/velero-on-prem
-- ./vendor/katalog/velero/velero-restic
-- ./vendor/katalog/velero/velero-schedules
+- ./vendor/katalog/dr/velero/velero-on-prem
+- ./vendor/katalog/dr/velero/velero-restic
+- ./vendor/katalog/dr/velero/velero-schedules
 ```
 
 5. To deploy the packages to your cluster, execute:
