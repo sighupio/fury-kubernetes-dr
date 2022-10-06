@@ -104,3 +104,8 @@ output "service_account" {
   description = "Velero ServiceAccount Kustomize patch"
   value = local.service_account
 }
+
+output "velero_iam_role_arn" {
+  description = "Velero IAM Role ARN"
+  value       = element(coalescelist(aws_iam_role.velero_backup.*.arn, [""]), 0)
+}
