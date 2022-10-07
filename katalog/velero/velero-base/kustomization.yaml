@@ -15,6 +15,7 @@ resources:
   - deployment.yaml
   - service.yaml
   - serviceMonitor.yaml
+  - alert-rules.yaml
 
 images:
   - name: velero/velero
