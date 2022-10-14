@@ -16,7 +16,7 @@ spec:
       rules:
         - alert: VeleroNoBackupInLast24Hours
           annotations:
-            message: "There are no successful velero backups in the las 24 hours for the '{{$labels.schedule}}' schedule."
+            description: "There are no successful velero backups in the las 24 hours for the '{{$labels.schedule}}' schedule."
             doc: "There are no successful backups for schedule '{{$labels.schedule}}' in the last 24 hours. There might be a problem running the schedule or the backups themselves."
           expr: |
             time() - velero_backup_last_successful_timestamp{schedule=~"full|manifests"} > 86400
