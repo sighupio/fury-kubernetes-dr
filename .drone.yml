@@ -201,7 +201,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-120-aws
+      CI_PIPELINE_NUMBER: cluster-121-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
