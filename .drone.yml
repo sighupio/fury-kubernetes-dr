@@ -279,7 +279,7 @@ steps:
       path: /shared
     depends_on: [ apply-gcp-configuration ]
     commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-120
+      - export KUBECONFIG=/shared/kube/kubeconfig-121
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
