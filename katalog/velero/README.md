@@ -147,7 +147,7 @@ bases:
   - vendor/katalog/dr/velero/velero-restic
 ```
 
-More information about [Velero Restic integration](https://velero.io/docs/v1.3.1/restic/)
+More information about [Velero Restic integration](https://velero.io/docs/v1.9/restic/)
 
 ### Velero schedule
 
