@@ -16,9 +16,9 @@ variable "tags" {
 }
 
 variable "oidc_provider_url" {
-  type = string
+  type        = string
   description = "URL of OIDC issuer discovery document"
-  default = ""
+  default     = ""
 }
 
 data "aws_caller_identity" "current" {}

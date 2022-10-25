@@ -23,7 +23,7 @@ variable "gcp_service_account_name" {
 variable "gcp_custom_role_name" {
   type        = string
   description = "Name of the gcp custom role to assign to the gcp service account"
-  default     = "velero_role" 
+  default     = "velero_role"
 }
 
 variable "workload_identity" {

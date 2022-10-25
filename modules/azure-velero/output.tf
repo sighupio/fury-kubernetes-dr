@@ -5,7 +5,7 @@
  */
 
 locals {
-  cloud_credentials        = <<EOF
+  cloud_credentials = <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
@@ -22,7 +22,7 @@ stringData:
     AZURE_CLOUD_NAME=${var.azure_cloud_name}
 EOF
 
-  backup_storage_location  = <<EOF
+  backup_storage_location = <<EOF
 ---
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
