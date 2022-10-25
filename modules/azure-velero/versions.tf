@@ -5,9 +5,9 @@
  */
 
 terraform {
-  required_version = "0.15.4"
+  required_version = ">= 0.15.4"
   required_providers {
-    azurerm = "2.60.0"
-    azuread = "1.5.0"
+    azurerm = ">= 2.60.0"
+    azuread = ">= 1.5.0"
   }
 }
