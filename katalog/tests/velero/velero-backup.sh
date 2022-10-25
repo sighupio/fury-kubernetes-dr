@@ -27,7 +27,7 @@ load ./../helper
 @test "Restore backup" {
     info
     backup() {
-        timeout 120 velero restore create --from-backup backup-e2e -n kube-system --wait
+        timeout 240 velero restore create --from-backup backup-e2e -n kube-system --wait
     }
     run backup
     [ "$status" -eq 0 ]
