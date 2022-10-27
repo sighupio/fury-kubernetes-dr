@@ -1,11 +1,11 @@
 /**
- * Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+ * Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
  * Use of this source code is governed by a BSD-style
  * license that can be found in the LICENSE file.
  */
 
 locals {
-  cloud_credentials        = <<EOF
+  cloud_credentials = <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
@@ -22,7 +22,7 @@ stringData:
     AZURE_CLOUD_NAME=${var.azure_cloud_name}
 EOF
 
-  backup_storage_location  = <<EOF
+  backup_storage_location = <<EOF
 ---
 apiVersion: velero.io/v1
 kind: BackupStorageLocation

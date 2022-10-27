@@ -1,4 +1,4 @@
-# Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
@@ -11,7 +11,7 @@ namespace: kube-system
 images:
   - name: velero/velero
     newName: registry.sighup.io/fury/velero/velero
-    newTag: v1.7.1
+    newTag: v1.9.2
 
 resources:
   - daemonset.yml

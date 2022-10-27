@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+ * Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
  * Use of this source code is governed by a BSD-style
  * license that can be found in the LICENSE file.
  */
@@ -19,7 +19,7 @@ stringData:
     aws_secret_access_key=${element(coalescelist(aws_iam_access_key.velero_backup.*.secret, [""]), 0)}
 EOF
 
-    service_account = <<EOF
+  service_account = <<EOF
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -87,7 +87,7 @@ output "cloud_credentials" {
 
 output "deployment" {
   description = "Velero Deployment Kustomize patch"
-  value = local.deployment
+  value       = local.deployment
 }
 
 output "backup_storage_location" {
@@ -102,5 +102,5 @@ output "volume_snapshot_location" {
 
 output "service_account" {
   description = "Velero ServiceAccount Kustomize patch"
-  value = local.service_account
+  value       = local.service_account
 }
