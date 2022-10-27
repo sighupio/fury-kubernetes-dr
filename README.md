@@ -70,8 +70,8 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 | ------------------ | :----------------: | --------------------------------------------------- |
 | `1.21.x`           | :white_check_mark: | No known issues                                     |
 | `1.22.x`           | :white_check_mark: | No known issues                                     |
-| `1.23.x`           |     :warning:      | No known issues                                     |
-| `1.24.x`           |     :warning:      | No known issues                                     |
+| `1.23.x`           | :white_check_mark: | No known issues                                     |
+| `1.24.x`           | :white_check_mark: | No known issues                                     |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
