@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+ * Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
  * Use of this source code is governed by a BSD-style
  * license that can be found in the LICENSE file.
  */
@@ -23,7 +23,7 @@ variable "gcp_service_account_name" {
 variable "gcp_custom_role_name" {
   type        = string
   description = "Name of the gcp custom role to assign to the gcp service account"
-  default     = "velero_role" 
+  default     = "velero_role"
 }
 
 variable "workload_identity" {

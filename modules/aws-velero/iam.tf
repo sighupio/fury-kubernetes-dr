@@ -1,18 +1,18 @@
 /**
- * Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+ * Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
  * Use of this source code is governed by a BSD-style
  * license that can be found in the LICENSE file.
  */
 
 resource "aws_iam_user" "velero_backup_user" {
   count = length(var.oidc_provider_url) != 0 ? 0 : 1
-  name = "${var.backup_bucket_name}-velero-backup"
-  path = "/"
-  tags = var.tags
+  name  = "${var.backup_bucket_name}-velero-backup"
+  path  = "/"
+  tags  = var.tags
 }
 
 resource "aws_iam_policy_attachment" "velero_backup" {
-  count = length(var.oidc_provider_url) != 0 ? 0 : 1
+  count      = length(var.oidc_provider_url) != 0 ? 0 : 1
   name       = "${var.backup_bucket_name}-velero-backup"
   users      = [aws_iam_user.velero_backup_user.0.name]
   policy_arn = aws_iam_policy.velero_backup.arn
@@ -20,7 +20,7 @@ resource "aws_iam_policy_attachment" "velero_backup" {
 
 resource "aws_iam_access_key" "velero_backup" {
   count = length(var.oidc_provider_url) != 0 ? 0 : 1
-  user = aws_iam_user.velero_backup_user.0.name
+  user  = aws_iam_user.velero_backup_user.0.name
 }
 
 resource "aws_iam_policy" "velero_backup" {
@@ -66,8 +66,8 @@ EOF
 }
 
 resource "aws_iam_role" "velero_backup" {
-  count = length(var.oidc_provider_url) != 0 ? 1 : 0
-  name = "${var.backup_bucket_name}-velero-backup"
+  count              = length(var.oidc_provider_url) != 0 ? 1 : 0
+  name               = "${var.backup_bucket_name}-velero-backup"
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -90,7 +90,7 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "velero_backup" {
-  count = length(var.oidc_provider_url) != 0 ? 1 : 0
-  role = aws_iam_role.velero_backup.0.name
+  count      = length(var.oidc_provider_url) != 0 ? 1 : 0
+  role       = aws_iam_role.velero_backup.0.name
   policy_arn = aws_iam_policy.velero_backup.arn
 }

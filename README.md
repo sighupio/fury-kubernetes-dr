@@ -1,15 +1,15 @@
 <h1>
     <img src="https://github.com/sighupio/fury-distribution/blob/master/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px"/>
-    Kubernetes Fury DR
+    Kubernetes Fury Disaster Recovery
 </h1>
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.9.3-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.10.0-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-dr?label=License)
 [![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)](https://kubernetes.slack.com/archives/C0154HYTAQH)
 
 <!-- <KFD-DOCS> -->
 
-**Kubernetes Fury DR** implements backups and disaster recovery for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using [Velero][velero-page].
+**Kubernetes Fury Disaster Recovery (DR)** implements backups and disaster recovery for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using [Velero][velero-page].
 
 If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
 
@@ -37,7 +37,7 @@ Kubernetes Fury DR provides the following packages:
 
 |                      Package                      | Version |                                   Description                                    |
 | ------------------------------------------------- | ------- | -------------------------------------------------------------------------------- |
-| [velero](katalog/velero)                          | `1.7.1` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
+| [velero](katalog/velero)                          | `1.10.0` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
 
 The velero package contains the following additional components:
 
@@ -63,16 +63,15 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 | [aws-velero](modules/aws-velero)     | Creates AWS resources and Kubernetes CRDs to persist backups.                                                                                                                                                                                 |
 | [azure-velero](modules/azure-velero) | Creates Azure resources and Kubernetes CRDs to persist backups.                                                                                                                                                                               |
 | [gcp-velero](modules/gcp-velero)     | Creates GCP resources and Kubernetes CRDs to persist backups.                                                                                                                                                                                 |
-| [eks-velero](modules/eks-velero)     | (*DEPRECATED*) Creates AWS resources and Kubernetes CRDs to persist backups from an EKS cluster. It uses only **IAM Roles** for ServiceAccount to inject AWS credentials inside Velero's pods. Now merged in [aws-velero](modules/aws-velero) |
 
 ## Compatibility
 
 | Kubernetes Version |   Compatibility    |                        Notes                        |
 | ------------------ | :----------------: | --------------------------------------------------- |
-| `1.20.x`           | :white_check_mark: | No known issues                                     |
 | `1.21.x`           | :white_check_mark: | No known issues                                     |
 | `1.22.x`           | :white_check_mark: | No known issues                                     |
-| `1.23.x`           |     :warning:      | Conformance tests passed. Not officially supported. |
+| `1.23.x`           | :white_check_mark: | No known issues                                     |
+| `1.24.x`           | :white_check_mark: | No known issues                                     |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
@@ -109,15 +108,15 @@ To deploy Velero on AWS:
 ```yaml
 bases:
   - name: dr/velero/velero-aws
-    version: "v1.9.3"
+    version: "v1.10.0"
   - name: dr/velero/velero-restic
-    version: "v1.9.3"
+    version: "v1.10.0"
   - name: dr/velero/velero-schedules
-    version: "v1.9.3"
+    version: "v1.10.0"
 
 modules:
   - name: dr/aws-velero
-    version: "v1.9.3"
+    version: "v1.10.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -144,9 +143,9 @@ module "velero" {
 
 ```yaml
 resources:
-- ./vendor/katalog/velero/velero-aws
-- ./vendor/katalog/velero/velero-restic
-- ./vendor/katalog/velero/velero-schedules
+- ./vendor/katalog/dr/velero/velero-aws
+- ./vendor/katalog/dr/velero/velero-restic
+- ./vendor/katalog/dr/velero/velero-schedules
 ```
 
 6. To deploy the packages to your cluster, execute:
@@ -171,15 +170,15 @@ To deploy Velero on GCP:
 ```yaml
 bases:
   - name: dr/velero/velero-gcp
-    version: "v1.9.3"
+    version: "v1.10.0"
   - name: dr/velero/velero-restic
-    version: "v1.9.3"
+    version: "v1.10.0"
   - name: dr/velero/velero-schedules
-    version: "v1.9.3"
+    version: "v1.10.0"
 
 modules:
   - name: dr/gcp-velero
-    version: "v1.9.3"
+    version: "v1.10.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -206,9 +205,9 @@ module "velero" {
 
 ```yaml
 resources:
-- ./vendor/katalog/velero/velero-gcp
-- ./vendor/katalog/velero/velero-restic
-- ./vendor/katalog/velero/velero-schedules
+- ./vendor/katalog/dr/velero/velero-gcp
+- ./vendor/katalog/dr/velero/velero-restic
+- ./vendor/katalog/dr/velero/velero-schedules
 ```
 
 6. To deploy the packages to your cluster, execute:
@@ -230,15 +229,15 @@ To deploy Velero on Azure:
 ```yaml
 bases:
   - name: dr/velero/velero-azure
-    version: "v1.9.3"
+    version: "v1.10.0"
   - name: dr/velero/velero-restic
-    version: "v1.9.3"
+    version: "v1.10.0"
   - name: dr/velero/velero-schedules
-    version: "v1.9.3"
+    version: "v1.10.0"
 
 modules:
   - name: dr/azure-velero
-    version: "v1.9.3"
+    version: "v1.10.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -265,9 +264,9 @@ module "velero" {
 
 ```yaml
 resources:
-- ./vendor/katalog/velero/velero-azure
-- ./vendor/katalog/velero/velero-restic
-- ./vendor/katalog/velero/velero-schedules
+- ./vendor/katalog/dr/velero/velero-azure
+- ./vendor/katalog/dr/velero/velero-restic
+- ./vendor/katalog/dr/velero/velero-schedules
 ```
 
 6. To deploy the packages to your cluster, execute:
@@ -289,11 +288,11 @@ To deploy `velero on-prem`:
 ```yaml
 bases:
   - name: velero/velero-on-prem
-    version: "v1.9.3"
+    version: "v1.10.0"
   - name: velero/velero-restic
-    version: "v1.9.3"
+    version: "v1.10.0"
   - name: velero/velero-schedules
-    version: "v1.9.3"
+    version: "v1.10.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -306,9 +305,9 @@ bases:
 
 ```yaml
 resources:
-- ./vendor/katalog/velero/velero-on-prem
-- ./vendor/katalog/velero/velero-restic
-- ./vendor/katalog/velero/velero-schedules
+- ./vendor/katalog/dr/velero/velero-on-prem
+- ./vendor/katalog/dr/velero/velero-restic
+- ./vendor/katalog/dr/velero/velero-schedules
 ```
 
 5. To deploy the packages to your cluster, execute:

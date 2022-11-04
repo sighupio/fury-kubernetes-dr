@@ -1,0 +1,25 @@
+---
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: k8s
+    role: alert-rules
+  name: velero-backups-failing-alerts
+spec:
+  groups:
+    - name: VeleroBackups
+      rules:
+        - alert: VeleroNoBackupInLast24Hours
+          annotations:
+            description: "There are no successful velero backups in the las 24 hours for the '{{$labels.schedule}}' schedule."
+            doc: "There are no successful backups for schedule '{{$labels.schedule}}' in the last 24 hours. There might be a problem running the schedule or the backups themselves."
+          expr: |
+            time() - velero_backup_last_successful_timestamp{schedule=~"full|manifests"} > 86400
+          for: 5m
+          labels:
+            severity: warning
