@@ -1,6 +1,6 @@
 <h1>
     <img src="https://github.com/sighupio/fury-distribution/blob/master/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px"/>
-    Kubernetes Fury DR
+    Kubernetes Fury Disaster Recovery
 </h1>
 
 ![Release](https://img.shields.io/badge/Latest%20Release-v1.10.0-blue)
@@ -9,7 +9,7 @@
 
 <!-- <KFD-DOCS> -->
 
-**Kubernetes Fury DR** implements backups and disaster recovery for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using [Velero][velero-page].
+**Kubernetes Fury Disaster Recovery (DR)** implements backups and disaster recovery for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using [Velero][velero-page].
 
 If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
 
