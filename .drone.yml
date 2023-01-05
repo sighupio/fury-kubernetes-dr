@@ -2,8 +2,9 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
-kind: pipeline
 name: license
+kind: pipeline
+type: docker
 
 steps:
   - name: check
@@ -13,8 +14,9 @@ steps:
       - go get -u github.com/google/addlicense
       - addlicense -c "SIGHUP s.r.l" -v -l bsd --check .
 ---
-kind: pipeline
 name: policeman
+kind: pipeline
+type: docker
 
 depends_on:
   - license
@@ -48,17 +50,19 @@ steps:
     commands:
       - kustomize build katalog/velero/velero-on-prem > velero.yml
 
-  - name: deprek8ion
-    image: eu.gcr.io/swade1987/deprek8ion:1.1.34
+  - name: check-deprecated-apis
+    image: us-docker.pkg.dev/fairwinds-ops/oss/pluto:v5
     pull: always
     depends_on:
       - render
     commands:
-      - /conftest test -p /policies velero.yml
+      # we use --ignore-deprecations because we don't want the CI to fail when the API has not been removed yet.
+      - /pluto detect velero.yml --ignore-deprecations --target-versions=k8s=v1.24.0
 
 ---
-kind: pipeline
 name: e2e-kubernetes-1.21
+kind: pipeline
+type: docker
 
 depends_on:
   - policeman
@@ -457,8 +461,9 @@ volumes:
   temp: {}
 
 ---
-kind: pipeline
 name: e2e-kubernetes-1.22
+kind: pipeline
+type: docker
 
 depends_on:
   - policeman
@@ -857,8 +862,9 @@ volumes:
   temp: {}
 
 ---
-kind: pipeline
 name: e2e-kubernetes-1.23
+kind: pipeline
+type: docker
 
 depends_on:
   - policeman
@@ -1257,8 +1263,9 @@ volumes:
   temp: {}
 
 ---
-kind: pipeline
 name: e2e-kubernetes-1.24
+kind: pipeline
+type: docker
 
 depends_on:
   - policeman
@@ -1657,8 +1664,9 @@ volumes:
   temp: {}
 
 ---
-kind: pipeline
 name: release
+kind: pipeline
+type: docker
 
 depends_on:
   - e2e-kubernetes-1.21
