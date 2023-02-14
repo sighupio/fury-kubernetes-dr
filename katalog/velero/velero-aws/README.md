@@ -1,11 +1,11 @@
 # Velero AWS
 
 This Velero deployment is ready to be deployed in any AWS cluster as it includes the
-[AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.2.0).
+[AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.6.1).
 
 ## Image repository and tag
 
-- Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.5.1`
+- Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.6.1`
 - Velero AWS Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-aws](https://github.com/vmware-tanzu/velero-plugin-for-aws).
 

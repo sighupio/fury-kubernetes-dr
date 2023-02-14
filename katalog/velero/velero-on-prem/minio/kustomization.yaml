@@ -53,7 +53,7 @@ images:
     newTag: RELEASE.2021-05-18T03-39-44Z
   - name: groundnuty/k8s-wait-for
     newName: registry.sighup.io/fury/groundnuty/k8s-wait-for
-    newTag: v1.4
+    newTag: v1.7
 
 generatorOptions:
   disableNameSuffixHash: true
