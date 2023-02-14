@@ -43,7 +43,7 @@ steps:
       - clone
 
   - name: render
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.21.12_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     depends_on:
       - clone
@@ -57,408 +57,7 @@ steps:
       - render
     commands:
       # we use --ignore-deprecations because we don't want the CI to fail when the API has not been removed yet.
-      - /pluto detect velero.yml --ignore-deprecations --target-versions=k8s=v1.24.0
-
----
-name: e2e-kubernetes-1.21
-kind: pipeline
-type: docker
-
-depends_on:
-  - policeman
-
-node:
-  runner: internal
-
-platform:
-  os: linux
-  arch: amd64
-
-trigger:
-  ref:
-    include:
-      - refs/heads/main
-      - refs/heads/master
-      - refs/heads/release-v*
-      - refs/tags/**
-
-steps:
-  - name: init
-    image: quay.io/sighup/e2e-testing-drone-plugin:v1.24.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ clone ]
-    settings:
-      action: cluster-121
-      pipeline_id: cluster-121
-      instance_path: /shared
-      aws_default_region:
-        from_secret: aws_region
-      aws_access_key_id:
-        from_secret: aws_access_key_id
-      aws_secret_access_key:
-        from_secret: aws_secret_access_key
-      terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
-      vsphere_server:
-        from_secret: vsphere_server
-      vsphere_password:
-        from_secret: vsphere_password
-      vsphere_user:
-        from_secret: vsphere_user
-      dockerhub_username:
-        from_secret: dockerhub_username
-      dockerhub_password:
-        from_secret: dockerhub_password
-
-  - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.21.12_3.8.7_4.21.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ init ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - bats -t katalog/tests/velero/velero-install.sh
-
-  - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.21.12_3.8.7_4.21.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ test-install ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
-      - tar -zxf velero.tar.gz
-      - mv velero*/velero /usr/local/bin/velero
-      - bats -t katalog/tests/velero/velero-backup.sh
-
-  - name: init-aws
-    image: hashicorp/terraform:0.15.4
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ test-backup-restore ]
-    environment:
-      CI_PIPELINE_NUMBER: cluster-121-aws
-      AWS_DEFAULT_REGION:
-        from_secret: aws_region
-      AWS_ACCESS_KEY_ID:
-        from_secret: aws_access_key_id
-      AWS_SECRET_ACCESS_KEY:
-        from_secret: aws_secret_access_key
-      TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
-    commands:
-      - cd example/aws-example
-      - terraform init
-        --backend=true
-        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
-        --backend-config="key=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-        --backend-config="region=$${AWS_DEFAULT_REGION}"
-      - terraform apply
-        --auto-approve
-        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
-
-  - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.21.12_3.8.7_4.21.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ init-aws ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
-      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
-      - kubectl rollout restart deploy velero -n kube-system
-
-  - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.21.12_3.8.7_4.21.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ apply-aws-configuration ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
-      - tar -zxf velero.tar.gz
-      - mv velero*/velero /usr/local/bin/velero
-      - bats -t katalog/tests/velero/velero-backup.sh
-
-  - name: destroy-aws
-    image: hashicorp/terraform:0.15.4
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ test-backup-restore-aws ]
-    environment:
-      CI_PIPELINE_NUMBER: cluster-121-aws
-      AWS_DEFAULT_REGION:
-        from_secret: aws_region
-      AWS_ACCESS_KEY_ID:
-        from_secret: aws_access_key_id
-      AWS_SECRET_ACCESS_KEY:
-        from_secret: aws_secret_access_key
-      TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
-    commands:
-      - cd example/aws-example
-      - terraform init
-        --backend=true
-        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
-        --backend-config="key=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-        --backend-config="region=$${AWS_DEFAULT_REGION}"
-      - terraform destroy
-        --auto-approve
-        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-    when:
-      status:
-      - success
-      - failure
-
-  - name: init-gcp
-    image: hashicorp/terraform:0.15.4
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ test-backup-restore-aws ]
-    environment:
-      GCP_PROJECT:
-        from_secret: gcp_project
-      GCP_CREDENTIALS:
-        from_secret: gcp_credentials
-      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-121-gcp
-      TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
-    commands:
-      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
-      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
-      - cd example/gcp-example
-      - terraform init
-        --backend=true
-        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
-        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-      - terraform apply
-        --auto-approve
-        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-        --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
-
-  - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.21.12_3.8.7_4.21.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ init-gcp ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
-      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
-      - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
-      - kubectl rollout restart deploy velero -n kube-system
-
-  - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ apply-gcp-configuration ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
-      - tar -zxf velero.tar.gz
-      - mv velero*/velero /usr/local/bin/velero
-      - bats -t katalog/tests/velero/velero-backup.sh
-
-  - name: destroy-gcp
-    image: hashicorp/terraform:0.15.4
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ test-backup-restore-gcp ]
-    environment:
-      GCP_PROJECT:
-        from_secret: gcp_project
-      GCP_CREDENTIALS:
-        from_secret: gcp_credentials
-      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-121-gcp
-      TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
-    commands:
-      - cd example/gcp-example
-      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
-      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
-      - terraform init
-        --backend=true
-        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
-        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-      - terraform destroy
-        --auto-approve
-        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-        --var="gcp_project"=$${GCP_PROJECT}
-    when:
-      status:
-      - success
-      - failure
-
-  - name: init-azure
-    image: hashicorp/terraform:0.15.4
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ test-backup-restore-gcp ]
-    environment:
-      CI_PIPELINE_NUMBER: k8s121azu
-      TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
-      STORAGE_ACCOUNT_NAME:
-        from_secret: storage_account_name
-      RESOURCE_GROUP_NAME:
-        from_secret: resource_group_name
-      ARM_CLIENT_ID:
-        from_secret: arm_client_id
-      ARM_CLIENT_SECRET:
-        from_secret: arm_client_secret
-      ARM_SUBSCRIPTION_ID:
-        from_secret: arm_subscription_id
-      ARM_TENANT_ID:
-        from_secret: arm_tenant_id
-    commands:
-      - cd example/azure-example
-      - terraform init
-        --backend=true
-        --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
-        --backend-config="resource_group_name=$${RESOURCE_GROUP_NAME}"
-        --backend-config="container_name=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
-        --backend-config="key=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-      - terraform apply
-        --auto-approve
-        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
-      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
-      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
-
-  - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.21.12_3.8.7_4.21.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ init-azure ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
-      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
-      - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
-      - kubectl rollout restart deploy velero -n kube-system
-
-  - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.21.12_3.8.7_4.21.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ apply-azure-configuration ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-121
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
-      - tar -zxf velero.tar.gz
-      - mv velero*/velero /usr/local/bin/velero
-      - bats -t katalog/tests/velero/velero-backup.sh
-
-  - name: destroy-azure
-    image: hashicorp/terraform:0.15.4
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ test-backup-restore-azure ]
-    environment:
-      CI_PIPELINE_NUMBER: k8s121azu
-      TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
-      STORAGE_ACCOUNT_NAME:
-        from_secret: storage_account_name
-      RESOURCE_GROUP_NAME:
-        from_secret: resource_group_name
-      ARM_CLIENT_ID:
-        from_secret: arm_client_id
-      ARM_CLIENT_SECRET:
-        from_secret: arm_client_secret
-      ARM_SUBSCRIPTION_ID:
-        from_secret: arm_subscription_id
-      ARM_TENANT_ID:
-        from_secret: arm_tenant_id
-    commands:
-      - cd example/azure-example
-      - terraform init
-        --backend=true
-        --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
-        --backend-config="resource_group_name=$${RESOURCE_GROUP_NAME}"
-        --backend-config="container_name=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
-        --backend-config="key=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
-      - terraform destroy
-        --auto-approve
-        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
-    when:
-      status:
-      - success
-      - failure
-
-  - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v1.24.1
-    pull: always
-    depends_on: [ test-backup-restore-azure ]
-    settings:
-      action: destroy
-      pipeline_id: cluster-121
-      aws_default_region:
-        from_secret: aws_region
-      aws_access_key_id:
-        from_secret: aws_access_key_id
-      aws_secret_access_key:
-        from_secret: aws_secret_access_key
-      terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
-      vsphere_server:
-        from_secret: vsphere_server
-      vsphere_password:
-        from_secret: vsphere_password
-      vsphere_user:
-        from_secret: vsphere_user
-      dockerhub_username:
-        from_secret: dockerhub_username
-      dockerhub_password:
-        from_secret: dockerhub_password
-    when:
-      status:
-      - success
-      - failure
-
-volumes:
-- name: shared
-  temp: {}
+      - /pluto detect gatekeeper.yml --target-versions=k8s=v1.25.0 --ignore-deprecations
 
 ---
 name: e2e-kubernetes-1.22
@@ -515,7 +114,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.22.9_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -526,7 +125,7 @@ steps:
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.22.9_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -534,7 +133,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-122
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -571,7 +170,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.22.9_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -584,7 +183,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.22.9_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -592,7 +191,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-122
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -662,7 +261,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.22.9_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -676,7 +275,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.22.9_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -684,7 +283,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-122
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -761,7 +360,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.22.9_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -775,7 +374,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.22.9_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -783,7 +382,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-122
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -916,7 +515,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.23.6_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -927,7 +526,7 @@ steps:
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.23.6_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -935,7 +534,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-123
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -972,7 +571,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.23.6_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -985,7 +584,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.23.6_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -993,7 +592,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-123
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1063,7 +662,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.23.6_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1077,7 +676,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.23.6_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1085,7 +684,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-123
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1162,7 +761,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.23.6_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1176,7 +775,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.23.6_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -1184,7 +783,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-123
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1317,7 +916,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.0_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
     pull: always
     volumes:
     - name: shared
@@ -1328,7 +927,7 @@ steps:
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.0_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
     pull: always
     volumes:
     - name: shared
@@ -1336,7 +935,7 @@ steps:
     depends_on: [ test-install ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-124
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1373,7 +972,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.0_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
     pull: always
     volumes:
     - name: shared
@@ -1386,7 +985,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.0_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
     pull: always
     volumes:
     - name: shared
@@ -1394,7 +993,7 @@ steps:
     depends_on: [ apply-aws-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-124
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1464,7 +1063,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.0_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
     pull: always
     volumes:
     - name: shared
@@ -1478,7 +1077,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.0_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
     pull: always
     volumes:
     - name: shared
@@ -1486,7 +1085,7 @@ steps:
     depends_on: [ apply-gcp-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-124
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1563,7 +1162,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.0_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
     pull: always
     volumes:
     - name: shared
@@ -1577,7 +1176,7 @@ steps:
       - kubectl rollout restart deploy velero -n kube-system
 
   - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.0_3.8.7_4.21.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
     pull: always
     volumes:
     - name: shared
@@ -1585,7 +1184,7 @@ steps:
     depends_on: [ apply-azure-configuration ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-124
-      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.9.2/velero-v1.9.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
@@ -1664,15 +1263,416 @@ volumes:
   temp: {}
 
 ---
+name: e2e-kubernetes-1.25
+kind: pipeline
+type: docker
+
+depends_on:
+  - policeman
+
+platform:
+  os: linux
+  arch: amd64
+
+node:
+  runner: internal
+
+trigger:
+  ref:
+    include:
+      - refs/heads/main
+      - refs/heads/master
+      - refs/heads/release-v*
+      - refs/tags/**
+
+steps:
+  - name: init
+    image: quay.io/sighup/e2e-testing-drone-plugin:v1.24.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ clone ]
+    settings:
+      action: cluster-125
+      pipeline_id: cluster-125
+      instance_path: /shared
+      aws_default_region:
+        from_secret: aws_region
+      aws_access_key_id:
+        from_secret: aws_access_key_id
+      aws_secret_access_key:
+        from_secret: aws_secret_access_key
+      terraform_tf_states_bucket_name:
+        from_secret: terraform_tf_states_bucket_name
+      vsphere_server:
+        from_secret: vsphere_server
+      vsphere_password:
+        from_secret: vsphere_password
+      vsphere_user:
+        from_secret: vsphere_user
+      dockerhub_username:
+        from_secret: dockerhub_username
+      dockerhub_password:
+        from_secret: dockerhub_password
+
+  - name: test-install
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-125
+      - bats -t katalog/tests/velero/velero-install.sh
+
+  - name: test-backup-restore
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-install ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-125
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
+      - tar -zxf velero.tar.gz
+      - mv velero*/velero /usr/local/bin/velero
+      - bats -t katalog/tests/velero/velero-backup.sh
+
+  - name: init-aws
+    image: hashicorp/terraform:0.15.4
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore ]
+    environment:
+      CI_PIPELINE_NUMBER: cluster-125-aws
+      AWS_DEFAULT_REGION:
+        from_secret: aws_region
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - cd example/aws-example
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="key=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+        --backend-config="region=$${AWS_DEFAULT_REGION}"
+      - terraform apply
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
+
+  - name: apply-aws-configuration
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init-aws ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-125
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
+      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kubectl rollout restart deploy velero -n kube-system
+
+  - name: test-backup-restore-aws
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ apply-aws-configuration ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-125
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
+      - tar -zxf velero.tar.gz
+      - mv velero*/velero /usr/local/bin/velero
+      - bats -t katalog/tests/velero/velero-backup.sh
+
+  - name: destroy-aws
+    image: hashicorp/terraform:0.15.4
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-aws ]
+    environment:
+      CI_PIPELINE_NUMBER: cluster-124-aws
+      AWS_DEFAULT_REGION:
+        from_secret: aws_region
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - cd example/aws-example
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="key=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+        --backend-config="region=$${AWS_DEFAULT_REGION}"
+      - terraform destroy
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+    when:
+      status:
+      - success
+      - failure
+
+  - name: init-gcp
+    image: hashicorp/terraform:0.15.4
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-aws ]
+    environment:
+      GCP_PROJECT:
+        from_secret: gcp_project
+      GCP_CREDENTIALS:
+        from_secret: gcp_credentials
+      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
+      CI_PIPELINE_NUMBER: cluster-125-gcp
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
+      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
+      - cd example/gcp-example
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+      - terraform apply
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+        --var="gcp_project"=$${GCP_PROJECT}
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
+
+  - name: apply-gcp-configuration
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init-gcp ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-125
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
+      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
+      - kubectl rollout restart deploy velero -n kube-system
+
+  - name: test-backup-restore-gcp
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ apply-gcp-configuration ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-125
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
+      - tar -zxf velero.tar.gz
+      - mv velero*/velero /usr/local/bin/velero
+      - bats -t katalog/tests/velero/velero-backup.sh
+
+  - name: destroy-gcp
+    image: hashicorp/terraform:0.15.4
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-gcp ]
+    environment:
+      GCP_PROJECT:
+        from_secret: gcp_project
+      GCP_CREDENTIALS:
+        from_secret: gcp_credentials
+      GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
+      CI_PIPELINE_NUMBER: cluster-125-gcp
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+    commands:
+      - cd example/gcp-example
+      - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
+      - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
+      - terraform init
+        --backend=true
+        --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+      - terraform destroy
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+        --var="gcp_project"=$${GCP_PROJECT}
+    when:
+      status:
+      - success
+      - failure
+
+  - name: init-azure
+    image: hashicorp/terraform:0.15.4
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-gcp ]
+    environment:
+      CI_PIPELINE_NUMBER: k8s125azu
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+      STORAGE_ACCOUNT_NAME:
+        from_secret: storage_account_name
+      RESOURCE_GROUP_NAME:
+        from_secret: resource_group_name
+      ARM_CLIENT_ID:
+        from_secret: arm_client_id
+      ARM_CLIENT_SECRET:
+        from_secret: arm_client_secret
+      ARM_SUBSCRIPTION_ID:
+        from_secret: arm_subscription_id
+      ARM_TENANT_ID:
+        from_secret: arm_tenant_id
+    commands:
+      - cd example/azure-example
+      - terraform init
+        --backend=true
+        --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
+        --backend-config="resource_group_name=$${RESOURCE_GROUP_NAME}"
+        --backend-config="container_name=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="key=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+      - terraform apply
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+      - terraform output -raw cloud_credentials > /shared/cloud_credentials.yaml
+      - terraform output -raw volume_snapshot_location > /shared/volume_snapshot_location.yaml
+      - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
+
+  - name: apply-azure-configuration
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init-azure ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-125
+      - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
+      - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
+      - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
+      - kubectl rollout restart deploy velero -n kube-system
+
+  - name: test-backup-restore-azure
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ apply-azure-configuration ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-125
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.10.1/velero-v1.10.1-linux-amd64.tar.gz
+      - tar -zxf velero.tar.gz
+      - mv velero*/velero /usr/local/bin/velero
+      - bats -t katalog/tests/velero/velero-backup.sh
+
+  - name: destroy-azure
+    image: hashicorp/terraform:0.15.4
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ test-backup-restore-azure ]
+    environment:
+      CI_PIPELINE_NUMBER: k8s125azu
+      TERRAFORM_TF_STATES_BUCKET_NAME:
+        from_secret: terraform_tf_states_bucket_name
+      STORAGE_ACCOUNT_NAME:
+        from_secret: storage_account_name
+      RESOURCE_GROUP_NAME:
+        from_secret: resource_group_name
+      ARM_CLIENT_ID:
+        from_secret: arm_client_id
+      ARM_CLIENT_SECRET:
+        from_secret: arm_client_secret
+      ARM_SUBSCRIPTION_ID:
+        from_secret: arm_subscription_id
+      ARM_TENANT_ID:
+        from_secret: arm_tenant_id
+    commands:
+      - cd example/azure-example
+      - terraform init
+        --backend=true
+        --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
+        --backend-config="resource_group_name=$${RESOURCE_GROUP_NAME}"
+        --backend-config="container_name=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
+        --backend-config="key=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
+      - terraform destroy
+        --auto-approve
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}"
+    when:
+      status:
+      - success
+      - failure
+
+  - name: destroy
+    image: quay.io/sighup/e2e-testing-drone-plugin:v1.24.1
+    pull: always
+    depends_on: [ test-backup-restore-azure ]
+    settings:
+      action: destroy
+      pipeline_id: cluster-125
+      aws_default_region:
+        from_secret: aws_region
+      aws_access_key_id:
+        from_secret: aws_access_key_id
+      aws_secret_access_key:
+        from_secret: aws_secret_access_key
+      terraform_tf_states_bucket_name:
+        from_secret: terraform_tf_states_bucket_name
+      vsphere_server:
+        from_secret: vsphere_server
+      vsphere_password:
+        from_secret: vsphere_password
+      vsphere_user:
+        from_secret: vsphere_user
+      dockerhub_username:
+        from_secret: dockerhub_username
+      dockerhub_password:
+        from_secret: dockerhub_password
+    when:
+      status:
+      - success
+      - failure
+
+volumes:
+- name: shared
+  temp: {}
+
+---
 name: release
 kind: pipeline
 type: docker
 
 depends_on:
-  - e2e-kubernetes-1.21
   - e2e-kubernetes-1.22
   - e2e-kubernetes-1.23
   - e2e-kubernetes-1.24
+  - e2e-kubernetes-1.25
 
 platform:
   os: linux
