@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - args:
-        - restic
+        - node-agent
         - server
         command:
         - /velero
