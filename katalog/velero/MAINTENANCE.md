@@ -6,7 +6,7 @@ To update the Velero package, follow the next steps:
 ```bash
 velero install --namespace kube-system --provider aws --no-secret --bucket my-bucket --dry-run -o yaml --plugins velero/velero-plugin-for-aws:<tag> > orig.yaml
 ```
-- Update CRDs in [`/katalog/velero/velero-base/crds.yaml`](./velero-base/crds.yaml)
+- Update CRDs in [`/katalog/velero/velero-base/crds.yaml`](./velero-base/crds.yaml) with: `velero install --crds-only --dry-run -o yaml > crds.yaml`
 - Port the needed changes
 - Update the images tags
 - Sync the image to our registry
