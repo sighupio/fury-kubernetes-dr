@@ -182,6 +182,8 @@ steps:
       - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-aws
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
@@ -274,6 +276,8 @@ steps:
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-gcp
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
@@ -373,6 +377,8 @@ steps:
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-azure
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
@@ -584,6 +590,8 @@ steps:
       - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-aws
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
@@ -676,6 +684,8 @@ steps:
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-gcp
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
@@ -775,6 +785,8 @@ steps:
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-azure
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.23.0_3.8.7_2.4.1
@@ -986,6 +998,8 @@ steps:
       - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-aws
     image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
@@ -1078,6 +1092,8 @@ steps:
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-gcp
     image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
@@ -1177,6 +1193,8 @@ steps:
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-azure
     image: quay.io/sighup/e2e-testing:1.1.0_0.7.0_3.1.1_1.9.4_1.24.1_3.8.7_4.21.1
@@ -1389,6 +1407,8 @@ steps:
       - kubectl apply -f /shared/cloud_credentials.yaml -n kube-system
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-aws
     image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
@@ -1481,6 +1501,8 @@ steps:
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-gcp
     image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
@@ -1580,6 +1602,8 @@ steps:
       - kubectl apply -f /shared/backup_storage_location.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
+      - sleep 30 # wait for velero to restart
+      - kubectl get pods -n kube-system
 
   - name: test-backup-restore-azure
     image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
