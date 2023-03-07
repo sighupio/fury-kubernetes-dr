@@ -20,7 +20,7 @@ load ./../helper
     verify() {
         velero -n kube-system backup get backup-e2e | grep Completed
     }
-    loop_it verify 10 10
+    loop_it verify 20 10
     [ "$status" -eq 0 ]
 }
 

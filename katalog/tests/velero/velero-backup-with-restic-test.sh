@@ -78,3 +78,12 @@ load ./../helper
     run delete
     [ "$status" -eq 0 ]
 }
+
+@test "Delete app" {
+    info
+    delete(){
+        delete katalog/tests/test-app
+    }
+    run delete
+    [ "$status" -eq 0 ]
+}
