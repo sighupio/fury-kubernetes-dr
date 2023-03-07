@@ -147,7 +147,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-122-aws
+      CI_PIPELINE_NUMBER: dr-122-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -207,7 +207,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-122-aws
+      CI_PIPELINE_NUMBER: dr-122-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -244,7 +244,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-122-gcp
+      CI_PIPELINE_NUMBER: dr-122-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
@@ -306,7 +306,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-122-gcp
+      CI_PIPELINE_NUMBER: dr-122-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
@@ -555,7 +555,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-123-aws
+      CI_PIPELINE_NUMBER: dr-123-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -615,7 +615,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-123-aws
+      CI_PIPELINE_NUMBER: dr-123-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -652,7 +652,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-123-gcp
+      CI_PIPELINE_NUMBER: dr-123-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
@@ -714,7 +714,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-123-gcp
+      CI_PIPELINE_NUMBER: dr-123-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
@@ -963,7 +963,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-124-aws
+      CI_PIPELINE_NUMBER: dr-124-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -1023,7 +1023,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-124-aws
+      CI_PIPELINE_NUMBER: dr-124-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -1060,7 +1060,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-124-gcp
+      CI_PIPELINE_NUMBER: dr-124-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
@@ -1122,7 +1122,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-124-gcp
+      CI_PIPELINE_NUMBER: dr-124-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
@@ -1372,7 +1372,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-125-aws
+      CI_PIPELINE_NUMBER: dr-125-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -1432,7 +1432,7 @@ steps:
       path: /shared
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CI_PIPELINE_NUMBER: cluster-125-aws
+      CI_PIPELINE_NUMBER: dr-125-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -1469,7 +1469,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-125-gcp
+      CI_PIPELINE_NUMBER: dr-125-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
@@ -1531,7 +1531,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
-      CI_PIPELINE_NUMBER: cluster-125-gcp
+      CI_PIPELINE_NUMBER: dr-125-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
