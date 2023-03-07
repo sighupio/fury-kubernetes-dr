@@ -15,7 +15,16 @@ load ./../helper
     [ "$status" -eq 0 ]
 }
 
-@test "upps. Chaos...." {
+@test "Verify that backup is completed" {
+    info
+    verify() {
+        velero -n kube-system backup get backup-e2e | grep Completed
+    }
+    loop_it verify 10 10
+    [ "$status" -eq 0 ]
+}
+
+@test "oops. Chaos...." {
     info
     chaos() {
         kubectl delete service velero -n kube-system
@@ -26,10 +35,10 @@ load ./../helper
 
 @test "Restore backup" {
     info
-    backup() {
+    restore() {
         timeout 120 velero restore create --from-backup backup-e2e -n kube-system --wait
     }
-    run backup
+    run restore
     [ "$status" -eq 0 ]
 }
 
