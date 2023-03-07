@@ -4,7 +4,7 @@ To update the Velero package, follow the next steps:
 - Update the Velero CLI to your target version
 - Get the upstream manifest with
 ```bash
-velero install --namespace kube-system --provider aws --no-secret --bucket my-bucket --dry-run -o yaml --plugins velero/velero-plugin-for-aws:<tag> > orig.yaml
+velero install --namespace kube-system --provider aws --no-secret --bucket my-bucket --dry-run -o yaml --plugins velero/velero-plugin-for-aws:<tag> --use-node-agent > orig.yaml
 ```
 - Update CRDs in [`/katalog/velero/velero-base/crds.yaml`](./velero-base/crds.yaml) with: `velero install --crds-only --dry-run -o yaml > crds.yaml`
 - Port the needed changes
