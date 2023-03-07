@@ -82,7 +82,7 @@ load ./../helper
 @test "Delete app" {
     info
     delete(){
-        delete katalog/tests/test-app
+        kustomize build katalog/tests/test-app | kubectl delete -f -
     }
     run delete
     [ "$status" -eq 0 ]
