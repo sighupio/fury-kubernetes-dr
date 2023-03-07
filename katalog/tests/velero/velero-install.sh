@@ -60,3 +60,14 @@ load ./../helper
     run deploy
     [ "$status" -eq 0 ]
 }
+
+@test "check minio setup job" {
+  info
+  test(){
+    data=$(kubectl get job -n kube-system -l k8s-app=minio-setup -o json | jq '.items[] | select(.metadata.name == "minio-setup" and .status.succeeded == 1 )')
+    if [ "${data}" == "" ]; then return 1; fi
+  }
+  loop_it test 400 6
+  status=${loop_it_result}
+  [[ "$status" -eq 0 ]]
+}
