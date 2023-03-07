@@ -8,37 +8,37 @@ load ./../helper
 
 @test "Trigger backup" {
     info
-    backup() {
+    test() {
         timeout 120 velero backup create backup-e2e --from-schedule manifests -n kube-system --wait
     }
-    run backup
+    run test
     [ "$status" -eq 0 ]
 }
 
 @test "Verify that backup is completed" {
     info
-    verify() {
+    test() {
         velero -n kube-system backup get backup-e2e | grep Completed
     }
-    loop_it verify 20 10
+    loop_it test 20 10
     [ "$status" -eq 0 ]
 }
 
 @test "oops. Chaos...." {
     info
-    chaos() {
+    test() {
         kubectl delete service velero -n kube-system
     }
-    run chaos
+    run test
     [ "$status" -eq 0 ]
 }
 
 @test "Restore backup" {
     info
-    restore() {
+    test() {
         timeout 120 velero restore create --from-backup backup-e2e -n kube-system --wait
     }
-    run restore
+    run test
     [ "$status" -eq 0 ]
 }
 
@@ -54,9 +54,9 @@ load ./../helper
 
 @test "Delete backup" {
     info
-    delete(){
+    test(){
         velero backup delete backup-e2e --confirm -n kube-system
     }
-    run delete
+    run test
     [ "$status" -eq 0 ]
 }

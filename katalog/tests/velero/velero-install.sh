@@ -15,10 +15,10 @@ load ./../helper
 
 @test "Deploy Velero on Prem" {
     info
-    deploy() {
+    test() {
         apply katalog/velero/velero-on-prem
     }
-    loop_it deploy 30 10
+    loop_it test 30 10
     status=${loop_it_result}
     [ "$status" -eq 0 ]
 }
@@ -35,10 +35,10 @@ load ./../helper
 
 @test "Deploy Velero Restic" {
     info
-    deploy() {
+    test() {
         apply katalog/velero/velero-restic
     }
-    run deploy
+    run test
     [ "$status" -eq 0 ]
 }
 
@@ -54,10 +54,10 @@ load ./../helper
 
 @test "Deploy Velero Schedules" {
     info
-    deploy() {
+    test() {
         apply katalog/velero/velero-schedules
     }
-    run deploy
+    run test
     [ "$status" -eq 0 ]
 }
 

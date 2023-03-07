@@ -8,55 +8,55 @@ load ./../helper
 
 @test "Deploy app" {
     info
-    deploy() {
+    test() {
         apply katalog/tests/test-app
         sleep 10
         kubectl exec -it deployment/mysql -- touch /var/lib/mysql/HELLO_CI
 
     }
-    run deploy
+    run test
     [ "$status" -eq 0 ]
 }
 
 @test "Trigger backup" {
     info
-    backup() {
+    test() {
         timeout 120 velero backup create backup-e2e-app --from-schedule manifests -n kube-system --wait
     }
-    run backup
+    run test
     [ "$status" -eq 0 ]
 }
 
 @test "Verify that backup is completed" {
     info
-    verify() {
+    test() {
         velero -n kube-system backup get backup-e2e-app | grep Completed
     }
-    loop_it verify 10 10
+    loop_it test 10 10
     [ "$status" -eq 0 ]
 }
 
 @test "oops. Chaos...." {
     info
-    chaos() {
+    test() {
         kubectl exec -it deployment/mysql -- rm /var/lib/mysql/HELLO_CI
         kubectl delete deployments -n default --all
         kubectl delete pvc -n default --all
         kubectl delete pv mysql-pv
         sleep 15
     }
-    run chaos
+    run test
     [ "$status" -eq 0 ]
 }
 
 @test "Restore backup" {
     info
-    backup() {
+    test() {
         # Caveat, to restore a `local` pv, the pv must be manually created, restic expects dynamic pv creation
         kubectl apply -n default -f katalog/tests/test-app/resources/pv.yaml
         timeout 120 velero restore create --from-backup backup-e2e-app -n kube-system --wait
     }
-    run backup
+    run test
     [ "$status" -eq 0 ]
 }
 
@@ -72,18 +72,18 @@ load ./../helper
 
 @test "Delete backup" {
     info
-    delete(){
+    test(){
         velero backup delete backup-e2e-app --confirm -n kube-system
     }
-    run delete
+    run test
     [ "$status" -eq 0 ]
 }
 
 @test "Delete app" {
     info
-    delete(){
+    test(){
         kustomize build katalog/tests/test-app | kubectl delete -f -
     }
-    run delete
+    run test
     [ "$status" -eq 0 ]
 }
