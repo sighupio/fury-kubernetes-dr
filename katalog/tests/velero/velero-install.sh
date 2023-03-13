@@ -15,10 +15,10 @@ load ./../helper
 
 @test "Deploy Velero on Prem" {
     info
-    deploy() {
+    test() {
         apply katalog/velero/velero-on-prem
     }
-    loop_it deploy 30 10
+    loop_it test 30 10
     status=${loop_it_result}
     [ "$status" -eq 0 ]
 }
@@ -35,10 +35,10 @@ load ./../helper
 
 @test "Deploy Velero Restic" {
     info
-    deploy() {
+    test() {
         apply katalog/velero/velero-restic
     }
-    run deploy
+    run test
     [ "$status" -eq 0 ]
 }
 
@@ -54,9 +54,20 @@ load ./../helper
 
 @test "Deploy Velero Schedules" {
     info
-    deploy() {
+    test() {
         apply katalog/velero/velero-schedules
     }
-    run deploy
+    run test
     [ "$status" -eq 0 ]
+}
+
+@test "check minio setup job" {
+  info
+  test(){
+    data=$(kubectl get job -n kube-system -l k8s-app=minio-setup -o json | jq '.items[] | select(.metadata.name == "minio-setup" and .status.succeeded == 1 )')
+    if [ "${data}" == "" ]; then return 1; fi
+  }
+  loop_it test 400 6
+  status=${loop_it_result}
+  [[ "$status" -eq 0 ]]
 }

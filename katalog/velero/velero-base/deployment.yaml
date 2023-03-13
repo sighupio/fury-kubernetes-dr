@@ -27,6 +27,7 @@ spec:
       containers:
       - args:
         - server
+        - --uploader-type=restic
         command:
         - /velero
         env:

@@ -8,19 +8,23 @@ kind: DaemonSet
 metadata:
   labels:
     k8s-app: velero-restic
-  name: velero-restic
+  name: node-agent
 spec:
   selector:
     matchLabels:
       k8s-app: velero-restic
+      name: node-agent
+      component: velero
   template:
     metadata:
       labels:
         k8s-app: velero-restic
+        name: node-agent
+        component: velero
     spec:
       containers:
       - args:
-        - restic
+        - node-agent
         - server
         command:
         - /velero
