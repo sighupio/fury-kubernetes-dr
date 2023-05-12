@@ -157,7 +157,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/aws-example
+      - cd examples/aws-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -217,7 +217,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/aws-example
+      - cd examples/aws-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -250,7 +250,7 @@ steps:
     commands:
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
-      - cd example/gcp-example
+      - cd examples/gcp-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -310,7 +310,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/gcp-example
+      - cd examples/gcp-example
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
       - terraform init
@@ -350,7 +350,7 @@ steps:
       ARM_TENANT_ID:
         from_secret: arm_tenant_id
     commands:
-      - cd example/azure-example
+      - cd examples/azure-example
       - terraform init
         --backend=true
         --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
@@ -418,7 +418,7 @@ steps:
       ARM_TENANT_ID:
         from_secret: arm_tenant_id
     commands:
-      - cd example/azure-example
+      - cd examples/azure-example
       - terraform init
         --backend=true
         --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
@@ -565,7 +565,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/aws-example
+      - cd examples/aws-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -625,7 +625,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/aws-example
+      - cd examples/aws-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -658,7 +658,7 @@ steps:
     commands:
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
-      - cd example/gcp-example
+      - cd examples/gcp-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -718,7 +718,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/gcp-example
+      - cd examples/gcp-example
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
       - terraform init
@@ -758,7 +758,7 @@ steps:
       ARM_TENANT_ID:
         from_secret: arm_tenant_id
     commands:
-      - cd example/azure-example
+      - cd examples/azure-example
       - terraform init
         --backend=true
         --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
@@ -826,7 +826,7 @@ steps:
       ARM_TENANT_ID:
         from_secret: arm_tenant_id
     commands:
-      - cd example/azure-example
+      - cd examples/azure-example
       - terraform init
         --backend=true
         --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
@@ -973,7 +973,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/aws-example
+      - cd examples/aws-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -1033,7 +1033,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/aws-example
+      - cd examples/aws-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -1066,7 +1066,7 @@ steps:
     commands:
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
-      - cd example/gcp-example
+      - cd examples/gcp-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -1126,7 +1126,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/gcp-example
+      - cd examples/gcp-example
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
       - terraform init
@@ -1166,7 +1166,7 @@ steps:
       ARM_TENANT_ID:
         from_secret: arm_tenant_id
     commands:
-      - cd example/azure-example
+      - cd examples/azure-example
       - terraform init
         --backend=true
         --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
@@ -1234,7 +1234,7 @@ steps:
       ARM_TENANT_ID:
         from_secret: arm_tenant_id
     commands:
-      - cd example/azure-example
+      - cd examples/azure-example
       - terraform init
         --backend=true
         --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
@@ -1382,7 +1382,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/aws-example
+      - cd examples/aws-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -1442,7 +1442,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/aws-example
+      - cd examples/aws-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -1475,7 +1475,7 @@ steps:
     commands:
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
-      - cd example/gcp-example
+      - cd examples/gcp-example
       - terraform init
         --backend=true
         --backend-config="bucket=$${TERRAFORM_TF_STATES_BUCKET_NAME}"
@@ -1535,7 +1535,7 @@ steps:
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: terraform_tf_states_bucket_name
     commands:
-      - cd example/gcp-example
+      - cd examples/gcp-example
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
       - terraform init
@@ -1575,7 +1575,7 @@ steps:
       ARM_TENANT_ID:
         from_secret: arm_tenant_id
     commands:
-      - cd example/azure-example
+      - cd examples/azure-example
       - terraform init
         --backend=true
         --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"
@@ -1643,7 +1643,7 @@ steps:
       ARM_TENANT_ID:
         from_secret: arm_tenant_id
     commands:
-      - cd example/azure-example
+      - cd examples/azure-example
       - terraform init
         --backend=true
         --backend-config="storage_account_name=$${STORAGE_ACCOUNT_NAME}"

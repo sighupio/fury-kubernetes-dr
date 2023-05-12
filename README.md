@@ -332,9 +332,9 @@ kustomize build . | kubectl apply -f -
 [velero-aws-plugin-repo]: https://github.com/vmware-tanzu/velero-plugin-for-aws
 [velero-azure-plugin-repo]: https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure
 [velero-gcp-plugin-repo-permissions]: https://github.com/vmware-tanzu/velero-plugin-for-gcp#set-permissions-for-velero
-[kfd-velero-gcp-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/example/gcp-example/main.tf
-[kfd-velero-aws-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/example/aws-example/main.tf
-[kfd-velero-azure-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/example/azure-example/main.tf
+[kfd-velero-gcp-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/examples/gcp-examples/main.tf
+[kfd-velero-aws-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/examples/aws-examples/main.tf
+[kfd-velero-azure-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/examples/azure-examples/main.tf
 [kfd-velero-on-prem]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/katalog/velero/velero-on-prem
 [aws-docs-iam-roles]: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
