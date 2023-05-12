@@ -5,36 +5,29 @@
  */
 
 terraform {
-  backend "azurerm" {}
-  required_version = ">= 1.3.0"
+  backend "s3" {}
+  required_version = "~> 1.4"
   required_providers {
-    azurerm = {
-      version = ">= 2.60.0"
-      source  = "hashicorp/random"
-    }
-    azuread = {
-      version = ">= 1.5.0"
-      source  = "hashicorp/azuread"
-    }
+    aws = "~> 3.76.1"
   }
 }
 
-provider "azurerm" {
-  features {}
+provider "aws" {
+  region = var.region
 }
 
-variable "my_cluster_name" {
-
+variable "region" {
+  default = "eu-west-1"
 }
+
+variable "my_cluster_name" {}
 variable "environment" {
   default = "testing"
 }
 
 module "velero" {
-  source                     = "../../modules/azure-velero"
-  backup_bucket_name         = "${var.my_cluster_name}${var.environment}"
-  aks_resource_group_name    = "sighup-e2e-testing"
-  velero_resource_group_name = "sighup-e2e-testing-velero"
+  source             = "../../modules/aws-velero"
+  backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero-e2e"
 }
 
 output "cloud_credentials" {
