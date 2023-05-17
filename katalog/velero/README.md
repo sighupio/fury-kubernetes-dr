@@ -59,10 +59,10 @@ You can find a [terraform module](../../modules/aws-velero) designed to create a
 to make velero works in AWS.
 
 You can find and example terraform project using the [aws-velero](../../modules/aws-velero) terraform module
-[here](../../example/aws-example/main.tf)
+[here](../../examples/aws-examples/main.tf)
 
 ```bash
-$ cd example/aws-example
+$ cd examples/aws-example
 $ terraform init
 # omitted output
 $ terraform apply --var="my_cluster_name=kubernetes-cluster-and-velero"

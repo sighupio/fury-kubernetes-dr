@@ -5,29 +5,30 @@
  */
 
 terraform {
-  backend "s3" {}
-  required_version = ">= 0.15.4"
+  backend "gcs" {}
+  required_version = "~> 1.4"
   required_providers {
-    aws = ">= 3.37.0"
+    google = "~> 3.90.1"
+    random = "~> 3.5.1"
   }
 }
 
-provider "aws" {
-  region = var.region
-}
-
-variable "region" {
-  default = "eu-west-1"
-}
-
+variable "gcp_project" {}
 variable "my_cluster_name" {}
 variable "environment" {
   default = "testing"
 }
 
+resource "random_id" "random_role_id_suffix" {
+  byte_length = 2
+}
+
 module "velero" {
-  source             = "../../modules/aws-velero"
-  backup_bucket_name = "${var.my_cluster_name}-${var.environment}-velero-e2e"
+  source                   = "../../modules/gcp-velero"
+  backup_bucket_name       = "${var.my_cluster_name}-${var.environment}-velero"
+  gcp_service_account_name = "${var.my_cluster_name}-${var.environment}-velero"
+  gcp_custom_role_name     = replace("${var.my_cluster_name}-${var.environment}-${random_id.random_role_id_suffix.hex}", "-", "_")
+  project                  = var.gcp_project
 }
 
 output "cloud_credentials" {
