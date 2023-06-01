@@ -25,7 +25,7 @@ resource "azuread_service_principal_password" "main" {
 }
 
 resource "azurerm_role_definition" "velero" {
-  name  = "Velero"
+  name  = "${var.backup_bucket_name}-velero"
   scope = data.azurerm_resource_group.velero.id
   permissions {
     actions = [
