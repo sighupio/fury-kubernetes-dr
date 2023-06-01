@@ -26,7 +26,7 @@ resource "azuread_service_principal_password" "main" {
 
 resource "azurerm_role_definition" "velero" {
   name  = "Velero"
-  scope = data.azurerm_resource_group.aks.id
+  scope = data.azurerm_resource_group.velero.id
   permissions {
     actions = [
       "Microsoft.Compute/disks/read",
