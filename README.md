@@ -39,7 +39,7 @@ Kubernetes Fury DR provides the following packages:
 
 | Package                  | Version  | Description                                                                                                     |
 | ------------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
-| [velero](katalog/velero) | `1.10.1` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
+| [velero](katalog/velero) | `1.11.0` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
 
 The velero package contains the following additional components:
 
@@ -70,10 +70,10 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 
 | Kubernetes Version |   Compatibility    | Notes           |
 | ------------------ | :----------------: | --------------- |
-| `1.22.x`           | :white_check_mark: | No known issues |
 | `1.23.x`           | :white_check_mark: | No known issues |
 | `1.24.x`           | :white_check_mark: | No known issues |
 | `1.25.x`           | :white_check_mark: | No known issues |
+| `1.26.x`           | :white_check_mark: | No known issues |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
