@@ -335,7 +335,7 @@ kustomize build . | kubectl apply -f -
 [kfd-velero-gcp-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/gcp-examples/main.tf
 [kfd-velero-aws-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/aws-examples/main.tf
 [kfd-velero-azure-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/azure-examples/main.tf
-[kfd-velero-on-prem]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/katalog/velero/velero-on-prem
+[kfd-velero-on-prem]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/katalog/velero/velero-on-prem
 [aws-docs-iam-roles]: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 [compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/docs/COMPATIBILITY_MATRIX.md
