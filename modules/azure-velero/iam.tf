@@ -24,23 +24,50 @@ resource "azuread_service_principal_password" "main" {
   }
 }
 
+resource "azurerm_role_definition" "velero" {
+  name  = "${var.backup_bucket_name}-velero"
+  scope = data.azurerm_resource_group.velero.id
+  permissions {
+    actions = [
+      "Microsoft.Compute/disks/read",
+      "Microsoft.Compute/disks/write",
+      "Microsoft.Compute/disks/endGetAccess/action",
+      "Microsoft.Compute/disks/beginGetAccess/action",
+      "Microsoft.Compute/snapshots/read",
+      "Microsoft.Compute/snapshots/write",
+      "Microsoft.Compute/snapshots/delete",
+      "Microsoft.Storage/storageAccounts/listkeys/action",
+      "Microsoft.Storage/storageAccounts/regeneratekey/action",
+      "Microsoft.Storage/storageAccounts/blobServices/containers/delete",
+      "Microsoft.Storage/storageAccounts/blobServices/containers/read",
+      "Microsoft.Storage/storageAccounts/blobServices/containers/write",
+      "Microsoft.Storage/storageAccounts/blobServices/generateUserDelegationKey/action",
+    ]
+    data_actions = [
+      "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/delete",
+      "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
+      "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/write",
+      "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/move/action",
+      "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/add/action"
+    ]
+  }
+  assignable_scopes = [
+    data.azurerm_resource_group.aks.id,
+    data.azurerm_resource_group.velero.id
+  ]
+}
+
 resource "azurerm_role_assignment" "aks" {
   scope                            = data.azurerm_resource_group.aks.id
-  role_definition_name             = "Contributor"
+  role_definition_id               = azurerm_role_definition.velero.role_definition_resource_id
   principal_id                     = azuread_service_principal.main.id
   skip_service_principal_aad_check = true
 }
 
 resource "azurerm_role_assignment" "snapshot" {
   scope                            = data.azurerm_resource_group.velero.id
-  role_definition_name             = "Contributor"
+  role_definition_id               = azurerm_role_definition.velero.role_definition_resource_id
   principal_id                     = azuread_service_principal.main.id
   skip_service_principal_aad_check = true
 }
 
-resource "azurerm_role_assignment" "velero" {
-  scope                            = azurerm_storage_account.main.id
-  role_definition_name             = "Contributor"
-  principal_id                     = azuread_service_principal.main.id
-  skip_service_principal_aad_check = true
-}
