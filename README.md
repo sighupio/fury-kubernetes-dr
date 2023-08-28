@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.12.0-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v2.1.0-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-dr?label=License)
 [![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)](https://kubernetes.slack.com/archives/C0154HYTAQH)
 
@@ -91,11 +91,10 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ### Prerequisites
 
 | Tool                        | Version   | Description                                                                                                                                                    |
-| --------------------------- |-----------| -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [furyctl][furyctl-repo]     | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
-| [kustomize][kustomize-repo] | `>=3.5.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
-| [terraform][terraform-page] | `>=1.3.0` | Additional infrastructure is deployed using `terraform`.                                                                                                       |
-
+| [kustomize][kustomize-repo] | `>=3.5.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |                                                                                                 
+| [terraform][terraform-page] | `>=1.3`   | Additional infrastructure is deployed using `terraform`.                                                                                                       |
 ### Velero on AWS
 
 Velero on AWS is based on the [AWS Velero Plugin][velero-aws-plugin-repo].
@@ -110,15 +109,15 @@ To deploy Velero on AWS:
 ```yaml
 bases:
   - name: dr/velero/velero-aws
-    version: "v1.12.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-restic
-    version: "v1.12.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-schedules
-    version: "v1.12.0"
+    version: "v2.1.0"
 
 modules:
   - name: dr/aws-velero
-    version: "v1.12.0"
+    version: "v2.1.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -172,15 +171,15 @@ To deploy Velero on GCP:
 ```yaml
 bases:
   - name: dr/velero/velero-gcp
-    version: "v1.12.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-restic
-    version: "v1.12.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-schedules
-    version: "v1.12.0"
+    version: "v2.1.0"
 
 modules:
   - name: dr/gcp-velero
-    version: "v1.12.0"
+    version: "v2.1.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -231,15 +230,15 @@ To deploy Velero on Azure:
 ```yaml
 bases:
   - name: dr/velero/velero-azure
-    version: "v1.12.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-restic
-    version: "v1.12.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-schedules
-    version: "v1.12.0"
+    version: "v2.1.0"
 
 modules:
   - name: dr/azure-velero
-    version: "v1.12.0"
+    version: "v2.1.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -290,11 +289,11 @@ To deploy `velero on-prem`:
 ```yaml
 bases:
   - name: velero/velero-on-prem
-    version: "v1.12.0"
+    version: "v2.1.0"
   - name: velero/velero-restic
-    version: "v1.12.0"
+    version: "v2.1.0"
   - name: velero/velero-schedules
-    version: "v1.12.0"
+    version: "v2.1.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.

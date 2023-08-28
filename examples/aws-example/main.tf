@@ -5,7 +5,10 @@
  */
 
 terraform {
-  backend "s3" {}
+  backend "s3" {
+    skip_region_validation = true
+  }
+
   required_version = "~> 1.4"
   required_providers {
     aws = "~> 3.76.1"
