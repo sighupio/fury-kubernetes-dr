@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.11.0-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.12.0-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-dr?label=License)
 [![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)](https://kubernetes.slack.com/archives/C0154HYTAQH)
 
@@ -110,15 +110,15 @@ To deploy Velero on AWS:
 ```yaml
 bases:
   - name: dr/velero/velero-aws
-    version: "v1.11.0"
+    version: "v1.12.0"
   - name: dr/velero/velero-restic
-    version: "v1.11.0"
+    version: "v1.12.0"
   - name: dr/velero/velero-schedules
-    version: "v1.11.0"
+    version: "v1.12.0"
 
 modules:
   - name: dr/aws-velero
-    version: "v1.11.0"
+    version: "v1.12.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -172,15 +172,15 @@ To deploy Velero on GCP:
 ```yaml
 bases:
   - name: dr/velero/velero-gcp
-    version: "v1.11.0"
+    version: "v1.12.0"
   - name: dr/velero/velero-restic
-    version: "v1.11.0"
+    version: "v1.12.0"
   - name: dr/velero/velero-schedules
-    version: "v1.11.0"
+    version: "v1.12.0"
 
 modules:
   - name: dr/gcp-velero
-    version: "v1.11.0"
+    version: "v1.12.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -231,15 +231,15 @@ To deploy Velero on Azure:
 ```yaml
 bases:
   - name: dr/velero/velero-azure
-    version: "v1.11.0"
+    version: "v1.12.0"
   - name: dr/velero/velero-restic
-    version: "v1.11.0"
+    version: "v1.12.0"
   - name: dr/velero/velero-schedules
-    version: "v1.11.0"
+    version: "v1.12.0"
 
 modules:
   - name: dr/azure-velero
-    version: "v1.11.0"
+    version: "v1.12.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -290,11 +290,11 @@ To deploy `velero on-prem`:
 ```yaml
 bases:
   - name: velero/velero-on-prem
-    version: "v1.11.0"
+    version: "v1.12.0"
   - name: velero/velero-restic
-    version: "v1.11.0"
+    version: "v1.12.0"
   - name: velero/velero-schedules
-    version: "v1.11.0"
+    version: "v1.12.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
