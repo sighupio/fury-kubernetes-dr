@@ -13,10 +13,10 @@ resources:
 images:
   - name: velero/velero-plugin-for-gcp
     newName: registry.sighup.io/fury/velero/velero-plugin-for-gcp
-    newTag: v1.6.1
+    newTag: v1.7.0
   - name: velero/velero-plugin-for-csi
     newName: registry.sighup.io/fury/velero/velero-plugin-for-csi
-    newTag: v0.4.1
+    newTag: v0.5.0
 
 patchesStrategicMerge:
   - plugin-patch.yaml

@@ -1,11 +1,11 @@
 # Velero GCP
 
 This Velero deployment is ready to be deployed in any GCP cluster as it includes the
-[GCP Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-gcp/tree/v1.6.1).
+[GCP Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-gcp/tree/v1.7.0).
 
 ## Image repository and tag
 
-- Velero GCP Plugin image: `velero/velero-plugin-for-gcp:v1.6.1`
+- Velero GCP Plugin image: `velero/velero-plugin-for-gcp:v1.7.0`
 - Velero GCP Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-gcp](https://github.com/vmware-tanzu/velero-plugin-for-gcp).
 

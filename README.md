@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v2.0.0-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v2.1.0-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-dr?label=License)
 [![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)](https://kubernetes.slack.com/archives/C0154HYTAQH)
 
@@ -39,7 +39,7 @@ Kubernetes Fury DR provides the following packages:
 
 | Package                  | Version  | Description                                                                                                     |
 | ------------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
-| [velero](katalog/velero) | `1.10.1` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
+| [velero](katalog/velero) | `1.11.0` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
 
 The velero package contains the following additional components:
 
@@ -70,10 +70,10 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 
 | Kubernetes Version |   Compatibility    | Notes           |
 | ------------------ | :----------------: | --------------- |
-| `1.22.x`           | :white_check_mark: | No known issues |
 | `1.23.x`           | :white_check_mark: | No known issues |
 | `1.24.x`           | :white_check_mark: | No known issues |
 | `1.25.x`           | :white_check_mark: | No known issues |
+| `1.26.x`           | :white_check_mark: | No known issues |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
@@ -90,12 +90,11 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ### Prerequisites
 
-| Tool                        | Version   | Description                                                                                                                                                    |
-| --------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]     | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
-| [kustomize][kustomize-repo] | `>=3.5.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
-| [terraform][terraform-page] | `>=1.3`   | Additional infrastructure is deployed using `terraform`.                                                                                                       |
-
+| Tool                        | Version    | Description                                                                                                                                                    |
+| --------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [furyctl][furyctl-repo]     | `>=0.25.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [kustomize][kustomize-repo] | `>=3.5.3`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
+| [terraform][terraform-page] | `>=1.3`    | Additional infrastructure is deployed using `terraform`.                                                                                                       |
 ### Velero on AWS
 
 Velero on AWS is based on the [AWS Velero Plugin][velero-aws-plugin-repo].
@@ -110,20 +109,20 @@ To deploy Velero on AWS:
 ```yaml
 bases:
   - name: dr/velero/velero-aws
-    version: "v2.0.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-restic
-    version: "v2.0.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-schedules
-    version: "v2.0.0"
+    version: "v2.1.0"
 
 modules:
   - name: dr/aws-velero
-    version: "v2.0.0"
+    version: "v2.1.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -172,20 +171,20 @@ To deploy Velero on GCP:
 ```yaml
 bases:
   - name: dr/velero/velero-gcp
-    version: "v2.0.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-restic
-    version: "v2.0.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-schedules
-    version: "v2.0.0"
+    version: "v2.1.0"
 
 modules:
   - name: dr/gcp-velero
-    version: "v2.0.0"
+    version: "v2.1.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -231,20 +230,20 @@ To deploy Velero on Azure:
 ```yaml
 bases:
   - name: dr/velero/velero-azure
-    version: "v2.0.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-restic
-    version: "v2.0.0"
+    version: "v2.1.0"
   - name: dr/velero/velero-schedules
-    version: "v2.0.0"
+    version: "v2.1.0"
 
 modules:
   - name: dr/azure-velero
-    version: "v2.0.0"
+    version: "v2.1.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -290,16 +289,16 @@ To deploy `velero on-prem`:
 ```yaml
 bases:
   - name: velero/velero-on-prem
-    version: "v2.0.0"
+    version: "v2.1.0"
   - name: velero/velero-restic
-    version: "v2.0.0"
+    version: "v2.1.0"
   - name: velero/velero-schedules
-    version: "v2.0.0"
+    version: "v2.1.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -332,10 +331,10 @@ kustomize build . | kubectl apply -f -
 [velero-aws-plugin-repo]: https://github.com/vmware-tanzu/velero-plugin-for-aws
 [velero-azure-plugin-repo]: https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure
 [velero-gcp-plugin-repo-permissions]: https://github.com/vmware-tanzu/velero-plugin-for-gcp#set-permissions-for-velero
-[kfd-velero-gcp-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/example/gcp-example/main.tf
-[kfd-velero-aws-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/example/aws-example/main.tf
-[kfd-velero-azure-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/example/azure-example/main.tf
-[kfd-velero-on-prem]: https://github.com/sighupio/fury-kubernetes-dr/tree/master/katalog/velero/velero-on-prem
+[kfd-velero-gcp-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/gcp-examples/main.tf
+[kfd-velero-aws-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/aws-examples/main.tf
+[kfd-velero-azure-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/azure-examples/main.tf
+[kfd-velero-on-prem]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/katalog/velero/velero-on-prem
 [aws-docs-iam-roles]: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 [compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/docs/COMPATIBILITY_MATRIX.md
