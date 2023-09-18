@@ -90,11 +90,11 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ### Prerequisites
 
-| Tool                        | Version   | Description                                                                                                                                                    |
-| --------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]     | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
-| [kustomize][kustomize-repo] | `>=3.5.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
-| [terraform][terraform-page] | `>=1.3`   | Additional infrastructure is deployed using `terraform`.                                                                                                       |
+| Tool                        | Version    | Description                                                                                                                                                    |
+| --------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [furyctl][furyctl-repo]     | `>=0.25.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [kustomize][kustomize-repo] | `>=3.5.3`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
+| [terraform][terraform-page] | `>=1.3`    | Additional infrastructure is deployed using `terraform`.                                                                                                       |
 ### Velero on AWS
 
 Velero on AWS is based on the [AWS Velero Plugin][velero-aws-plugin-repo].
@@ -122,7 +122,7 @@ modules:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -184,7 +184,7 @@ modules:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -243,7 +243,7 @@ modules:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
@@ -298,7 +298,7 @@ bases:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the downloaded packages under `./vendor/katalog/velero`.
 
