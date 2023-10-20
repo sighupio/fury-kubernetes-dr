@@ -133,7 +133,10 @@ More information about the [Azure Velero Plugin](https://github.com/vmware-tanzu
 
 ### Velero Node Agent
 
-Velero has support for backing up and restoring Kubernetes volumes using a free open-source backup tool named restic.
+> [!IMPORTANT]  
+> Velero Restic has been renamed to Velero Node Agent in v2.2.0
+
+Velero has support for backing up and restoring Kubernetes volumes using free open-source backup tools like restic and kopia.
 
 [velero-node-agent](./velero-node-agent) requires to have a velero deployment running in the cluster before deploy it.
 Velero Node Agent is not tied to be deployed on prem or on cloud. So feel free to deploy it with your prefered velero

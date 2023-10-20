@@ -26,7 +26,7 @@ Velero allows you to:
 - migrate cluster resources to other clusters
 - replicate your production environment to development and testing environment.
 
-Together with Velero, Velero Restic allows you to:
+Together with Velero, Velero Node Agent allows you to:
 
 - backup Kubernetes volumes
 - restore Kubernetes volumes
@@ -70,10 +70,9 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 
 | Kubernetes Version |   Compatibility    | Notes           |
 | ------------------ | :----------------: | --------------- |
-| `1.23.x`           | :white_check_mark: | No known issues |
-| `1.24.x`           | :white_check_mark: | No known issues |
 | `1.25.x`           | :white_check_mark: | No known issues |
 | `1.26.x`           | :white_check_mark: | No known issues |
+| `1.27.x`           | :white_check_mark: | No known issues |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
