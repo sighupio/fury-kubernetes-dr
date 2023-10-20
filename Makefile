@@ -73,7 +73,7 @@ lint: check-docker
 	@$(MAKE) clean-lint
 
 ## deploy-all: Deploys all the components in the dr module (with velero-on-prem)
-deploy-all: deploy-base deploy-on-prem deploy-base deploy-restic deploy-schedules
+deploy-all: deploy-base deploy-on-prem deploy-base deploy-node-agent deploy-schedules
 
 ## deploy-base: Deploys the `base` component in the cluster
 deploy-base: check-kustomize check-kubectl
@@ -83,9 +83,9 @@ deploy-base: check-kustomize check-kubectl
 deploy-on-prem: check-kustomize check-kubectl
 	@kustomize build katalog/velero/velero-on-prem | kubectl apply -f-
 
-## deploy-restic: Deploys the `velero-restic` component in the cluster
-deploy-restic: check-kustomize check-kubectl
-	@kustomize build katalog/velero/velero-restic | kubectl apply -f-
+## deploy-node-agent: Deploys the `velero-node-agent` component in the cluster
+deploy-node-agent: check-kustomize check-kubectl
+	@kustomize build katalog/velero/velero-node-agent | kubectl apply -f-
 
 ## deploy-schedules: Deploys the `velero-schedules` component in the cluster
 deploy-schedules: check-kustomize check-kubectl

@@ -27,7 +27,7 @@ $ make help
   deploy-all                    Deploys all the components in the dr module (with velero-on-prem)
   deploy-base                   Deploys the `base` component in the cluster
   deploy-on-prem                Deploys the `velero-on-prem` component in the cluster
-  deploy-restic                 Deploys the `velero-restic` component in the cluster
+  deploy-node-agent             Deploys the `velero-node-agent` component in the cluster
   deploy-schedules              Deploys the `velero-schedules` component in the cluster
   clean-%                       Clean the container image resulting from another target.
 ```
@@ -139,5 +139,5 @@ command, which in turn triggers other make targets for individual components:
 
 ```bash
 $ make deploy-all
-# This deploys velero-base, velero-on-prem, velero-restic and velero-schedules
+# This deploys velero-base, velero-on-prem, velero-node-agent and velero-schedules
 ```

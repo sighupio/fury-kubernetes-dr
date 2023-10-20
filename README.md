@@ -17,7 +17,7 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 ## Overview
 
-**Kubernetes Fury DR** module is based on [Velero][velero-page] and [Velero Restic][velero-restic-page].
+**Kubernetes Fury DR** module is based on [Velero][velero-page] and [Velero Node Agent][velero-node-agent-page].
 
 Velero allows you to:
 
@@ -45,7 +45,7 @@ The velero package contains the following additional components:
 
 | Component                                           | Description                                           |
 | --------------------------------------------------- | ----------------------------------------------------- |
-| [velero-restic](katalog/velero/velero-restic)       | Incremental backup and restore of Kubernetes volumes. |
+| [velero-node-agent](katalog/velero/velero-node-agent)       | Incremental backup and restore of Kubernetes volumes. |
 | [velero-schedules](katalog/velero/velero-schedules) | Common schedules for backup                           |
 
 ### Integration with cloud providers
@@ -110,7 +110,7 @@ To deploy Velero on AWS:
 bases:
   - name: dr/velero/velero-aws
     version: "v2.1.0"
-  - name: dr/velero/velero-restic
+  - name: dr/velero/velero-node-agent
     version: "v2.1.0"
   - name: dr/velero/velero-schedules
     version: "v2.1.0"
@@ -145,7 +145,7 @@ module "velero" {
 ```yaml
 resources:
   - ./vendor/katalog/dr/velero/velero-aws
-  - ./vendor/katalog/dr/velero/velero-restic
+  - ./vendor/katalog/dr/velero/velero-node-agent
   - ./vendor/katalog/dr/velero/velero-schedules
 ```
 
@@ -172,7 +172,7 @@ To deploy Velero on GCP:
 bases:
   - name: dr/velero/velero-gcp
     version: "v2.1.0"
-  - name: dr/velero/velero-restic
+  - name: dr/velero/velero-node-agent
     version: "v2.1.0"
   - name: dr/velero/velero-schedules
     version: "v2.1.0"
@@ -207,7 +207,7 @@ module "velero" {
 ```yaml
 resources:
   - ./vendor/katalog/dr/velero/velero-gcp
-  - ./vendor/katalog/dr/velero/velero-restic
+  - ./vendor/katalog/dr/velero/velero-node-agent
   - ./vendor/katalog/dr/velero/velero-schedules
 ```
 
@@ -231,7 +231,7 @@ To deploy Velero on Azure:
 bases:
   - name: dr/velero/velero-azure
     version: "v2.1.0"
-  - name: dr/velero/velero-restic
+  - name: dr/velero/velero-node-agent
     version: "v2.1.0"
   - name: dr/velero/velero-schedules
     version: "v2.1.0"
@@ -266,7 +266,7 @@ module "velero" {
 ```yaml
 resources:
   - ./vendor/katalog/dr/velero/velero-azure
-  - ./vendor/katalog/dr/velero/velero-restic
+  - ./vendor/katalog/dr/velero/velero-node-agent
   - ./vendor/katalog/dr/velero/velero-schedules
 ```
 
@@ -290,7 +290,7 @@ To deploy `velero on-prem`:
 bases:
   - name: velero/velero-on-prem
     version: "v2.1.0"
-  - name: velero/velero-restic
+  - name: velero/velero-node-agent
     version: "v2.1.0"
   - name: velero/velero-schedules
     version: "v2.1.0"
@@ -307,7 +307,7 @@ bases:
 ```yaml
 resources:
   - ./vendor/katalog/dr/velero/velero-on-prem
-  - ./vendor/katalog/dr/velero/velero-restic
+  - ./vendor/katalog/dr/velero/velero-node-agent
   - ./vendor/katalog/dr/velero/velero-schedules
 ```
 
@@ -321,7 +321,7 @@ kustomize build . | kubectl apply -f -
 
 [sighup-page]: https://sighup.io
 [velero-page]: https://velero.io
-[velero-restic-page]: https://velero.io/docs/main/restic/
+[velero-node-agent-page]: https://velero.io/docs/v1.12/file-system-backup/
 [minio-page]: https://min.io/
 [terraform-page]: https://www.terraform.io/
 [kfd-repo]: https://github.com/sighupio/fury-distribution

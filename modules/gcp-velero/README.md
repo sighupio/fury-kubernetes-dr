@@ -17,14 +17,14 @@ to backup Kubernetes objects and trigger volume snapshots.
 
 ## Outputs
 
-| Name                               | Description                                                       |
-|------------------------------------|-------------------------------------------------------------------|
-| `backup_storage_location`          | Velero Cloud BackupStorageLocation CRD                            |
-| `cloud_credentials`                | Velero service credentials in case workload identity is not used  |
-| `volume_snapshot_location`         | Velero Cloud VolumeSnapshotLocation CRD                           |
-| `kubernetes_service_account_patch` | Patch for the Kubernetes service account to use workload identity |
-| `remove_velero_credentials_patch`  | Patch to remove service account credentials in velero             |
-| `remove_restic_credentials_patch`  | Patch to remove service account credentials in velero restic      |
+| Name                               | Description                                                           |
+|------------------------------------|-----------------------------------------------------------------------|
+| `backup_storage_location`          | Velero Cloud BackupStorageLocation CRD                                |
+| `cloud_credentials`                | Velero service credentials in case workload identity is not used      |
+| `volume_snapshot_location`         | Velero Cloud VolumeSnapshotLocation CRD                               |
+| `kubernetes_service_account_patch` | Patch for the Kubernetes service account to use workload identity     |
+| `remove_velero_credentials_patch`  | Patch to remove service account credentials in velero                 |
+| `remove_restic_credentials_patch`  | Patch to remove service account credentials in velero Node Agent      |
 
 The presence of some outputs is conditional to the presence of `workload_identity`:
 

@@ -9,7 +9,7 @@
     - [Velero on AWS](#velero-on-aws)
     - [Velero on GCP](#velero-on-gcp)
     - [Velero on Azure](#velero-on-azure)
-    - [Velero Restic](#velero-restic)
+    - [Velero Node Agent](#velero-node-agent)
     - [Velero schedule](#velero-schedule)
 
 <!-- <KFD-DOCS> -->
@@ -131,12 +131,12 @@ bases:
 
 More information about the [Azure Velero Plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure)
 
-### Velero Restic
+### Velero Node Agent
 
-Velero has support for backing up and restoring Kubernetes volumes using a free open-source backup tool called restic.
+Velero has support for backing up and restoring Kubernetes volumes using a free open-source backup tool named restic.
 
-[velero-restic](./velero-restic) requires to have a velero deployment running in the cluster before deploy it.
-Velero restic is not tied to be deployed on prem or on cloud. So feel free to deploy it with your prefered velero
+[velero-node-agent](./velero-node-agent) requires to have a velero deployment running in the cluster before deploy it.
+Velero Node Agent is not tied to be deployed on prem or on cloud. So feel free to deploy it with your prefered velero
 deployment.
 
 ```yaml
@@ -144,10 +144,10 @@ namespace: kube-system
 
 bases:
   - vendor/katalog/dr/velero/velero-aws
-  - vendor/katalog/dr/velero/velero-restic
+  - vendor/katalog/dr/velero/velero-node-agent
 ```
 
-More information about [Velero Restic integration](https://velero.io/docs/v1.9/restic/)
+More information about [Velero Node Agent integration](https://velero.io/docs/v1.12/upgrade-to-1.12/)
 
 ### Velero schedule
 

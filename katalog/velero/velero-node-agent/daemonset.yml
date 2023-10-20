@@ -7,18 +7,18 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
-    k8s-app: velero-restic
+    k8s-app: velero-node-agent
   name: node-agent
 spec:
   selector:
     matchLabels:
-      k8s-app: velero-restic
+      k8s-app: velero-node-agent
       name: node-agent
       component: velero
   template:
     metadata:
       labels:
-        k8s-app: velero-restic
+        k8s-app: velero-node-agent
         name: node-agent
         component: velero
     spec:
