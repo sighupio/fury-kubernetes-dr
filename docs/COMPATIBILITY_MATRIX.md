@@ -1,14 +1,15 @@
 # Compatibility Matrix
 
-| Module Version / Kubernetes Version |       1.20.X       |       1.21.X       |       1.22.X       |       1.23.X       |       1.24.X       |       1.25.X       |       1.26.X       |
-| ----------------------------------- | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: |
-| v1.9.2                              |     :warning:      |     :warning:      |     :warning:      |     :warning:      |                    |                    |                    |
-| v1.9.3                              | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |                    |                    |                    |
-| v1.10.0                             |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |
-| v1.10.1                             |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |
-| v1.11.0                             |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |
-| v2.0.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |
-| v2.1.0                              |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Module Version / Kubernetes Version |       1.20.X       |       1.21.X       |       1.22.X       |       1.23.X       |       1.24.X       |       1.25.X       |       1.26.X       |       1.27.X       |
+| ----------------------------------- | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: |
+| v1.9.2                              |     :warning:      |     :warning:      |     :warning:      |     :warning:      |                    |                    |                    |                    |
+| v1.9.3                              | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |                    |                    |                    |                    |
+| v1.10.0                             |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |
+| v1.10.1                             |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |
+| v1.11.0                             |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |
+| v2.0.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |
+| v2.1.0                              |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |
+| v2.2.0                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 :white_check_mark: Compatible
 
