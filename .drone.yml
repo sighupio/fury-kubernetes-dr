@@ -523,7 +523,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: test-install
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.4_3.5.3_4.33.3
     pull: always
     volumes:
     - name: shared
@@ -534,7 +534,7 @@ steps:
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.4_3.5.3_4.33.3
     pull: always
     volumes:
     - name: shared
@@ -580,7 +580,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-aws-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.4_3.5.3_4.33.3
     pull: always
     volumes:
     - name: shared
@@ -595,7 +595,7 @@ steps:
       - kubectl get pods -n kube-system
 
   - name: test-backup-restore-aws
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.4_3.5.3_4.33.3
     pull: always
     volumes:
     - name: shared
@@ -673,7 +673,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-gcp-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.4_3.5.3_4.33.3
     pull: always
     volumes:
     - name: shared
@@ -689,7 +689,7 @@ steps:
       - kubectl get pods -n kube-system
 
   - name: test-backup-restore-gcp
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.4_3.5.3_4.33.3
     pull: always
     volumes:
     - name: shared
@@ -774,7 +774,7 @@ steps:
       - terraform output -raw backup_storage_location > /shared/backup_storage_location.yaml
 
   - name: apply-azure-configuration
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.4_3.5.3_4.33.3
     pull: always
     volumes:
     - name: shared
@@ -790,7 +790,7 @@ steps:
       - kubectl get pods -n kube-system
 
   - name: test-backup-restore-azure
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.26.4_3.5.3_4.33.3
     pull: always
     volumes:
     - name: shared
