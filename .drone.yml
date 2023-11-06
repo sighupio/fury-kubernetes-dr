@@ -531,6 +531,9 @@ steps:
     depends_on: [ init ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-126
+      - ls /
+      - ls /shared/
+      - ls /shared/kube/
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
