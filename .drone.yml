@@ -123,9 +123,6 @@ steps:
     depends_on: [ init ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-125
-      - ls /
-      - ls /shared/
-      - ls /shared/kube/
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
@@ -534,9 +531,6 @@ steps:
     depends_on: [ init ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-126
-      - ls /
-      - ls /shared/
-      - ls /shared/kube/
       - bats -t katalog/tests/velero/velero-install.sh
 
   - name: test-backup-restore
@@ -877,6 +871,10 @@ steps:
       status:
       - success
       - failure
+
+volumes:
+- name: shared
+  temp: {}
 
 ---
 name: e2e-kubernetes-1.27
