@@ -14,7 +14,7 @@ velero install --namespace kube-system --provider aws --no-secret --bucket my-bu
 ## Customizations
 - The package has been split in three Kustomize bases:
   - [`velero-base`](./velero-base)
-  - [`velero-restic`](./velero-restic)
+  - [`velero-node-agent`](./velero-node-agent)
   - [`velero-schedules`](./velero-schedules)
 
   and four Kustomize overlays:

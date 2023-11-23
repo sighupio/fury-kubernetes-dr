@@ -9,7 +9,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -108,7 +108,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -149,6 +149,11 @@ items:
                   description: CSISnapshotTimeout specifies the time used to wait
                     for CSI VolumeSnapshot status turns to ReadyToUse during creation,
                     before returning error as timeout. The default value is 10 minute.
+                  type: string
+                datamover:
+                  description: DataMover specifies the data mover to be used by the
+                    backup. If DataMover is "" or "velero", the built-in data mover
+                    will be used.
                   type: string
                 defaultVolumesToFsBackup:
                   description: DefaultVolumesToFsBackup specifies whether pod volume
@@ -283,6 +288,7 @@ items:
                                   contains only "value". The requirements are ANDed.
                                 type: object
                             type: object
+                            x-kubernetes-map-type: atomic
                           name:
                             description: Name is the name of this hook.
                             type: string
@@ -473,6 +479,7 @@ items:
                         are ANDed.
                       type: object
                   type: object
+                  x-kubernetes-map-type: atomic
                 metadata:
                   properties:
                     labels:
@@ -533,6 +540,7 @@ items:
                           "value". The requirements are ANDed.
                         type: object
                     type: object
+                    x-kubernetes-map-type: atomic
                   nullable: true
                   type: array
                 orderedResources:
@@ -565,6 +573,12 @@ items:
                   - kind
                   - name
                   type: object
+                  x-kubernetes-map-type: atomic
+                snapshotMoveData:
+                  description: SnapshotMoveData specifies whether snapshot data should
+                    be moved
+                  nullable: true
+                  type: boolean
                 snapshotVolumes:
                   description: SnapshotVolumes specifies whether to take snapshots
                     of any PV's referenced in the set of objects included in the Backup.
@@ -709,7 +723,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -800,6 +814,7 @@ items:
                   required:
                   - key
                   type: object
+                  x-kubernetes-map-type: atomic
                 default:
                   description: Default indicates this location is the default backup
                     storage location.
@@ -885,7 +900,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -961,7 +976,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -1018,7 +1033,7 @@ items:
                       - CSIBackupVolumeSnapshotContents
                       type: string
                     name:
-                      description: Name is the name of the kubernetes resource with
+                      description: Name is the name of the Kubernetes resource with
                         which the file is associated.
                       type: string
                   required:
@@ -1055,7 +1070,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -1171,6 +1186,7 @@ items:
                       description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                       type: string
                   type: object
+                  x-kubernetes-map-type: atomic
                 repoIdentifier:
                   description: RepoIdentifier is the backup repository identifier.
                   type: string
@@ -1258,7 +1274,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -1367,6 +1383,7 @@ items:
                       description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                       type: string
                   type: object
+                  x-kubernetes-map-type: atomic
                 repoIdentifier:
                   description: RepoIdentifier is the backup repository identifier.
                   type: string
@@ -1446,7 +1463,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -1502,7 +1519,7 @@ items:
                   type: array
                 existingResourcePolicy:
                   description: ExistingResourcePolicy specifies the restore behavior
-                    for the kubernetes resource to be restored
+                    for the Kubernetes resource to be restored
                   nullable: true
                   type: string
                 hooks:
@@ -1592,6 +1609,7 @@ items:
                                   contains only "value". The requirements are ANDed.
                                 type: object
                             type: object
+                            x-kubernetes-map-type: atomic
                           name:
                             description: Name is the name of this hook.
                             type: string
@@ -1651,6 +1669,7 @@ items:
                                         restore.
                                       items:
                                         type: object
+                                        x-kubernetes-preserve-unknown-fields: true
                                       type: array
                                       x-kubernetes-preserve-unknown-fields: true
                                     timeout:
@@ -1737,6 +1756,7 @@ items:
                         are ANDed.
                       type: object
                   type: object
+                  x-kubernetes-map-type: atomic
                 namespaceMapping:
                   additionalProperties:
                     type: string
@@ -1798,6 +1818,7 @@ items:
                           "value". The requirements are ANDed.
                         type: object
                     type: object
+                    x-kubernetes-map-type: atomic
                   nullable: true
                   type: array
                 preserveNodePorts:
@@ -1805,6 +1826,28 @@ items:
                     nodePorts from backup.
                   nullable: true
                   type: boolean
+                resourceModifier:
+                  description: ResourceModifier specifies the reference to JSON resource
+                    patches that should be applied to resources before restoration.
+                  nullable: true
+                  properties:
+                    apiGroup:
+                      description: APIGroup is the group for the resource being referenced.
+                        If APIGroup is not specified, the specified Kind must be in
+                        the core API group. For any other third-party types, APIGroup
+                        is required.
+                      type: string
+                    kind:
+                      description: Kind is the type of resource being referenced
+                      type: string
+                    name:
+                      description: Name is the name of resource being referenced
+                      type: string
+                  required:
+                  - kind
+                  - name
+                  type: object
+                  x-kubernetes-map-type: atomic
                 restorePVs:
                   description: RestorePVs specifies whether to restore all included
                     PVs from snapshot
@@ -1927,7 +1970,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -1999,6 +2042,11 @@ items:
                         for CSI VolumeSnapshot status turns to ReadyToUse during creation,
                         before returning error as timeout. The default value is 10
                         minute.
+                      type: string
+                    datamover:
+                      description: DataMover specifies the data mover to be used by
+                        the backup. If DataMover is "" or "velero", the built-in data
+                        mover will be used.
                       type: string
                     defaultVolumesToFsBackup:
                       description: DefaultVolumesToFsBackup specifies whether pod
@@ -2137,6 +2185,7 @@ items:
                                       The requirements are ANDed.
                                     type: object
                                 type: object
+                                x-kubernetes-map-type: atomic
                               name:
                                 description: Name is the name of this hook.
                                 type: string
@@ -2327,6 +2376,7 @@ items:
                             only "value". The requirements are ANDed.
                           type: object
                       type: object
+                      x-kubernetes-map-type: atomic
                     metadata:
                       properties:
                         labels:
@@ -2388,6 +2438,7 @@ items:
                               only "value". The requirements are ANDed.
                             type: object
                         type: object
+                        x-kubernetes-map-type: atomic
                       nullable: true
                       type: array
                     orderedResources:
@@ -2420,6 +2471,12 @@ items:
                       - kind
                       - name
                       type: object
+                      x-kubernetes-map-type: atomic
+                    snapshotMoveData:
+                      description: SnapshotMoveData specifies whether snapshot data
+                        should be moved
+                      nullable: true
+                      type: boolean
                     snapshotVolumes:
                       description: SnapshotVolumes specifies whether to take snapshots
                         of any PV's referenced in the set of objects included in the
@@ -2481,7 +2538,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -2561,7 +2618,7 @@ items:
   kind: CustomResourceDefinition
   metadata:
     annotations:
-      controller-gen.kubebuilder.io/version: v0.7.0
+      controller-gen.kubebuilder.io/version: v0.12.0
     creationTimestamp: null
     labels:
       component: velero
@@ -2623,6 +2680,7 @@ items:
                   required:
                   - key
                   type: object
+                  x-kubernetes-map-type: atomic
                 provider:
                   description: Provider is the provider of the volume storage.
                   type: string
@@ -2644,5 +2702,389 @@ items:
           type: object
       served: true
       storage: true
+- apiVersion: apiextensions.k8s.io/v1
+  kind: CustomResourceDefinition
+  metadata:
+    annotations:
+      controller-gen.kubebuilder.io/version: v0.12.0
+    creationTimestamp: null
+    labels:
+      component: velero
+    name: datadownloads.velero.io
+  spec:
+    group: velero.io
+    names:
+      kind: DataDownload
+      listKind: DataDownloadList
+      plural: datadownloads
+      singular: datadownload
+    scope: Namespaced
+    versions:
+    - additionalPrinterColumns:
+      - description: DataDownload status such as New/InProgress
+        jsonPath: .status.phase
+        name: Status
+        type: string
+      - description: Time duration since this DataDownload was started
+        jsonPath: .status.startTimestamp
+        name: Started
+        type: date
+      - description: Completed bytes
+        format: int64
+        jsonPath: .status.progress.bytesDone
+        name: Bytes Done
+        type: integer
+      - description: Total bytes
+        format: int64
+        jsonPath: .status.progress.totalBytes
+        name: Total Bytes
+        type: integer
+      - description: Name of the Backup Storage Location where the backup data is
+          stored
+        jsonPath: .spec.backupStorageLocation
+        name: Storage Location
+        type: string
+      - description: Time duration since this DataDownload was created
+        jsonPath: .metadata.creationTimestamp
+        name: Age
+        type: date
+      - description: Name of the node where the DataDownload is processed
+        jsonPath: .status.node
+        name: Node
+        type: string
+      name: v2alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: 'APIVersion defines the versioned schema of this representation
+                of an object. Servers should convert recognized schemas to the latest
+                internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+              type: string
+            kind:
+              description: 'Kind is a string value representing the REST resource
+                this object represents. Servers may infer this from the endpoint the
+                client submits requests to. Cannot be updated. In CamelCase. More
+                info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: DataDownloadSpec is the specification for a DataDownload.
+              properties:
+                backupStorageLocation:
+                  description: BackupStorageLocation is the name of the backup storage
+                    location where the backup repository is stored.
+                  type: string
+                cancel:
+                  description: Cancel indicates request to cancel the ongoing DataDownload.
+                    It can be set when the DataDownload is in InProgress phase
+                  type: boolean
+                dataMoverConfig:
+                  additionalProperties:
+                    type: string
+                  description: DataMoverConfig is for data-mover-specific configuration
+                    fields.
+                  type: object
+                datamover:
+                  description: DataMover specifies the data mover to be used by the
+                    backup. If DataMover is "" or "velero", the built-in data mover
+                    will be used.
+                  type: string
+                operationTimeout:
+                  description: OperationTimeout specifies the time used to wait internal
+                    operations, before returning error as timeout.
+                  type: string
+                snapshotID:
+                  description: SnapshotID is the ID of the Velero backup snapshot
+                    to be restored from.
+                  type: string
+                sourceNamespace:
+                  description: SourceNamespace is the original namespace where the
+                    volume is backed up from. It may be different from SourcePVC's
+                    namespace if namespace is remapped during restore.
+                  type: string
+                targetVolume:
+                  description: TargetVolume is the information of the target PVC and
+                    PV.
+                  properties:
+                    namespace:
+                      description: Namespace is the target namespace
+                      type: string
+                    pv:
+                      description: PV is the name of the target PV that is created
+                        by Velero restore
+                      type: string
+                    pvc:
+                      description: PVC is the name of the target PVC that is created
+                        by Velero restore
+                      type: string
+                  required:
+                  - namespace
+                  - pv
+                  - pvc
+                  type: object
+              required:
+              - backupStorageLocation
+              - operationTimeout
+              - snapshotID
+              - sourceNamespace
+              - targetVolume
+              type: object
+            status:
+              description: DataDownloadStatus is the current status of a DataDownload.
+              properties:
+                completionTimestamp:
+                  description: CompletionTimestamp records the time a restore was
+                    completed. Completion time is recorded even on failed restores.
+                    The server's time is used for CompletionTimestamps
+                  format: date-time
+                  nullable: true
+                  type: string
+                message:
+                  description: Message is a message about the DataDownload's status.
+                  type: string
+                node:
+                  description: Node is name of the node where the DataDownload is
+                    processed.
+                  type: string
+                phase:
+                  description: Phase is the current state of the DataDownload.
+                  enum:
+                  - New
+                  - Accepted
+                  - Prepared
+                  - InProgress
+                  - Canceling
+                  - Canceled
+                  - Completed
+                  - Failed
+                  type: string
+                progress:
+                  description: Progress holds the total number of bytes of the snapshot
+                    and the current number of restored bytes. This can be used to
+                    display progress information about the restore operation.
+                  properties:
+                    bytesDone:
+                      format: int64
+                      type: integer
+                    totalBytes:
+                      format: int64
+                      type: integer
+                  type: object
+                startTimestamp:
+                  description: StartTimestamp records the time a restore was started.
+                    The server's time is used for StartTimestamps
+                  format: date-time
+                  nullable: true
+                  type: string
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources: {}
+- apiVersion: apiextensions.k8s.io/v1
+  kind: CustomResourceDefinition
+  metadata:
+    annotations:
+      controller-gen.kubebuilder.io/version: v0.12.0
+    creationTimestamp: null
+    labels:
+      component: velero
+    name: datauploads.velero.io
+  spec:
+    group: velero.io
+    names:
+      kind: DataUpload
+      listKind: DataUploadList
+      plural: datauploads
+      singular: dataupload
+    scope: Namespaced
+    versions:
+    - additionalPrinterColumns:
+      - description: DataUpload status such as New/InProgress
+        jsonPath: .status.phase
+        name: Status
+        type: string
+      - description: Time duration since this DataUpload was started
+        jsonPath: .status.startTimestamp
+        name: Started
+        type: date
+      - description: Completed bytes
+        format: int64
+        jsonPath: .status.progress.bytesDone
+        name: Bytes Done
+        type: integer
+      - description: Total bytes
+        format: int64
+        jsonPath: .status.progress.totalBytes
+        name: Total Bytes
+        type: integer
+      - description: Name of the Backup Storage Location where this backup should
+          be stored
+        jsonPath: .spec.backupStorageLocation
+        name: Storage Location
+        type: string
+      - description: Time duration since this DataUpload was created
+        jsonPath: .metadata.creationTimestamp
+        name: Age
+        type: date
+      - description: Name of the node where the DataUpload is processed
+        jsonPath: .status.node
+        name: Node
+        type: string
+      name: v2alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: 'APIVersion defines the versioned schema of this representation
+                of an object. Servers should convert recognized schemas to the latest
+                internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+              type: string
+            kind:
+              description: 'Kind is a string value representing the REST resource
+                this object represents. Servers may infer this from the endpoint the
+                client submits requests to. Cannot be updated. In CamelCase. More
+                info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: DataUploadSpec is the specification for a DataUpload.
+              properties:
+                backupStorageLocation:
+                  description: BackupStorageLocation is the name of the backup storage
+                    location where the backup repository is stored.
+                  type: string
+                cancel:
+                  description: Cancel indicates request to cancel the ongoing DataUpload.
+                    It can be set when the DataUpload is in InProgress phase
+                  type: boolean
+                csiSnapshot:
+                  description: If SnapshotType is CSI, CSISnapshot provides the information
+                    of the CSI snapshot.
+                  nullable: true
+                  properties:
+                    snapshotClass:
+                      description: SnapshotClass is the name of the snapshot class
+                        that the volume snapshot is created with
+                      type: string
+                    storageClass:
+                      description: StorageClass is the name of the storage class of
+                        the PVC that the volume snapshot is created from
+                      type: string
+                    volumeSnapshot:
+                      description: VolumeSnapshot is the name of the volume snapshot
+                        to be backed up
+                      type: string
+                  required:
+                  - storageClass
+                  - volumeSnapshot
+                  type: object
+                dataMoverConfig:
+                  additionalProperties:
+                    type: string
+                  description: DataMoverConfig is for data-mover-specific configuration
+                    fields.
+                  nullable: true
+                  type: object
+                datamover:
+                  description: DataMover specifies the data mover to be used by the
+                    backup. If DataMover is "" or "velero", the built-in data mover
+                    will be used.
+                  type: string
+                operationTimeout:
+                  description: OperationTimeout specifies the time used to wait internal
+                    operations, before returning error as timeout.
+                  type: string
+                snapshotType:
+                  description: SnapshotType is the type of the snapshot to be backed
+                    up.
+                  type: string
+                sourceNamespace:
+                  description: SourceNamespace is the original namespace where the
+                    volume is backed up from. It is the same namespace for SourcePVC
+                    and CSI namespaced objects.
+                  type: string
+                sourcePVC:
+                  description: SourcePVC is the name of the PVC which the snapshot
+                    is taken for.
+                  type: string
+              required:
+              - backupStorageLocation
+              - operationTimeout
+              - snapshotType
+              - sourceNamespace
+              - sourcePVC
+              type: object
+            status:
+              description: DataUploadStatus is the current status of a DataUpload.
+              properties:
+                completionTimestamp:
+                  description: CompletionTimestamp records the time a backup was completed.
+                    Completion time is recorded even on failed backups. Completion
+                    time is recorded before uploading the backup object. The server's
+                    time is used for CompletionTimestamps
+                  format: date-time
+                  nullable: true
+                  type: string
+                dataMoverResult:
+                  additionalProperties:
+                    type: string
+                  description: DataMoverResult stores data-mover-specific information
+                    as a result of the DataUpload.
+                  nullable: true
+                  type: object
+                message:
+                  description: Message is a message about the DataUpload's status.
+                  type: string
+                node:
+                  description: Node is name of the node where the DataUpload is processed.
+                  type: string
+                path:
+                  description: Path is the full path of the snapshot volume being
+                    backed up.
+                  type: string
+                phase:
+                  description: Phase is the current state of the DataUpload.
+                  enum:
+                  - New
+                  - Accepted
+                  - Prepared
+                  - InProgress
+                  - Canceling
+                  - Canceled
+                  - Completed
+                  - Failed
+                  type: string
+                progress:
+                  description: Progress holds the total number of bytes of the volume
+                    and the current number of backed up bytes. This can be used to
+                    display progress information about the backup operation.
+                  properties:
+                    bytesDone:
+                      format: int64
+                      type: integer
+                    totalBytes:
+                      format: int64
+                      type: integer
+                  type: object
+                snapshotID:
+                  description: SnapshotID is the identifier for the snapshot in the
+                    backup repository.
+                  type: string
+                startTimestamp:
+                  description: StartTimestamp records the time a backup was started.
+                    Separate from CreationTimestamp, since that value changes on restores.
+                    The server's time is used for StartTimestamps
+                  format: date-time
+                  nullable: true
+                  type: string
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources: {}
 kind: List
 
