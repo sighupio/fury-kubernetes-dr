@@ -2,7 +2,6 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
----
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -12,14 +11,14 @@ spec:
     storage: 10Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
+  # storageClassName: local-storage
   local:
     path: /tmp
   nodeAffinity:
     required:
       nodeSelectorTerms:
-        - matchExpressions:
-            - key: node-role.kubernetes.io/control-plane
-              operator: DoesNotExist
+      - matchExpressions:
+        - key: node-role.kubernetes.io/control-plane
+          operator: DoesNotExist

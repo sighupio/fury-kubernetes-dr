@@ -39,7 +39,7 @@ Kubernetes Fury DR provides the following packages:
 
 | Package                  | Version  | Description                                                                                                     |
 | ------------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
-| [velero](katalog/velero) | `1.12.0` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
+| [velero](katalog/velero) | `1.13.0` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
 
 The velero package contains the following additional components:
 
@@ -73,6 +73,8 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 | `1.25.x`           | :white_check_mark: | No known issues |
 | `1.26.x`           | :white_check_mark: | No known issues |
 | `1.27.x`           | :white_check_mark: | No known issues |
+| `1.28.x`           | :white_check_mark: | No known issues |
+| `1.29.x`           |  |  |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information about previous releases of the modules.
 
@@ -108,15 +110,15 @@ To deploy Velero on AWS:
 ```yaml
 bases:
   - name: dr/velero/velero-aws
-    version: "v2.1.0"
+    version: "v2.3.0"
   - name: dr/velero/velero-node-agent
-    version: "v2.1.0"
+    version: "v2.3.0"
   - name: dr/velero/velero-schedules
-    version: "v2.1.0"
+    version: "v2.3.0"
 
 modules:
   - name: dr/aws-velero
-    version: "v2.1.0"
+    version: "v2.3.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -170,15 +172,15 @@ To deploy Velero on GCP:
 ```yaml
 bases:
   - name: dr/velero/velero-gcp
-    version: "v2.1.0"
+    version: "v2.3.0"
   - name: dr/velero/velero-node-agent
-    version: "v2.1.0"
+    version: "v2.3.0"
   - name: dr/velero/velero-schedules
-    version: "v2.1.0"
+    version: "v2.3.0"
 
 modules:
   - name: dr/gcp-velero
-    version: "v2.1.0"
+    version: "v2.3.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -229,15 +231,15 @@ To deploy Velero on Azure:
 ```yaml
 bases:
   - name: dr/velero/velero-azure
-    version: "v2.1.0"
+    version: "v2.3.0"
   - name: dr/velero/velero-node-agent
-    version: "v2.1.0"
+    version: "v2.3.0"
   - name: dr/velero/velero-schedules
-    version: "v2.1.0"
+    version: "v2.3.0"
 
 modules:
   - name: dr/azure-velero
-    version: "v2.1.0"
+    version: "v2.3.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -288,11 +290,11 @@ To deploy `velero on-prem`:
 ```yaml
 bases:
   - name: velero/velero-on-prem
-    version: "v2.1.0"
+    version: "v2.3.0"
   - name: velero/velero-node-agent
-    version: "v2.1.0"
+    version: "v2.3.0"
   - name: velero/velero-schedules
-    version: "v2.1.0"
+    version: "v2.3.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.

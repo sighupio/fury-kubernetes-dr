@@ -1,11 +1,11 @@
 # Velero on Premises
 
 This Velero deployment is ready to be deployed in any Kubernetes cluster as it includes a MinIO instance compatible with
-the [AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.8.0).
+the [AWS Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws/tree/v1.9.0).
 
 ## Image repository and tag
 
-- Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.8.0`
+- Velero AWS Plugin image: `velero/velero-plugin-for-aws:v1.9.0`
 - Velero AWS Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-aws](https://github.com/vmware-tanzu/velero-plugin-for-aws).
 - MinIO image: `minio/minio:RELEASE.2023-01-31T02-24-19Z`
