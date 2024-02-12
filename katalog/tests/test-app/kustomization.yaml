@@ -8,7 +8,7 @@ kind: Kustomization
 namespace: default
 
 resources:
-# - resources/sc.yaml
+- resources/sc.yaml
 - resources/pv.yaml
 - resources/pvc.yaml
 - resources/deployment.yaml
