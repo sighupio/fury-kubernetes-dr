@@ -2,21 +2,20 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: kube-system
 
 resources:
-  - ../velero-base
+- ../velero-base
 
 images:
-  - name: velero/velero-plugin-for-gcp
-    newName: registry.sighup.io/fury/velero/velero-plugin-for-gcp
-    newTag: v1.8.0
-  - name: velero/velero-plugin-for-csi
-    newName: registry.sighup.io/fury/velero/velero-plugin-for-csi
-    newTag: v0.6.0
+- name: velero/velero-plugin-for-gcp
+  newName: registry.sighup.io/fury/velero/velero-plugin-for-gcp
+  newTag: v1.9.0
+- name: velero/velero-plugin-for-csi
+  newName: registry.sighup.io/fury/velero/velero-plugin-for-csi
+  newTag: v0.7.0
 
 patchesStrategicMerge:
-  - plugin-patch.yaml
+- plugin-patch.yaml

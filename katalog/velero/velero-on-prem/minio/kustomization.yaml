@@ -2,66 +2,65 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 namespace: kube-system
 
 resources:
-  - rbac.yaml
-  - init-job.yaml
-  - service.yaml
-  - sts.yaml
+- rbac.yaml
+- init-job.yaml
+- service.yaml
+- sts.yaml
 
 vars:
-  - name: MINIO_NAMESPACE
-    objref:
-      kind: Service
-      name: minio
-      apiVersion: v1
-    fieldref:
-      fieldpath: metadata.namespace
-  - name: MINIO_SERVICE_NAME
-    objref:
-      kind: Service
-      name: minio
-      apiVersion: v1
-    fieldref:
-      fieldpath: metadata.name
-  - name: MINIO_STS_NAME
-    objref:
-      kind: StatefulSet
-      name: minio
-      apiVersion: apps/v1
-    fieldref:
-      fieldpath: metadata.name
-  - name: MINIO_SETUP_JOB_NAME
-    objref:
-      kind: Job
-      name: minio-setup
-      apiVersion: batch/v1
-    fieldref:
-      fieldpath: metadata.name
+- name: MINIO_NAMESPACE
+  objref:
+    kind: Service
+    name: minio
+    apiVersion: v1
+  fieldref:
+    fieldpath: metadata.namespace
+- name: MINIO_SERVICE_NAME
+  objref:
+    kind: Service
+    name: minio
+    apiVersion: v1
+  fieldref:
+    fieldpath: metadata.name
+- name: MINIO_STS_NAME
+  objref:
+    kind: StatefulSet
+    name: minio
+    apiVersion: apps/v1
+  fieldref:
+    fieldpath: metadata.name
+- name: MINIO_SETUP_JOB_NAME
+  objref:
+    kind: Job
+    name: minio-setup
+    apiVersion: batch/v1
+  fieldref:
+    fieldpath: metadata.name
 
 images:
-  - name: minio/minio
-    newName: registry.sighup.io/fury/minio
-    newTag: RELEASE.2023-10-16T04-13-43Z
-  - name: minio/mc
-    newName: registry.sighup.io/fury/minio/mc
-    newTag: RELEASE.2023-10-14T01-57-03Z
-  - name: groundnuty/k8s-wait-for
-    newName: registry.sighup.io/fury/groundnuty/k8s-wait-for
-    newTag: v2.0
+- name: minio/minio
+  newName: registry.sighup.io/fury/minio
+  newTag: RELEASE.2024-02-09T21-25-16Z
+- name: minio/mc
+  newName: registry.sighup.io/fury/minio/mc
+  newTag: RELEASE.2024-02-09T22-18-24Z
+- name: groundnuty/k8s-wait-for
+  newName: registry.sighup.io/fury/groundnuty/k8s-wait-for
+  newTag: v2.0
 
 generatorOptions:
   disableNameSuffixHash: true
 
 secretGenerator:
 - name: minio-credentials
-  envs: 
-    - cloud-credentials.env
+  envs:
+  - cloud-credentials.env
 - name: cloud-credentials
   files:
-    - cloud=cloud-credentials.config
+  - cloud=cloud-credentials.config

@@ -2,16 +2,15 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 namespace: kube-system
 
 images:
-  - name: velero/velero
-    newName: registry.sighup.io/fury/velero/velero
-    newTag: v1.12.0
+- name: velero/velero
+  newName: registry.sighup.io/fury/velero/velero
+  newTag: v1.13.0
 
 resources:
-  - daemonset.yml
+- daemonset.yml
