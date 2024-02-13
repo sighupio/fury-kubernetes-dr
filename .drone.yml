@@ -101,7 +101,7 @@ steps:
       aws_secret_access_key:
         from_secret: aws_secret_access_key
       terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
       vsphere_server:
         from_secret: vsphere_server
       vsphere_password:
@@ -156,7 +156,7 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
     commands:
       - cd examples/aws-example
       - terraform init
@@ -216,7 +216,7 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
     commands:
       - cd examples/aws-example
       - terraform init
@@ -247,7 +247,7 @@ steps:
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: dr-127-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: gcp_terraform_tf_states_bucket_name
     commands:
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
@@ -309,7 +309,7 @@ steps:
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: dr-127-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: gcp_terraform_tf_states_bucket_name
     commands:
       - cd examples/gcp-example
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
@@ -337,7 +337,7 @@ steps:
     environment:
       CI_PIPELINE_NUMBER: k127a
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: arm_terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
         from_secret: storage_account_name
       RESOURCE_GROUP_NAME:
@@ -405,7 +405,7 @@ steps:
     environment:
       CI_PIPELINE_NUMBER: k127a
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: arm_terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
         from_secret: storage_account_name
       RESOURCE_GROUP_NAME:
@@ -448,7 +448,7 @@ steps:
       aws_secret_access_key:
         from_secret: aws_secret_access_key
       terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
       vsphere_server:
         from_secret: vsphere_server
       vsphere_password:
@@ -510,7 +510,7 @@ steps:
       aws_secret_access_key:
         from_secret: aws_secret_access_key
       terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
       vsphere_server:
         from_secret: vsphere_server
       vsphere_password:
@@ -565,7 +565,7 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
     commands:
       - cd examples/aws-example
       - terraform init
@@ -625,7 +625,7 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
     commands:
       - cd examples/aws-example
       - terraform init
@@ -656,7 +656,7 @@ steps:
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: dr-128-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: gcp_terraform_tf_states_bucket_name
     commands:
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
@@ -718,7 +718,7 @@ steps:
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: dr-128-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: gcp_terraform_tf_states_bucket_name
     commands:
       - cd examples/gcp-example
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
@@ -746,7 +746,7 @@ steps:
     environment:
       CI_PIPELINE_NUMBER: k128a
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: arm_terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
         from_secret: storage_account_name
       RESOURCE_GROUP_NAME:
@@ -814,7 +814,7 @@ steps:
     environment:
       CI_PIPELINE_NUMBER: k128a
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: arm_terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
         from_secret: storage_account_name
       RESOURCE_GROUP_NAME:
@@ -857,7 +857,7 @@ steps:
       aws_secret_access_key:
         from_secret: aws_secret_access_key
       terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
       vsphere_server:
         from_secret: vsphere_server
       vsphere_password:
@@ -919,7 +919,7 @@ steps:
       aws_secret_access_key:
         from_secret: aws_secret_access_key
       terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
       vsphere_server:
         from_secret: vsphere_server
       vsphere_password:
@@ -974,7 +974,7 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
     commands:
       - cd examples/aws-example
       - terraform init
@@ -1034,7 +1034,7 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
     commands:
       - cd examples/aws-example
       - terraform init
@@ -1065,7 +1065,7 @@ steps:
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: dr-129-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: gcp_terraform_tf_states_bucket_name
     commands:
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
       - export GOOGLE_APPLICATION_CREDENTIALS=$${GCP_CREDENTIALS_PATH}
@@ -1127,7 +1127,7 @@ steps:
       GCP_CREDENTIALS_PATH: /shared/terraform-credentials.json
       CI_PIPELINE_NUMBER: dr-129-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: gcp_terraform_tf_states_bucket_name
     commands:
       - cd examples/gcp-example
       - echo $${GCP_CREDENTIALS} > $${GCP_CREDENTIALS_PATH}
@@ -1155,7 +1155,7 @@ steps:
     environment:
       CI_PIPELINE_NUMBER: k129a
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: arm_terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
         from_secret: storage_account_name
       RESOURCE_GROUP_NAME:
@@ -1223,7 +1223,7 @@ steps:
     environment:
       CI_PIPELINE_NUMBER: k129a
       TERRAFORM_TF_STATES_BUCKET_NAME:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: arm_terraform_tf_states_bucket_name
       STORAGE_ACCOUNT_NAME:
         from_secret: storage_account_name
       RESOURCE_GROUP_NAME:
@@ -1266,7 +1266,7 @@ steps:
       aws_secret_access_key:
         from_secret: aws_secret_access_key
       terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
+        from_secret: aws_terraform_tf_states_bucket_name
       vsphere_server:
         from_secret: vsphere_server
       vsphere_password:
