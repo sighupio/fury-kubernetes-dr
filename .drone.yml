@@ -77,9 +77,6 @@ node:
 trigger:
   ref:
     include:
-      - refs/heads/main
-      - refs/heads/master
-      - refs/heads/release-v*
       - refs/tags/**
 
 steps:
@@ -486,9 +483,6 @@ node:
 trigger:
   ref:
     include:
-      - refs/heads/main
-      - refs/heads/master
-      - refs/heads/release-v*
       - refs/tags/**
 
 steps:
@@ -895,9 +889,6 @@ node:
 trigger:
   ref:
     include:
-      - refs/heads/main
-      - refs/heads/master
-      - refs/heads/release-v*
       - refs/tags/**
 
 steps:
