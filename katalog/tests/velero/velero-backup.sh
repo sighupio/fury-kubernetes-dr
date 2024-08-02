@@ -48,7 +48,7 @@ load ./../helper
     test() {
         kubectl get service velero -n kube-system
     }
-    loop_it test 10 10
+    loop_it test 15 15
     [ "$status" -eq 0 ]
 }
 

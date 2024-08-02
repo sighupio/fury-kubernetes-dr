@@ -19,12 +19,3 @@ spec:
         volumeMounts:
         - mountPath: /target
           name: plugins
-      - image: velero/velero-plugin-for-csi
-        imagePullPolicy: Always
-        name: velero-plugin-csi
-        securityContext:
-          allowPrivilegeEscalation: false
-        volumeMounts:
-        - mountPath: /target
-          name: plugins
-

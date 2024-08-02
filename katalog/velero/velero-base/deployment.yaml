@@ -28,6 +28,8 @@ spec:
       - args:
         - server
         - --uploader-type=restic
+        - --client-qps=75.0
+        - --client-burst=100
         command:
         - /velero
         env:
