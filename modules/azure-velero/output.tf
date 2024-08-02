@@ -14,12 +14,12 @@ metadata:
 type: Opaque
 stringData:
   cloud: |-
-    AZURE_SUBSCRIPTION_ID=${data.azurerm_client_config.main.subscription_id}
-    AZURE_TENANT_ID=${data.azurerm_client_config.main.tenant_id}
-    AZURE_CLIENT_ID=${azuread_service_principal.main.application_id}
-    AZURE_CLIENT_SECRET=${azuread_service_principal_password.main.value}
-    AZURE_RESOURCE_GROUP=${data.azurerm_resource_group.aks.name}
-    AZURE_CLOUD_NAME=${var.azure_cloud_name}
+    AZURE_SUBSCRIPTION_ID="${data.azurerm_client_config.main.subscription_id}"
+    AZURE_TENANT_ID="${data.azurerm_client_config.main.tenant_id}"
+    AZURE_CLIENT_ID="${azuread_service_principal.main.application_id}"
+    AZURE_CLIENT_SECRET="${azuread_service_principal_password.main.value}"
+    AZURE_RESOURCE_GROUP="${data.azurerm_resource_group.aks.name}"
+    AZURE_CLOUD_NAME="${var.azure_cloud_name}"
 EOF
 
   backup_storage_location = <<EOF
