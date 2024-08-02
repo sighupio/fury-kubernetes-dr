@@ -11,6 +11,7 @@
 | v2.1.0                              |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |
 | v2.2.0                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |
 | v2.3.0                              |                    |                    |                    |                    |                    |                    | :warning:          | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| v2.4.0                              |                    |                    |                    |                    |                    |                    | :warning:          | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 :white_check_mark: Compatible
 
