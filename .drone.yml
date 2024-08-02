@@ -155,9 +155,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CLUSTER_NAME}"
-      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials.yaml
-      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location.yaml
-      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location.yaml
+      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_127.yaml
+      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_127.yaml
+      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_127.yaml
 
   - name: apply-aws-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.27.1_3.5.3_4.33.3
@@ -246,7 +246,7 @@ steps:
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
       - terraform apply
         --auto-approve
-        --var="my_cluster_name=$${CLUSTER_NAME}"
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}-${CI_BUILD_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
       - terraform output -raw cloud_credentials > /drone/src/cloud_credentials.yaml
       - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location.yaml
@@ -307,7 +307,7 @@ steps:
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
       - terraform destroy
         --auto-approve
-        --var="my_cluster_name=$${CLUSTER_NAME}"
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}-${CI_BUILD_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
     when:
       status:
@@ -627,7 +627,7 @@ steps:
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
       - terraform apply
         --auto-approve
-        --var="my_cluster_name=$${CLUSTER_NAME}"
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}-${CI_BUILD_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
       - terraform output -raw cloud_credentials > /drone/src/cloud_credentials.yaml
       - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location.yaml
@@ -689,7 +689,7 @@ steps:
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
       - terraform destroy
         --auto-approve
-        --var="my_cluster_name=$${CLUSTER_NAME}"
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}-${CI_BUILD_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
     when:
       status:
@@ -1009,7 +1009,7 @@ steps:
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
       - terraform apply
         --auto-approve
-        --var="my_cluster_name=$${CLUSTER_NAME}"
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}-${CI_BUILD_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
       - terraform output -raw cloud_credentials > /drone/src/cloud_credentials.yaml
       - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location.yaml
@@ -1071,7 +1071,7 @@ steps:
         --backend-config="prefix=${CI_REPO}/${DRONE_BRANCH}/${CI_BUILD_NUMBER}/$${CI_PIPELINE_NUMBER}"
       - terraform destroy
         --auto-approve
-        --var="my_cluster_name=$${CLUSTER_NAME}"
+        --var="my_cluster_name=$${CI_PIPELINE_NUMBER}-${CI_BUILD_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
     when:
       status:
