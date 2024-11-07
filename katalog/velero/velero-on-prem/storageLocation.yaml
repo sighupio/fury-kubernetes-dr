@@ -17,3 +17,4 @@ spec:
   objectStorage:
     bucket: "$(MINIO_NAMESPACE)"
   provider: aws
+
