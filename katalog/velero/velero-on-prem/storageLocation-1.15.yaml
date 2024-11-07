@@ -1,0 +1,20 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+---
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  labels:
+    k8s-app: velero
+  name: default
+spec:
+  config:
+    region: minio
+    s3ForcePathStyle: "true"
+    s3Url: "http://$(MINIO_STS_NAME)-0.$(MINIO_SERVICE_NAME).$(MINIO_NAMESPACE).svc.cluster.local:9000"
+  objectStorage:
+    bucket: "$(MINIO_NAMESPACE)"
+  provider: aws
+
