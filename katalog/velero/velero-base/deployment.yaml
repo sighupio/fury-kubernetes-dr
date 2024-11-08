@@ -27,12 +27,17 @@ spec:
       containers:
       - args:
         - server
-        - --uploader-type=restic
+        - --features=EnableCSI
+        - --uploader-type=kopia
         - --client-qps=75.0
         - --client-burst=100
         command:
         - /velero
         env:
+        # We need to set the HOME environment variable because the repository configurations
+        # and other cache files are saved there.
+        - name: HOME
+          value: /home/velero
         - name: VELERO_SCRATCH_DIR
           value: /scratch
         - name: VELERO_NAMESPACE
@@ -62,6 +67,11 @@ spec:
             cpu: 100m
             memory: 256Mi
         volumeMounts:
+        # Because we are using a securityContenxt that sets the runAsUser, by default no home
+        # directory is created for the user, so we also need to mount an emptyDir to allow Velero
+        # to have a directory where repository configurations can be saved.
+        - mountPath: /home/velero
+          name: repoconfig
         - mountPath: /plugins
           name: plugins
         - mountPath: /scratch
@@ -77,3 +87,5 @@ spec:
       - name: cloud-credentials
         secret:
           secretName: cloud-credentials
+      - name: repoconfig
+        emptyDir: {}

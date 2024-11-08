@@ -48,6 +48,7 @@ object storage backend that Velero can use to store backup data.
 namespace: kube-system
 
 bases:
+  - vendor/katalog/dr/velero/velero-base
   - vendor/katalog/dr/velero/velero-on-prem
 ```
 
@@ -86,6 +87,7 @@ Then, you will be able to deploy the velero AWS deployment.
 namespace: kube-system
 
 bases:
+  - vendor/katalog/dr/velero/velero-base
   - vendor/katalog/dr/velero/velero-aws
 ```
 
@@ -106,6 +108,7 @@ Then, you will be able to deploy the velero GCP deployment.
 namespace: kube-system
 
 bases:
+  - vendor/katalog/dr/velero/velero-base
   - vendor/katalog/dr/velero/velero-gcp
 ```
 
@@ -126,6 +129,7 @@ Then, you will be able to deploy the velero Azure deployment.
 namespace: kube-system
 
 bases:
+  - vendor/katalog/dr/velero/velero-base
   - vendor/katalog/dr/velero/velero-azure
 ```
 
@@ -146,6 +150,7 @@ deployment.
 namespace: kube-system
 
 bases:
+  - vendor/katalog/dr/velero/velero-base
   - vendor/katalog/dr/velero/velero-aws
   - vendor/katalog/dr/velero/velero-node-agent
 ```
@@ -163,10 +168,28 @@ Feel free to deploy these schedules if fits in your business:
 namespace: kube-system
 
 bases:
+  - vendor/katalog/dr/velero/velero-base
   - vendor/katalog/dr/velero/velero-aws
   - vendor/katalog/dr/velero/velero-schedules
 ```
 
 More information about [velero schedules](https://github.com/vmware-tanzu/velero/blob/master/site/docs/master/api-types/schedule.md)
+
+### Snapshot Controller
+
+The [`snapshot-controller`](./snapshot-controller/) module enables [CSI Snapshot Data Movement](https://velero.io/docs/main/csi-snapshot-data-movement/) support and is specifically designed to move **CSI snapshot data** to a backup storage location.
+
+It requires requires a **CSI driver** to be installed on the underlying infrastructure, as **Velero** will use it to perform the data movement.
+
+Example `kustomization.yaml` file
+
+```yaml
+namespace: kube-system
+
+bases:
+  - vendor/katalog/dr/velero/velero-base
+  - vendor/katalog/dr/velero/velero-on-prem
+  - vendor/katalog/dr/velero/snapshot-controller
+```
 
 <!-- </KFD-DOCS> -->
