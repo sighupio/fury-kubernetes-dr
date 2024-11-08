@@ -20,7 +20,7 @@ spec:
         - mountPath: /target
           name: plugins
       - name: wait-for-minio-setup
-        image: groundnuty/k8s-wait-for:v1.4
+        image: groundnuty/k8s-wait-for
         imagePullPolicy: Always
         args: ["job", "$(MINIO_SETUP_JOB_NAME)"]
         securityContext:
