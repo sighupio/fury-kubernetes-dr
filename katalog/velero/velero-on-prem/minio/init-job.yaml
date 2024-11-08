@@ -27,7 +27,7 @@ spec:
         args: ["pod", "$(MINIO_STS_NAME)-0"]
       containers:
       - name: mc
-        image: minio/mc:latest
+        image: minio/mc
         imagePullPolicy: Always
         envFrom:
         - secretRef:
