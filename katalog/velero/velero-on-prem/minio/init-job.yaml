@@ -22,7 +22,7 @@ spec:
         emptyDir: {}
       initContainers:
       - name: wait-for-minio
-        image: groundnuty/k8s-wait-for:v1.2
+        image: groundnuty/k8s-wait-for
         imagePullPolicy: Always
         args: ["pod", "$(MINIO_STS_NAME)-0"]
       containers:
