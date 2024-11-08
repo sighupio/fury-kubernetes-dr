@@ -10,6 +10,7 @@ metadata:
   labels:
     k8s-app: minio-setup
 spec:
+  ttlSecondsAfterFinished: 3600 
   template:
     metadata:
       labels:
