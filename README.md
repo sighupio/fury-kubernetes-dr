@@ -75,9 +75,6 @@ Deploy the necessary infrastructure to persist the backups natively in cloud pro
 
 | Kubernetes Version |   Compatibility    | Notes           |
 | ------------------ | :----------------: | --------------- |
-| `1.25.x`           | :white_check_mark: | No known issues |
-| `1.26.x`           | :white_check_mark: | No known issues |
-| `1.27.x`           | :white_check_mark: | No known issues |
 | `1.28.x`           | :white_check_mark: | No known issues |
 | `1.29.x`           | :white_check_mark: | No known issues |
 | `1.30.x`           | :white_check_mark: | No known issues |
