@@ -20,7 +20,7 @@ load ./../helper
     test() {
         velero -n kube-system backup get backup-e2e | grep Completed
     }
-    loop_it test 20 10
+    loop_it test 40 10
     [ "$status" -eq 0 ]
 }
 
@@ -48,7 +48,7 @@ load ./../helper
     test() {
         kubectl get service velero -n kube-system
     }
-    loop_it test 15 15
+    loop_it test 30 15
     [ "$status" -eq 0 ]
 }
 

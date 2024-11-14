@@ -22,8 +22,14 @@ velero install --namespace kube-system --provider aws --no-secret --bucket my-bu
   - [`velero-azure`](./velero-azure)
   - [`velero-gcp`](./velero-gcp)
   - [`velero-on-prem`](./velero-on-prem)
+
+  - The [`snapshot-controller`](./snapshot-controller/) package is needed to enable [CSI Snapshot Data Movement](https://velero.io/docs/main/csi-snapshot-data-movement/) support.
+
 - Split the manifests into different files
 - Velero is deployed in the `kube-system` namespace instead of `velero`
 - Added `securityContext` to Velero `Deployment`
 - Removed Prometheus annotations from Velero `Deployment`
 - Added a `Service` and a `ServiceMonitor` for monitoring
+- Add `--features=EnableCSI` to enable the use of the underlying *CSI Driver* for Velero.
+- Change `--uploader-type=restic` to `--uploader-type=kopia`, in order to use [kopia](https://github.com/kopia/kopia/) for Data Movement.
+- Add the `HOME` environment variable and a volume mount as a workaround for [this issue](https://github.com/vmware-tanzu/velero/issues/8067), which is due to the `runAsUser` set in the `securityContext` of the [Velero deployment](../velero-base/deployment.yaml)

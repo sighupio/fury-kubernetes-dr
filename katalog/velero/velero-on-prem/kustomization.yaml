@@ -26,3 +26,4 @@ resources:
 - ../velero-base
 - minio/
 - storageLocation.yaml
+- volumeSnapLocation.yaml

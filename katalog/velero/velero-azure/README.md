@@ -1,11 +1,11 @@
 # Velero Azure
 
 This Velero deployment is ready to be deployed in any Azure cluster as it includes the
-[Azure Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/tree/v1.10.0).
+[Azure Velero plugin](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/tree/v1.11.0).
 
 ## Image repository and tag
 
-- Velero Azure Plugin image: `velero/velero-plugin-for-microsoft-azure:v1.10.0`
+- Velero Azure Plugin image: `velero/velero-plugin-for-microsoft-azure:v1.11.0`
 - Velero Azure Plugin repository:
 [https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure](https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure).
 
