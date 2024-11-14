@@ -994,7 +994,7 @@ steps:
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /drone/src/terraform-credentials-129.json
-      CI_PIPELINE_NUMBER: dr-129-gcp
+      CI_PIPELINE_NUMBER: dr-130-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: gcp_terraform_tf_states_bucket_name
     commands:
