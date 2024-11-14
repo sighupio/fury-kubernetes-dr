@@ -289,11 +289,11 @@ To deploy `velero on-prem`:
 
 ```yaml
 bases:
-  - name: velero/velero-on-prem
+  - name: dr/velero/velero-on-prem
     version: "v2.4.0"
-  - name: velero/velero-node-agent
+  - name: dr/velero/velero-node-agent
     version: "v2.4.0"
-  - name: velero/velero-schedules
+  - name: dr/velero/velero-schedules
     version: "v2.4.0"
 ```
 
