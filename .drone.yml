@@ -869,7 +869,7 @@ steps:
     network_mode: host
     depends_on: [ create-kind-cluster ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
     commands:
       - bats -t katalog/tests/velero/velero-install.sh
@@ -880,7 +880,7 @@ steps:
     network_mode: host
     depends_on: [ test-install ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
     commands:
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
@@ -895,9 +895,9 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
-      CI_PIPELINE_NUMBER: dr-129-aws
+      CI_PIPELINE_NUMBER: dr-130-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -916,9 +916,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CLUSTER_NAME}"
-      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_129.yaml
-      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_129.yaml
-      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_129.yaml
+      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_130.yaml
+      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_130.yaml
+      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_130.yaml
 
   - name: apply-aws-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.29.1_3.5.3_4.33.3
@@ -926,11 +926,11 @@ steps:
     network_mode: host
     depends_on: [ init-aws ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
     commands:
-      - kubectl apply -f /drone/src/cloud_credentials_129.yaml -n kube-system
-      - kubectl apply -f /drone/src/backup_storage_location_129.yaml -n kube-system
+      - kubectl apply -f /drone/src/cloud_credentials_130.yaml -n kube-system
+      - kubectl apply -f /drone/src/backup_storage_location_130.yaml -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
       - sleep 30 # wait for velero to restart
       - kubectl get pods -n kube-system
@@ -941,7 +941,7 @@ steps:
     network_mode: host
     depends_on: [ apply-aws-configuration ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
     commands:
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
@@ -955,9 +955,9 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
-      CI_PIPELINE_NUMBER: dr-129-aws
+      CI_PIPELINE_NUMBER: dr-130-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -987,7 +987,7 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
       GCP_PROJECT:
         from_secret: gcp_project
@@ -1009,9 +1009,9 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}-${CI_BUILD_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_129.yaml
-      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_129.yaml
-      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_129.yaml
+      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_130.yaml
+      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_130.yaml
+      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_130.yaml
 
   - name: apply-gcp-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.29.1_3.5.3_4.33.3
@@ -1019,11 +1019,11 @@ steps:
     network_mode: host
     depends_on: [ init-gcp ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
     commands:
-      - kubectl apply -f /drone/src/cloud_credentials_129.yaml -n kube-system
-      - kubectl apply -f /drone/src/backup_storage_location_129.yaml -n kube-system
+      - kubectl apply -f /drone/src/cloud_credentials_130.yaml -n kube-system
+      - kubectl apply -f /drone/src/backup_storage_location_130.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
       - sleep 30 # wait for velero to restart
@@ -1035,7 +1035,7 @@ steps:
     network_mode: host
     depends_on: [ apply-gcp-configuration ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
     commands:
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
@@ -1049,14 +1049,14 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-gcp ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
       GCP_PROJECT:
         from_secret: gcp_project
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /drone/src/terraform-credentials-129.json
-      CI_PIPELINE_NUMBER: dr-129-gcp
+      CI_PIPELINE_NUMBER: dr-130-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: gcp_terraform_tf_states_bucket_name
     commands:
@@ -1082,7 +1082,7 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-gcp ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
       CI_PIPELINE_NUMBER: k130a
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -1110,9 +1110,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}${CI_BUILD_NUMBER}"
-      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_129.yaml
-      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_129.yaml
-      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_129.yaml
+      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_130.yaml
+      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_130.yaml
+      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_130.yaml
 
   - name: apply-azure-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.29.1_3.5.3_4.33.3
@@ -1120,11 +1120,11 @@ steps:
     network_mode: host
     depends_on: [ init-azure ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
     commands:
-      - kubectl apply -f /drone/src/cloud_credentials_129.yaml -n kube-system
-      - kubectl apply -f /drone/src/backup_storage_location_129.yaml -n kube-system
+      - kubectl apply -f /drone/src/cloud_credentials_130.yaml -n kube-system
+      - kubectl apply -f /drone/src/backup_storage_location_130.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
       - sleep 30 # wait for velero to restart
@@ -1136,7 +1136,7 @@ steps:
     network_mode: host
     depends_on: [ apply-azure-configuration ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
     commands:
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
@@ -1150,7 +1150,7 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-azure ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
       KUBECONFIG: /drone/src/kubeconfig-130
       CI_PIPELINE_NUMBER: k130a
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -1191,7 +1191,7 @@ steps:
     pull: always
     depends_on: [destroy-azure]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-129
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-130
     commands:
       # does not matter if the command fails
       - kind delete cluster --name $${CLUSTER_NAME} || true
@@ -1262,7 +1262,7 @@ steps:
     network_mode: host
     depends_on: [ test-install ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
     commands:
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
@@ -1277,9 +1277,9 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
-      CI_PIPELINE_NUMBER: dr-129-aws
+      CI_PIPELINE_NUMBER: dr-131-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -1298,9 +1298,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CLUSTER_NAME}"
-      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_129.yaml
-      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_129.yaml
-      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_129.yaml
+      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_131.yaml
+      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_131.yaml
+      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_131.yaml
 
   - name: apply-aws-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.29.1_3.5.3_4.33.3
@@ -1308,11 +1308,11 @@ steps:
     network_mode: host
     depends_on: [ init-aws ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
     commands:
-      - kubectl apply -f /drone/src/cloud_credentials_129.yaml -n kube-system
-      - kubectl apply -f /drone/src/backup_storage_location_129.yaml -n kube-system
+      - kubectl apply -f /drone/src/cloud_credentials_131.yaml -n kube-system
+      - kubectl apply -f /drone/src/backup_storage_location_131.yaml -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
       - sleep 30 # wait for velero to restart
       - kubectl get pods -n kube-system
@@ -1323,7 +1323,7 @@ steps:
     network_mode: host
     depends_on: [ apply-aws-configuration ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
     commands:
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
@@ -1337,9 +1337,9 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
-      CI_PIPELINE_NUMBER: dr-129-aws
+      CI_PIPELINE_NUMBER: dr-131-aws
       AWS_DEFAULT_REGION:
         from_secret: aws_region
       AWS_ACCESS_KEY_ID:
@@ -1369,14 +1369,14 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-aws ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
       GCP_PROJECT:
         from_secret: gcp_project
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /drone/src/terraform-credentials-129.json
-      CI_PIPELINE_NUMBER: dr-129-gcp
+      CI_PIPELINE_NUMBER: dr-131-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: gcp_terraform_tf_states_bucket_name
     commands:
@@ -1391,9 +1391,9 @@ steps:
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}-${CI_BUILD_NUMBER}"
         --var="gcp_project"=$${GCP_PROJECT}
-      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_129.yaml
-      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_129.yaml
-      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_129.yaml
+      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_131.yaml
+      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_131.yaml
+      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_131.yaml
 
   - name: apply-gcp-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.29.1_3.5.3_4.33.3
@@ -1401,11 +1401,11 @@ steps:
     network_mode: host
     depends_on: [ init-gcp ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
     commands:
-      - kubectl apply -f /drone/src/cloud_credentials_129.yaml -n kube-system
-      - kubectl apply -f /drone/src/backup_storage_location_129.yaml -n kube-system
+      - kubectl apply -f /drone/src/cloud_credentials_131.yaml -n kube-system
+      - kubectl apply -f /drone/src/backup_storage_location_131.yaml -n kube-system
       - kustomize build katalog/velero/velero-gcp | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
       - sleep 30 # wait for velero to restart
@@ -1417,7 +1417,7 @@ steps:
     network_mode: host
     depends_on: [ apply-gcp-configuration ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
     commands:
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
@@ -1431,14 +1431,14 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-gcp ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
       GCP_PROJECT:
         from_secret: gcp_project
       GCP_CREDENTIALS:
         from_secret: gcp_credentials
       GCP_CREDENTIALS_PATH: /drone/src/terraform-credentials-129.json
-      CI_PIPELINE_NUMBER: dr-129-gcp
+      CI_PIPELINE_NUMBER: dr-131-gcp
       TERRAFORM_TF_STATES_BUCKET_NAME:
         from_secret: gcp_terraform_tf_states_bucket_name
     commands:
@@ -1464,7 +1464,7 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-gcp ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
       CI_PIPELINE_NUMBER: k131a
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -1492,9 +1492,9 @@ steps:
       - terraform apply
         --auto-approve
         --var="my_cluster_name=$${CI_PIPELINE_NUMBER}${CI_BUILD_NUMBER}"
-      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_129.yaml
-      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_129.yaml
-      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_129.yaml
+      - terraform output -raw cloud_credentials > /drone/src/cloud_credentials_131.yaml
+      - terraform output -raw volume_snapshot_location > /drone/src/volume_snapshot_location_131.yaml
+      - terraform output -raw backup_storage_location > /drone/src/backup_storage_location_131.yaml
 
   - name: apply-azure-configuration
     image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.12.0_1.9.4_1.29.1_3.5.3_4.33.3
@@ -1502,11 +1502,11 @@ steps:
     network_mode: host
     depends_on: [ init-azure ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
     commands:
-      - kubectl apply -f /drone/src/cloud_credentials_129.yaml -n kube-system
-      - kubectl apply -f /drone/src/backup_storage_location_129.yaml -n kube-system
+      - kubectl apply -f /drone/src/cloud_credentials_131.yaml -n kube-system
+      - kubectl apply -f /drone/src/backup_storage_location_131.yaml -n kube-system
       - kustomize build katalog/velero/velero-azure | kubectl apply -f - -n kube-system
       - kubectl rollout restart deploy velero -n kube-system
       - sleep 30 # wait for velero to restart
@@ -1518,7 +1518,7 @@ steps:
     network_mode: host
     depends_on: [ apply-azure-configuration ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
     commands:
       - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
@@ -1532,7 +1532,7 @@ steps:
     network_mode: host
     depends_on: [ test-backup-restore-azure ]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
       KUBECONFIG: /drone/src/kubeconfig-131
       CI_PIPELINE_NUMBER: k131a
       TERRAFORM_TF_STATES_BUCKET_NAME:
@@ -1573,7 +1573,7 @@ steps:
     pull: always
     depends_on: [destroy-azure]
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-1.31.1
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-131
     commands:
       # does not matter if the command fails
       - kind delete cluster --name $${CLUSTER_NAME} || true
@@ -1593,7 +1593,7 @@ kind: pipeline
 type: docker
 
 depends_on:
-  - e2e-kubernetes-1.30
+  - e2e-kubernetes-1.28
   - e2e-kubernetes-1.29
   - e2e-kubernetes-1.30
   - e2e-kubernetes-1.31
