@@ -13,12 +13,32 @@ load ./../helper
     kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v2.0.0/katalog/prometheus-operator/crds/0servicemonitorCustomResourceDefinition.yaml
 }
 
+@test "Deploy Snapshot Controller..." {
+    info
+    test() {
+        apply katalog/velero/snapshot-controller
+    }
+    loop_it test 30 10
+    status=${loop_it_result}
+    [ "$status" -eq 0 ]
+}
+
 @test "Deploy Velero on Prem" {
     info
     test() {
         apply katalog/velero/velero-on-prem
     }
     loop_it test 30 10
+    status=${loop_it_result}
+    [ "$status" -eq 0 ]
+}
+
+@test "Check BackupStorageLocation" {
+    info
+    test() {
+        kubectl get backupstoragelocation default -n kube-system -o json | jq .status.phase | grep 'Available'
+    }
+    loop_it test 60 10
     status=${loop_it_result}
     [ "$status" -eq 0 ]
 }
