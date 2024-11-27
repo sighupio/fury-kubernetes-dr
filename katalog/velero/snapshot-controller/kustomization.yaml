@@ -7,10 +7,14 @@ kind: Kustomization
 
 namespace: kube-system
 
-images:
-- name: velero/velero
-  newName: registry.sighup.io/fury/velero/velero
-  newTag: v1.15.0
-
 resources:
-- daemonset.yml
+  - crds.yaml
+  - rbac.yaml
+  - deployment.yaml
+
+images:
+- name: registry.k8s.io/sig-storage/snapshot-controller
+  newName: registry.sighup.io/fury/sig-storage/snapshot-controller
+  newTag: v8.0.1
+
+
