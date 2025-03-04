@@ -1,0 +1,78 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: etcd-backup
+spec:
+  schedule: "* * 2 * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  concurrencyPolicy: Allow
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: etcd-certs
+              hostPath:
+                path: /etc/etcd/pki/etcd
+            - name: persistence
+              emptyDir: {}
+            - name: host-backup
+              hostPath:
+                path: /tmp/etcd-backup
+          initContainers:
+            - name: etcd
+              image: registry.sighup.io/fury/etcd-backup/etcd:3.5.17
+              envFrom:
+                - configMapRef:
+                    name: sighup-etcd-backup-definitions
+              securityContext:
+                runAsUser: 0
+                runAsGroup: 0
+              command: ["/bin/bash", "-c"]
+              args:
+                [
+                  "etcdctl snapshot save /backup/fury-etcd-snapshot-$(date +'%Y%m%d%H%M').etcdb && chown 1000:1000 /backup/fury-etcd-snapshot-*.etcdb",
+                ]
+              volumeMounts:
+                - mountPath: /etcd
+                  name: etcd-certs
+                  readOnly: true
+                - mountPath: /backup
+                  name: persistence
+          containers:
+            - name: save-to-host
+              image: registry.sighup.io/fury/busybox:latest
+              securityContext:
+                runAsUser: 0
+                runAsGroup: 0
+              command:
+                - "/bin/cp"
+                - "-r"
+                - "/backup/"
+                - "/hostpath"
+              volumeMounts:
+                - mountPath: /hostpath
+                  name: host-backup
+                - mountPath: /backup
+                  name: persistence
+          restartPolicy: OnFailure
+          hostNetwork: true
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: node-role.kubernetes.io/control-plane
+                        operator: Exists
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              effect: NoSchedule
+              operator: Exists
+            - key: node.kubernetes.io/memory-pressure
+              effect: NoSchedule
+              operator: Exists
