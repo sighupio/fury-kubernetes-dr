@@ -5,7 +5,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: etcd-backup
+  name: etcd-backup-s3
 spec:
   schedule: "* * 2 * *"
   successfulJobsHistoryLimit: 3
@@ -24,20 +24,21 @@ spec:
             - name: host-backup
               hostPath:
                 path: /tmp/etcd-backup
+            - name: etcd-backup-s3-rclone-conf
+              secret:
+                secretName: etcd-backup-s3-rclone-conf
           initContainers:
-            - name: etcd
-              image: registry.sighup.io/fury/etcd-backup/etcd:3.5.17
+            - name: backupper
+              image: etcd
               envFrom:
                 - configMapRef:
-                    name: sighup-etcd-backup-definitions
+                    name: etcd-backup-certificates-location
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
               command: ["/bin/bash", "-c"]
               args:
-                [
-                  "etcdctl snapshot save /backup/fury-etcd-snapshot-$(date +'%Y%m%d%H%M').etcdb && chown 1000:1000 /backup/fury-etcd-snapshot-*.etcdb",
-                ]
+                - "etcdctl snapshot save /backup/fury-etcd-snapshot-$(date +'%Y%m%d%H%M').etcdb"
               volumeMounts:
                 - mountPath: /etcd
                   name: etcd-certs
@@ -45,21 +46,47 @@ spec:
                 - mountPath: /backup
                   name: persistence
           containers:
-            - name: save-to-host
-              image: registry.sighup.io/fury/busybox:latest
-              securityContext:
-                runAsUser: 0
-                runAsGroup: 0
+            - name: move-to-s3
+              image: rclone
               command:
-                - "/bin/cp"
-                - "-r"
-                - "/backup/"
-                - "/hostpath"
+                - "/bin/sh"
+                - "-c"
+              args:
+                - 'rclone copy /etcd-backup "$TARGET"'
+              env:
+                - name: TARGET
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-config
+                      key: target
               volumeMounts:
-                - mountPath: /hostpath
-                  name: host-backup
-                - mountPath: /backup
+                - mountPath: /config/rclone
+                  name: etcd-backup-s3-rclone-conf
+                  readOnly: true
+                - mountPath: /etcd-backup
                   name: persistence
+            - name: delete-old
+              image: rclone
+              command:
+                - "/bin/sh"
+                - "-c"
+              args:
+                - 'rclone delete "$TARGET" --min-age="$RETENTION" --include=fury-etcd-snapshot*.etcdb'
+              env:
+                - name: TARGET
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-config
+                      key: target
+                - name: RETENTION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-config
+                      key: retention
+              volumeMounts:
+                - mountPath: /config/rclone
+                  name: etcd-backup-s3-rclone-conf
+                  readOnly: true
           restartPolicy: OnFailure
           hostNetwork: true
           affinity:
