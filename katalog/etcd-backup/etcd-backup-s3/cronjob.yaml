@@ -10,7 +10,7 @@ spec:
   schedule: "* * 2 * *"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 5
-  concurrencyPolicy: Allow
+  concurrencyPolicy: Replace
   jobTemplate:
     spec:
       template:
@@ -45,7 +45,6 @@ spec:
                   readOnly: true
                 - mountPath: /backup
                   name: persistence
-          containers:
             - name: move-to-s3
               image: rclone
               command:
@@ -65,6 +64,7 @@ spec:
                   readOnly: true
                 - mountPath: /etcd-backup
                   name: persistence
+          containers:
             - name: delete-old
               image: rclone
               command:
