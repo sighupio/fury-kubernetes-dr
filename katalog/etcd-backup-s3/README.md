@@ -1,0 +1,122 @@
+# ETCD Backup S3
+
+This package provides an automated solution for backing up ETCD data to an S3-compatible storage service using a Kubernetes CronJob.
+
+## Overview
+
+This package creates a CronJob that:
+
+1. Takes a snapshot of the ETCD database
+2. Uploads the snapshot to an S3-compatible storage target
+3. Cleans up old backups based on a configurable retention policy
+
+The job is scheduled to run on control plane nodes and uses `rclone` to manage the S3 uploads and lifecycle management.
+
+## Requirements
+
+- A Kubernetes cluster with ETCD
+- The ETCD cluster is placed on control plane nodes
+- Access to control plane nodes
+- An S3-compatible storage target (like MinIO, AWS S3, etc.)
+- `rclone` configuration for your S3 service
+
+## Configuration
+
+### Default Configuration
+
+The package includes the following default configuration:
+
+- The backup runs on specified schedule (configurable)
+- Snapshots are stored in the format `fury-etcd-snapshot-YYYYMMDDHHMM.etcdb`
+- Backups are uploaded to the configured S3 target
+- Old backups are cleaned up based on the retention policy
+
+### Components
+
+- **CronJob**: Orchestrates the backup process
+- **ConfigMaps**:
+  - `etcd-backup-config`: Contains S3 target and retention settings
+  - `etcd-backup-certificates-location`: Contains ETCD connection parameters
+- **Secret**:
+  - `etcd-backup-s3-rclone-conf`: Contains the rclone configuration
+
+## Usage
+
+### Basic Installation
+
+1. Create an `rclone.conf` file with your S3 credentials in the `rclone` directory
+2. Apply the package using kustomize:
+
+```bash
+kubectl apply -k /path/to/etcd-backup-s3
+```
+
+### Customization
+
+To customize the package, create your own `kustomization.yaml` that references this package:
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - /path/to/etcd-backup-s3
+
+# Override configurations as needed
+patches:
+  - patch: |-
+      apiVersion: batch/v1
+      kind: CronJob
+      metadata:
+        name: etcd-backup-s3
+      spec:
+        schedule: "0 1 * * *"  # Run at 1:00 AM daily
+
+# Override configmaps
+configMapGenerator:
+  - name: etcd-backup-config
+    behavior: replace
+    literals:
+      - target=s3:your-bucket-name/backups
+      - retention=30d  # Keep backups for 30 days
+```
+
+### Configuration Options
+
+#### Schedule
+
+You can modify the backup schedule using cron syntax:
+
+| Schedule | Description |
+|----------|-------------|
+| `0 1 * * *` | Daily at 1:00 AM |
+| `0 */6 * * *` | Every 6 hours |
+| `0 0 * * 0` | Weekly on Sunday at midnight |
+
+#### Target
+
+The S3 target follows the rclone format: `provider:bucket-name/path`
+
+#### Retention
+
+Specifies how long backups should be kept before automatic deletion (follows the rclone `--min-age` format):
+
+| Value | Description |
+|-------|-------------|
+| `10d` | 10 days |
+| `1w` | 1 week |
+| `3M` | 3 months |
+
+## Security Considerations
+
+- The CronJob runs with host network access to connect to the local ETCD instance
+- It mounts the ETCD certificates from the host to authenticate and container root access is thus required
+- The rclone configuration contains sensitive credentials and is stored as a Kubernetes Secret
+
+## Troubleshooting
+
+Check the job logs for detailed error messages:
+
+```bash
+kubectl logs -n kube-system job/etcd-backup-s3-<job-id>
+```
