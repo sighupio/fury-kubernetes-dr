@@ -10,7 +10,7 @@ This package creates a CronJob that:
 2. Uploads the snapshot to an S3-compatible storage target
 3. Cleans up old backups based on a configurable retention policy
 
-The job is scheduled to run on control plane nodes and uses `rclone` to manage the S3 uploads and lifecycle management.
+The job is scheduled to run on one of the available control plane nodes and uses `rclone` to manage the S3 uploads and lifecycle management.
 
 ## Requirements
 
