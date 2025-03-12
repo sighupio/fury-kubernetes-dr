@@ -9,8 +9,8 @@ Long story short, keep an eye on the `etcd` upstream changelog (in k8s and in `e
 gRPC API deprecation, in particular check the `Snapshot` interface.
 
 References:
-- https://github.com/etcd-io/etcd/blob/3c916bb2587174008054f629d784514abe9e8d36/client/v3/maintenance.go#L230
-- https://github.com/etcd-io/etcd/blob/3c916bb2587174008054f629d784514abe9e8d36/api/etcdserverpb/rpc.pb.go#L7549
+- [https://github.com/etcd-io/etcd/blob/3c916bb2587174008054f629d784514abe9e8d36/client/v3/maintenance.go#L230](client/v3/maintenance.go)
+- [https://github.com/etcd-io/etcd/blob/3c916bb2587174008054f629d784514abe9e8d36/api/etcdserverpb/rpc.pb.go#L7549](api/etcdserverpb/rpc.pb.go)
 
 ## Upgrade checklist
 In order to update and maintain the package:
