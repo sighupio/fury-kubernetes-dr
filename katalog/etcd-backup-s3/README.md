@@ -12,10 +12,14 @@ This package creates a CronJob that:
 
 The job is scheduled to run on one of the available control plane nodes and uses `rclone` to manage the S3 uploads and lifecycle management.
 
+The job is fault-tolerant, as it tries to backup the available etcd nodes:
+even if one of the etcd nodes (if you're in a HA-setup) is failing,
+`etcd-backup-s3` asks the cluster which nodes are healthy and spashots one of
+them.
+
 ## Requirements
 
 - A Kubernetes cluster with ETCD
-- The ETCD cluster is placed on control plane nodes
 - Access to control plane nodes
 - An S3-compatible storage target (like MinIO, AWS S3, etc.)
 - `rclone` configuration for your S3 service
