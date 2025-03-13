@@ -18,33 +18,38 @@ spec:
           volumes:
             - name: etcd-certs
               hostPath:
-                path: /etc/etcd/pki/etcd
+                path: /etc/etcd/pki
             - name: persistence
               emptyDir: {}
             - name: host-backup
               hostPath:
                 path: /tmp/etcd-backup
+            - name: kubeadm-config
+              configMap:
+                name: kubeadm-config
+                items:
+                - key: ClusterConfiguration
+                  path: config.yaml
             - name: etcd-backup-s3-rclone-conf
               secret:
                 secretName: etcd-backup-s3-rclone-conf
           initContainers:
             - name: backupper
-              image: etcd
+              image: etcd-backupper
               envFrom:
                 - configMapRef:
                     name: etcd-backup-certificates-location
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
-              command: ["/bin/bash", "-c"]
-              args:
-                - "etcdctl snapshot save /backup/fury-etcd-snapshot-$(date +'%Y%m%d%H%M').etcdb"
               volumeMounts:
                 - mountPath: /etcd
                   name: etcd-certs
                   readOnly: true
                 - mountPath: /backup
                   name: persistence
+                - mountPath: /k8s
+                  name: kubeadm-config
             - name: move-to-s3
               image: rclone
               command:
