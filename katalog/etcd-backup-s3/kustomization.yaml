@@ -34,8 +34,6 @@ configMapGenerator:
       - retention=10m
   - name: etcd-backup-certificates-location
     literals:
-      - ETCDCTL_API=3
-      # - ETCDCTL_ENDPOINTS=https://127.0.0.1:2379
       - ETCDCTL_CACERT=/etcd/etcd/ca.crt
       - ETCDCTL_CERT=/etcd/apiserver-etcd-client.crt
       - ETCDCTL_KEY=/etcd/apiserver-etcd-client.key
