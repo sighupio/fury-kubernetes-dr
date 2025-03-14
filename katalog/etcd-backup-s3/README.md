@@ -17,6 +17,9 @@ even if one of the etcd nodes (if you're in a HA-setup) is failing,
 `etcd-backup-s3` asks the cluster which nodes are healthy and spashots one of
 them.
 
+> [!NOTE]
+> The job is configured to use the Host Network, as a consequence it cannot resolve service names internal to the cluster or connect to them via the internal Kubernetes network.
+
 ## Requirements
 
 - A Kubernetes cluster with ETCD
