@@ -27,6 +27,12 @@ them.
 - An S3-compatible storage target (like MinIO, AWS S3, etc.)
 - `rclone` configuration for your S3 service
 
+> [!NOTE]
+> By default we rely on `ClusterConfiguration` found inside the `kubeadm-config` ConfigMap to
+> extract the ETCD server endpoints. If you want to use a cluster that's not managed by
+> `kubeadm`, please make sure to remove the `kubeadm-config` volume, and pass the CronJob the
+> `ETCDCTL_ENDPOINTS` environment variable set accordingly.
+
 ## Configuration
 
 ### Default Configuration
