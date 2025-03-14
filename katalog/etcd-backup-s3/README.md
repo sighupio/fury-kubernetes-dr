@@ -81,7 +81,7 @@ configMapGenerator:
   - name: etcd-backup-config
     behavior: replace
     literals:
-      - target=s3:your-bucket-name/backups
+      - target=s3:your-bucket-name/backups # `s3` must match with the section name in rclone.conf
       - retention=30d  # Keep backups for 30 days
 ```
 
