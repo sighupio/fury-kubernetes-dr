@@ -19,6 +19,6 @@ file, in the [`etcd-backupper` image](https://github.com/sighupio/fury-distribut
 In order to update and maintain the package:
 - First check if a new image is available for `rclone`
 - Check if another version of Alpine or `etcdctl` is available and update the [custom built `etcd-backupper` image](https://github.com/sighupio/fury-distribution-container-image-sync/tree/main/modules/dr/custom/etcd-backupper)
-- (Optional) Sync the image to our registry
+- (Optional) Sync the new rclone image to our registry
 - (Optional) Update the images tags in the kustomization.yaml file
 - (Optional) Fix manifest deprecations
