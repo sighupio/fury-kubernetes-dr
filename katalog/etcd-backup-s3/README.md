@@ -127,5 +127,5 @@ Specifies how long backups should be kept before automatic deletion (follows the
 Check the job logs for detailed error messages:
 
 ```bash
-kubectl logs -n kube-system job/etcd-backup-s3-<job-id>
+kubectl logs -n kube-system job/etcd-backup-s3-<job-id> --all-containers
 ```
