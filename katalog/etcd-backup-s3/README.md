@@ -99,7 +99,9 @@ You can modify the backup schedule using cron syntax:
 
 #### Target
 
-The S3 target follows the rclone format: `provider:bucket-name/path`
+The S3 target follows the rclone format: `provider:bucket-name/path`.
+
+The `provider` is defined in the `rclone.conf` file, name in the target must match the name of the section in the configuration file.
 
 #### Retention
 
