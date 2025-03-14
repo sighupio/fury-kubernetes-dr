@@ -1,0 +1,44 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kube-system
+
+resources:
+  - cronjob.yaml
+
+images:
+  - name: etcd-backupper
+    newName: registry.sighup.io/fury/dr/etcd-backup/etcd-backupper
+    newTag: alpine3.21-v3.5.19
+  - name: rclone
+    newName: registry.sighup.io/fury/dr/etcd-backup/rclone
+    newTag: v1.69-stable
+
+patches:
+  - patch: |-
+      apiVersion: batch/v1
+      kind: CronJob
+      metadata:
+        name: etcd-backup-s3
+      spec:
+        schedule: "* * 1 * *"
+
+configMapGenerator:
+  - name: etcd-backup-config
+    literals:
+      - target=minio:bucketname
+      - retention=10m
+  - name: etcd-backup-certificates-location
+    literals:
+      - ETCDCTL_CACERT=/etcd/etcd/ca.crt
+      - ETCDCTL_CERT=/etcd/apiserver-etcd-client.crt
+      - ETCDCTL_KEY=/etcd/apiserver-etcd-client.key
+
+secretGenerator:
+  - name: etcd-backup-s3-rclone-conf
+    files:
+      - rclone/rclone.conf

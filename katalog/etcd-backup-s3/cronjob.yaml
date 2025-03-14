@@ -1,0 +1,123 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: etcd-backup-s3
+  labels:
+    app.kubernetes.io/name: etcd-backup-s3
+    app.kubernetes.io/instance: etcd-backup-s3-dr
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: disaster-recovery
+    app.kubernetes.io/part-of: KFD
+spec:
+  schedule: "* * 2 * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+            labels:
+              app.kubernetes.io/name: etcd-backup-s3
+              app.kubernetes.io/instance: etcd-backup-s3-dr
+              app.kubernetes.io/version: "1.0.0"
+              app.kubernetes.io/component: disaster-recovery
+              app.kubernetes.io/part-of: KFD
+        spec:
+          volumes:
+            - name: etcd-certs
+              hostPath:
+                path: /etc/etcd/pki
+            - name: persistence
+              emptyDir: {}
+            - name: host-backup
+              hostPath:
+                path: /tmp/etcd-backup
+            - name: kubeadm-config
+              configMap:
+                name: kubeadm-config
+                items:
+                - key: ClusterConfiguration
+                  path: config.yaml
+            - name: etcd-backup-s3-rclone-conf
+              secret:
+                secretName: etcd-backup-s3-rclone-conf
+          initContainers:
+            - name: backupper
+              image: etcd-backupper
+              envFrom:
+                - configMapRef:
+                    name: etcd-backup-certificates-location
+              securityContext:
+                runAsUser: 0
+                runAsGroup: 0
+              volumeMounts:
+                - mountPath: /etcd
+                  name: etcd-certs
+                  readOnly: true
+                - mountPath: /backup
+                  name: persistence
+                - mountPath: /k8s
+                  name: kubeadm-config
+            - name: move-to-s3
+              image: rclone
+              command:
+                - "/bin/sh"
+                - "-c"
+              args:
+                - 'rclone copy /etcd-backup "$TARGET"'
+              env:
+                - name: TARGET
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-config
+                      key: target
+              volumeMounts:
+                - mountPath: /config/rclone
+                  name: etcd-backup-s3-rclone-conf
+                  readOnly: true
+                - mountPath: /etcd-backup
+                  name: persistence
+          containers:
+            - name: delete-old
+              image: rclone
+              command:
+                - "/bin/sh"
+                - "-c"
+              args:
+                - 'rclone delete "$TARGET" --min-age="$RETENTION" --include=fury-etcd-snapshot*.etcdb'
+              env:
+                - name: TARGET
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-config
+                      key: target
+                - name: RETENTION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-config
+                      key: retention
+              volumeMounts:
+                - mountPath: /config/rclone
+                  name: etcd-backup-s3-rclone-conf
+                  readOnly: true
+          restartPolicy: OnFailure
+          hostNetwork: true
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: node-role.kubernetes.io/control-plane
+                        operator: Exists
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              effect: NoSchedule
+              operator: Exists
+            - key: node.kubernetes.io/memory-pressure
+              effect: NoSchedule
+              operator: Exists
