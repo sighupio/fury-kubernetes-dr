@@ -34,9 +34,6 @@ spec:
                 path: /etc/etcd/pki
             - name: persistence
               emptyDir: {}
-            - name: host-backup
-              hostPath:
-                path: /tmp/etcd-backup
             - name: kubeadm-config
               configMap:
                 name: kubeadm-config
