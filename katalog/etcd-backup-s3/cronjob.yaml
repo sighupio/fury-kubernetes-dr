@@ -6,6 +6,12 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: etcd-backup-s3
+  labels:
+    app.kubernetes.io/name: etcd-backup-s3
+    app.kubernetes.io/instance: etcd-backup-s3-dr
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: disaster-recovery
+    app.kubernetes.io/part-of: KFD
 spec:
   schedule: "* * 2 * *"
   successfulJobsHistoryLimit: 3
