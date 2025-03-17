@@ -28,7 +28,7 @@ patches:
         schedule: "* * 1 * *"
 
 configMapGenerator:
-  - name: etcd-backup-config
+  - name: etcd-backup-s3-config
     literals:
       - target=minio:bucketname
       - retention=10m

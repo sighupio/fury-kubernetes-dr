@@ -71,7 +71,7 @@ spec:
                 - name: TARGET
                   valueFrom:
                     configMapKeyRef:
-                      name: etcd-backup-config
+                      name: etcd-backup-s3-config
                       key: target
               volumeMounts:
                 - mountPath: /config/rclone
@@ -91,12 +91,12 @@ spec:
                 - name: TARGET
                   valueFrom:
                     configMapKeyRef:
-                      name: etcd-backup-config
+                      name: etcd-backup-s3-config
                       key: target
                 - name: RETENTION
                   valueFrom:
                     configMapKeyRef:
-                      name: etcd-backup-config
+                      name: etcd-backup-s3-config
                       key: retention
               volumeMounts:
                 - mountPath: /config/rclone
