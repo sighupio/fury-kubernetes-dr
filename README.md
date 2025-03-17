@@ -90,7 +90,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ## Usage
 
-**Kubernetes Fury DR** deployment depends on the environment.
+**Kubernetes Fury DR**'s Velero deployment depends on the environment.
 
 | Environment                               | Storage Backend      | Velero Plugin                                   | Terraform Module                     |
 | ----------------------------------------- | -------------------- | ----------------------------------------------- | ------------------------------------ |
@@ -98,6 +98,13 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 | [Velero on GCP](#velero-on-gcp)           | GCS                  | [velero-gcp](katalog/velero/velero-gcp)         | [gcp-velero](modules/gcp-velero)     |
 | [Velero on Azure](#velero-on-azure)       | AZ Storage Container | [velero-azure](katalog/velero/velero-azure)     | [azure-velero](modules/azure-velero) |
 | [Velero on-premises](#velero-on-premises) | MinIo                | [velero-on-prem](katalog/velero/velero-on-prem) | `/`                                  |
+
+**Kubernetes Fury DR**'s etcd-backup deployment depends on the final location of the backups.
+| Package                                   | Storage Location        |
+| ----------------------------------------- | ----------------------- |
+| [etcd-backup-s3](#etcd-backup-s3)         | S3 Bucket               |
+| [etcd-backup-pvc](#etcd-backup-pvc)       | PersistentVolumeClaim   |
+
 
 ### Prerequisites
 
@@ -337,6 +344,14 @@ resources:
 kustomize build . | kubectl apply -f -
 ```
 
+### ETCD Backup S3
+[etcd-backup-s3][etcd-backup-s3-link] deploys a *CronJob* that continuously backups the etcd cluster and saves the snapshots in a S3 bucket.
+In order to deploy `etcd-backup-s3`, please refer to the [package's README.md][etcd-backup-s3-link].
+
+### ETCD Backup PVC
+[etcd-backup-pvc][etcd-backup-pvc-link] deploys a *CronJob* that continuously backups the etcd cluster and saves the snapshots in a PersistentVolumeClaim.
+In order to deploy `etcd-backup-pvc`, please refer to the [package's README.md][etcd-backup-pvc-link].
+
 <!-- Links -->
 
 [sighup-page]: https://sighup.io
@@ -358,6 +373,8 @@ kustomize build . | kubectl apply -f -
 [aws-docs-iam-roles]: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 [compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/docs/COMPATIBILITY_MATRIX.md
+[etcd-backup-s3-link]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/katalog/etcd-backup-s3/README.md
+[etcd-backup-pvc-link]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/katalog/etcd-backup-pvc/README.md
 
 <!-- </KFD-DOCS> -->
 
