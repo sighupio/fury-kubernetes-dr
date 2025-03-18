@@ -59,6 +59,12 @@ spec:
                   name: kubeadm-config
                 - mountPath: /backup
                   name: target-pvc
+              env:
+                - name: BACKUP_PREFIX
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-pvc-config
+                      key: backup-prefix
           containers:
             - name: delete-old
               image: rclone
@@ -66,13 +72,18 @@ spec:
                 - "/bin/sh"
                 - "-c"
               args:
-                - 'rclone delete /target --min-age="$RETENTION" --include=fury-etcd-snapshot*.etcdb'
+                - 'rclone delete /target --min-age="$RETENTION" --include="${BACKUP_PREFIX}*.etcdb"'
               env:
                 - name: RETENTION
                   valueFrom:
                     configMapKeyRef:
                       name: etcd-backup-pvc-config
                       key: retention
+                - name: BACKUP_PREFIX
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-pvc-config
+                      key: backup-prefix
               volumeMounts:
                 - mountPath: /target
                   name: target-pvc

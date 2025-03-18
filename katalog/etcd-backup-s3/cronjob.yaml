@@ -49,6 +49,12 @@ spec:
               envFrom:
                 - configMapRef:
                     name: etcd-backup-s3-certificates-location
+              env:
+                - name: BACKUP_PREFIX
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-s3-config
+                      key: backup-prefix
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
@@ -86,7 +92,7 @@ spec:
                 - "/bin/sh"
                 - "-c"
               args:
-                - 'rclone delete "$TARGET" --min-age="$RETENTION" --include=fury-etcd-snapshot*.etcdb'
+                - 'rclone delete "$TARGET" --min-age="$RETENTION" --include="${BACKUP_PREFIX}*.etcdb"'
               env:
                 - name: TARGET
                   valueFrom:
@@ -98,6 +104,11 @@ spec:
                     configMapKeyRef:
                       name: etcd-backup-s3-config
                       key: retention
+                - name: BACKUP_PREFIX
+                  valueFrom:
+                    configMapKeyRef:
+                      name: etcd-backup-s3-config
+                      key: backup-prefix
               volumeMounts:
                 - mountPath: /config/rclone
                   name: etcd-backup-s3-rclone-conf

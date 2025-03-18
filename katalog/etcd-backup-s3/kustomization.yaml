@@ -32,6 +32,7 @@ configMapGenerator:
     literals:
       - target=minio:bucketname
       - retention=10m
+      - backup-prefix=my-s3-etcd-backup-
   - name: etcd-backup-s3-certificates-location
     literals:
       - ETCDCTL_CACERT=/etcd/etcd/ca.crt
