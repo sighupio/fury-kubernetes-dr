@@ -39,7 +39,7 @@ them.
 The package includes the following default configuration:
 
 - The backup runs on specified schedule (configurable)
-- Snapshots are stored in the format `fury-etcd-snapshot-YYYYMMDDHHMM.etcdb`
+- Snapshots are stored in the format `<my-custom-prefix>YYYYMMDDHHMM.etcdb`, the prefix is configurable by the user, using `kustomize`.
 - Backups are uploaded to the configured PersistentVolumeClaim
 - Old backups are cleaned up based on the retention policy
 
@@ -47,8 +47,8 @@ The package includes the following default configuration:
 
 - **CronJob**: Orchestrates the backup process
 - **ConfigMaps**:
-  - `etcd-backup-config`: Contains retention settings
-  - `etcd-backup-certificates-location`: Contains ETCD connection parameters
+  - `etcd-backup-pvc-config`: Contains retention settings and the prefix to be used for the backup names
+  - `etcd-backup-pvc-certificates-location`: Contains ETCD connection parameters
 
 ## Usage
 
@@ -83,9 +83,10 @@ patches:
 
 # Override configmaps
 configMapGenerator:
-  - name: etcd-backup-config
+  - name: etcd-backup-pvc-config
     behavior: replace
     literals:
+      - backup-prefix=my-custom-prefix-
       - retention=30d  # Keep backups for 30 days
 ```
 
@@ -103,7 +104,9 @@ You can modify the backup schedule using cron syntax:
 
 #### Target
 
-Backups are automatically saved at the root of the PVC volume. The name follows the following format: `fury-etcd-snapshot-YYYYMMDDHHMM.etcdb`.
+Backups are automatically saved at the root of the PVC volume. The name follows the following format: `<my-custom-prefix>YYYYMMDDHHMM.etcdb`.
+
+The prefix is configurable by setting the `backup-prefix` field inside the `etcd-backup-pvc-config` ConfigMap.
 
 #### Retention
 

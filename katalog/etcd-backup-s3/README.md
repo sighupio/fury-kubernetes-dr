@@ -40,7 +40,7 @@ them.
 The package includes the following default configuration:
 
 - The backup runs on specified schedule (configurable)
-- Snapshots are stored in the format `fury-etcd-snapshot-YYYYMMDDHHMM.etcdb`
+- Snapshots are stored in the format `<my-custom-prefix>YYYYMMDDHHMM.etcdb`, the prefix is configurable by the user, using `kustomize`.
 - Backups are uploaded to the configured S3 target
 - Old backups are cleaned up based on the retention policy
 
@@ -48,8 +48,8 @@ The package includes the following default configuration:
 
 - **CronJob**: Orchestrates the backup process
 - **ConfigMaps**:
-  - `etcd-backup-s3-config`: Contains S3 target and retention settings
-  - `etcd-backup-certificates-location`: Contains ETCD connection parameters
+  - `etcd-backup-s3-config`: Contains S3 target, retention settings and the backup name prefix
+  - `etcd-backup-s3-certificates-location`: Contains ETCD connection parameters
 - **Secret**:
   - `etcd-backup-s3-rclone-conf`: Contains the rclone configuration
 
@@ -90,6 +90,7 @@ configMapGenerator:
   - name: etcd-backup-s3-config
     behavior: replace
     literals:
+      - backup-prefix=my-custom-prefix-
       - target=s3:your-bucket-name/backups # `s3` must match with the section name in rclone.conf
       - retention=30d  # Keep backups for 30 days
 ```
@@ -110,7 +111,13 @@ You can modify the backup schedule using cron syntax:
 
 The S3 target follows the rclone format: `provider:bucket-name/path`.
 
+The name follows the following format: `<my-custom-prefix>YYYYMMDDHHMM.etcdb`.
+
+The prefix is configurable by setting the `backup-prefix` field inside the `etcd-backup-s3-config` ConfigMap.
+
 The `provider` is defined in the `rclone.conf` file, name in the target must match the name of the section in the configuration file.
+
+The `prefix` is defined inside the `etcd-backup-s3-config` ConfigMap.
 
 #### Retention
 
