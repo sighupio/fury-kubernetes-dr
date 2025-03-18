@@ -31,7 +31,7 @@ configMapGenerator:
   - name: etcd-backup-pvc-config
     literals:
       - retention=10m
-  - name: etcd-backup-certificates-location
+  - name: etcd-backup-pvc-certificates-location
     literals:
       - ETCDCTL_CACERT=/etcd/etcd/ca.crt
       - ETCDCTL_CERT=/etcd/apiserver-etcd-client.crt

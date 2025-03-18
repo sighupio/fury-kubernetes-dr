@@ -48,7 +48,7 @@ spec:
               image: etcd-backupper
               envFrom:
                 - configMapRef:
-                    name: etcd-backup-certificates-location
+                    name: etcd-backup-s3-certificates-location
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
