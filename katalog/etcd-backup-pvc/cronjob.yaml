@@ -33,8 +33,6 @@ spec:
             - name: etcd-certs
               hostPath:
                 path: /etc/etcd/pki
-            - name: persistence
-              emptyDir: {}
             - name: kubeadm-config
               configMap:
                 name: kubeadm-config
