@@ -48,7 +48,7 @@ The package includes the following default configuration:
 
 - **CronJob**: Orchestrates the backup process
 - **ConfigMaps**:
-  - `etcd-backup-config`: Contains S3 target and retention settings
+  - `etcd-backup-s3-config`: Contains S3 target and retention settings
   - `etcd-backup-certificates-location`: Contains ETCD connection parameters
 - **Secret**:
   - `etcd-backup-s3-rclone-conf`: Contains the rclone configuration
@@ -87,7 +87,7 @@ patches:
 
 # Override configmaps
 configMapGenerator:
-  - name: etcd-backup-config
+  - name: etcd-backup-s3-config
     behavior: replace
     literals:
       - target=s3:your-bucket-name/backups # `s3` must match with the section name in rclone.conf
