@@ -57,21 +57,9 @@ spec:
                 - mountPath: /etcd
                   name: etcd-certs
                   readOnly: true
-                - mountPath: /backup
-                  name: persistence
                 - mountPath: /k8s
                   name: kubeadm-config
-            - name: move-to-pvc
-              image: rclone
-              command:
-                - "/bin/sh"
-                - "-c"
-              args:
-                - 'rclone copy /etcd-backup /target'
-              volumeMounts:
-                - mountPath: /etcd-backup
-                  name: persistence
-                - mountPath: /target
+                - mountPath: /backup
                   name: target-pvc
           containers:
             - name: delete-old
@@ -85,7 +73,7 @@ spec:
                 - name: RETENTION
                   valueFrom:
                     configMapKeyRef:
-                      name: etcd-backup-config
+                      name: etcd-backup-pvc-config
                       key: retention
               volumeMounts:
                 - mountPath: /target

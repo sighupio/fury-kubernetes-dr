@@ -28,7 +28,7 @@ patches:
         schedule: "* * * * *"
 
 configMapGenerator:
-  - name: etcd-backup-config
+  - name: etcd-backup-pvc-config
     literals:
       - retention=10m
   - name: etcd-backup-certificates-location
