@@ -5,15 +5,15 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: etcd-backup-s3
+  name: etcd-backup-pvc
   labels:
-    app.kubernetes.io/name: etcd-backup-s3
-    app.kubernetes.io/instance: etcd-backup-s3-dr
+    app.kubernetes.io/name: etcd-backup-pvc
+    app.kubernetes.io/instance: etcd-backup-pvc-dr
     app.kubernetes.io/version: "1.0.0"
     app.kubernetes.io/component: disaster-recovery
     app.kubernetes.io/part-of: KFD
 spec:
-  schedule: "0 1 * * *"
+  schedule: "* * 2 * *"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -21,9 +21,10 @@ spec:
     spec:
       template:
         metadata:
+          namespace: kube-system
           labels:
-            app.kubernetes.io/name: etcd-backup-s3
-            app.kubernetes.io/instance: etcd-backup-s3-dr
+            app.kubernetes.io/name: etcd-backup-pvc
+            app.kubernetes.io/instance: etcd-backup-pvc-dr
             app.kubernetes.io/version: "1.0.0"
             app.kubernetes.io/component: disaster-recovery
             app.kubernetes.io/part-of: KFD
@@ -32,29 +33,21 @@ spec:
             - name: etcd-certs
               hostPath:
                 path: /etc/etcd/pki
-            - name: persistence
-              emptyDir: {}
             - name: kubeadm-config
               configMap:
                 name: kubeadm-config
                 items:
                   - key: ClusterConfiguration
                     path: config.yaml
-            - name: etcd-backup-s3-rclone-conf
-              secret:
-                secretName: etcd-backup-s3-rclone-conf
+            - name: target-pvc
+              persistentVolumeClaim:
+                claimName: target-pvc
           initContainers:
             - name: backupper
               image: etcd-backupper
               envFrom:
                 - configMapRef:
-                    name: etcd-backup-s3-certificates-location
-              env:
-                - name: BACKUP_PREFIX
-                  valueFrom:
-                    configMapKeyRef:
-                      name: etcd-backup-s3-config
-                      key: backup-prefix
+                    name: etcd-backup-pvc-certificates-location
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
@@ -62,29 +55,16 @@ spec:
                 - mountPath: /etcd
                   name: etcd-certs
                   readOnly: true
-                - mountPath: /backup
-                  name: persistence
                 - mountPath: /k8s
                   name: kubeadm-config
-            - name: move-to-s3
-              image: rclone
-              command:
-                - "/bin/sh"
-                - "-c"
-              args:
-                - 'rclone copy /etcd-backup "$TARGET"'
+                - mountPath: /backup
+                  name: target-pvc
               env:
-                - name: TARGET
+                - name: BACKUP_PREFIX
                   valueFrom:
                     configMapKeyRef:
-                      name: etcd-backup-s3-config
-                      key: target
-              volumeMounts:
-                - mountPath: /config/rclone
-                  name: etcd-backup-s3-rclone-conf
-                  readOnly: true
-                - mountPath: /etcd-backup
-                  name: persistence
+                      name: etcd-backup-pvc-config
+                      key: backup-prefix
           containers:
             - name: delete-old
               image: rclone
@@ -92,27 +72,21 @@ spec:
                 - "/bin/sh"
                 - "-c"
               args:
-                - 'rclone delete "$TARGET" --min-age="$RETENTION" --include="${BACKUP_PREFIX}*.etcdb"'
+                - 'rclone delete /target --min-age="$RETENTION" --include="${BACKUP_PREFIX}*.etcdb"'
               env:
-                - name: TARGET
-                  valueFrom:
-                    configMapKeyRef:
-                      name: etcd-backup-s3-config
-                      key: target
                 - name: RETENTION
                   valueFrom:
                     configMapKeyRef:
-                      name: etcd-backup-s3-config
+                      name: etcd-backup-pvc-config
                       key: retention
                 - name: BACKUP_PREFIX
                   valueFrom:
                     configMapKeyRef:
-                      name: etcd-backup-s3-config
+                      name: etcd-backup-pvc-config
                       key: backup-prefix
               volumeMounts:
-                - mountPath: /config/rclone
-                  name: etcd-backup-s3-rclone-conf
-                  readOnly: true
+                - mountPath: /target
+                  name: target-pvc
           restartPolicy: OnFailure
           hostNetwork: true
           affinity:

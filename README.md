@@ -17,7 +17,7 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 ## Overview
 
-**Kubernetes Fury DR** module is based on [Velero][velero-page] and [Velero Node Agent][velero-node-agent-page].
+**Kubernetes Fury DR** module is based on [Velero][velero-page], [Velero Node Agent][velero-node-agent-page] and [etcd backup][etcd-backup-link].
 
 Velero allows you to:
 
@@ -25,6 +25,10 @@ Velero allows you to:
 - restore your cluster in case of problems
 - migrate cluster resources to other clusters
 - replicate your production environment to development and testing environment.
+
+ETCD backupper allows you to:
+
+- snapshot your ETCD cluster
 
 Together with Velero, Velero Node Agent allows you to:
 
@@ -42,9 +46,11 @@ The module contains also velero plugins to natively integrate with Velero with d
 
 Kubernetes Fury DR provides the following packages:
 
-| Package                  | Version  | Description                                                                                                     |
-| ------------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
-| [velero](katalog/velero) | `1.15.0` | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
+| Package                                    | Version     | Description                                                                                                     |
+| ------------------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------- |
+| [velero](katalog/velero)                   | `1.15.0`    | Backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes. |
+| [etcd-backup-s3](katalog/etcd-backup-s3)   | `homegrown` | Backup ETCD on a remote S3 bucket.                                                                              |
+| [etcd-backup-pvc](katalog/etcd-backup-pvc) | `homegrown` | Backup ETCD on a PersistentVolumeClaim.                                                                         |
 
 The velero package contains the following additional components:
 
@@ -84,7 +90,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ## Usage
 
-**Kubernetes Fury DR** deployment depends on the environment.
+**Kubernetes Fury DR**'s Velero deployment depends on the environment.
 
 | Environment                               | Storage Backend      | Velero Plugin                                   | Terraform Module                     |
 | ----------------------------------------- | -------------------- | ----------------------------------------------- | ------------------------------------ |
@@ -93,6 +99,13 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 | [Velero on Azure](#velero-on-azure)       | AZ Storage Container | [velero-azure](katalog/velero/velero-azure)     | [azure-velero](modules/azure-velero) |
 | [Velero on-premises](#velero-on-premises) | MinIo                | [velero-on-prem](katalog/velero/velero-on-prem) | `/`                                  |
 
+**Kubernetes Fury DR**'s etcd-backup deployment depends on the final location of the backups.
+| Package                                   | Storage Location        |
+| ----------------------------------------- | ----------------------- |
+| [etcd-backup-s3](#etcd-backup-s3)         | S3 Bucket               |
+| [etcd-backup-pvc](#etcd-backup-pvc)       | PersistentVolumeClaim   |
+
+
 ### Prerequisites
 
 | Tool                        | Version    | Description                                                                                                                                                    |
@@ -100,6 +113,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 | [furyctl][furyctl-repo]     | `>=0.25.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo] | `>=3.5.3`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
 | [terraform][terraform-page] | `>=1.3`    | Additional infrastructure is deployed using `terraform`.                                                                                                       |
+
 ### Velero on AWS
 
 Velero on AWS is based on the [AWS Velero Plugin][velero-aws-plugin-repo].
@@ -330,6 +344,14 @@ resources:
 kustomize build . | kubectl apply -f -
 ```
 
+### ETCD Backup S3
+[etcd-backup-s3][etcd-backup-s3-link] deploys a *CronJob* that continuously backups the etcd cluster and saves the snapshots in a S3 bucket.
+In order to deploy `etcd-backup-s3`, please refer to the [package's README.md][etcd-backup-s3-link].
+
+### ETCD Backup PVC
+[etcd-backup-pvc][etcd-backup-pvc-link] deploys a *CronJob* that continuously backups the etcd cluster and saves the snapshots in a PersistentVolumeClaim.
+In order to deploy `etcd-backup-pvc`, please refer to the [package's README.md][etcd-backup-pvc-link].
+
 <!-- Links -->
 
 [sighup-page]: https://sighup.io
@@ -351,6 +373,8 @@ kustomize build . | kubectl apply -f -
 [aws-docs-iam-roles]: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 [compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/docs/COMPATIBILITY_MATRIX.md
+[etcd-backup-s3-link]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/katalog/etcd-backup-s3/README.md
+[etcd-backup-pvc-link]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/katalog/etcd-backup-pvc/README.md
 
 <!-- </KFD-DOCS> -->
 

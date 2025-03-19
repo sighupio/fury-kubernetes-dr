@@ -19,18 +19,12 @@ images:
     newTag: v1.69-stable
 
 configMapGenerator:
-  - name: etcd-backup-s3-config
+  - name: etcd-backup-pvc-config
     literals:
-      - target=minio:bucketname
       - retention=10d
-      - backup-prefix=my-s3-etcd-backup-
-  - name: etcd-backup-s3-certificates-location
+      - backup-prefix=my-pvc-etcd-backup-
+  - name: etcd-backup-pvc-certificates-location
     literals:
       - ETCDCTL_CACERT=/etcd/etcd/ca.crt
       - ETCDCTL_CERT=/etcd/apiserver-etcd-client.crt
       - ETCDCTL_KEY=/etcd/apiserver-etcd-client.key
-
-secretGenerator:
-  - name: etcd-backup-s3-rclone-conf
-    files:
-      - rclone/rclone.conf
