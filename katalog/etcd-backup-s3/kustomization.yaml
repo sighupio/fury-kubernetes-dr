@@ -5,8 +5,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: kube-system
-
 resources:
   - cronjob.yaml
 
@@ -17,15 +15,6 @@ images:
   - name: rclone
     newName: registry.sighup.io/fury/dr/etcd-backup/rclone
     newTag: v1.69-stable
-
-patches:
-  - patch: |-
-      apiVersion: batch/v1
-      kind: CronJob
-      metadata:
-        name: etcd-backup-s3
-      spec:
-        schedule: "* * 1 * *"
 
 configMapGenerator:
   - name: etcd-backup-s3-config

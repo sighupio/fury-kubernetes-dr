@@ -80,11 +80,20 @@ patches:
         name: etcd-backup-pvc
       spec:
         schedule: "0 1 * * *"  # Run at 1:00 AM daily
+  - patch: |-
+      - op: replace
+        path: /spec/jobTemplate/spec/template/spec/volumes/2/persistentVolumeClaim/claimName
+        value: my-own-pvc
+    target:
+      group: batch
+      version: v1
+      kind: CronJob
+      name: etcd-backup-pvc
 
 # Override configmaps
 configMapGenerator:
   - name: etcd-backup-pvc-config
-    behavior: replace
+    behavior: replace # this is important, because a configMap is already defined with some defaults
     literals:
       - backup-prefix=my-custom-prefix-
       - retention=30d  # Keep backups for 30 days

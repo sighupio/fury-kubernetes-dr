@@ -5,8 +5,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: kube-system
-
 resources:
   - cronjob.yaml
 
@@ -17,24 +15,6 @@ images:
   - name: rclone
     newName: registry.sighup.io/fury/dr/etcd-backup/rclone
     newTag: v1.69-stable
-
-patches:
-  - patch: |-
-      apiVersion: batch/v1
-      kind: CronJob
-      metadata:
-        name: etcd-backup-pvc
-      spec:
-        schedule: "* * * * *"
-  - patch: |-
-      - op: replace
-        path: /spec/jobTemplate/spec/template/spec/volumes/2/persistentVolumeClaim/claimName
-        value: test
-    target:
-      group: batch
-      version: v1
-      kind: CronJob
-      name: etcd-backup-pvc
 
 configMapGenerator:
   - name: etcd-backup-pvc-config

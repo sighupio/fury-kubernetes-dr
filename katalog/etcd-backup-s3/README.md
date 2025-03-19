@@ -88,7 +88,7 @@ patches:
 # Override configmaps
 configMapGenerator:
   - name: etcd-backup-s3-config
-    behavior: replace
+    behavior: replace # this is important, because a configMap is already defined with some defaults
     literals:
       - backup-prefix=my-custom-prefix-
       - target=s3:your-bucket-name/backups # `s3` must match with the section name in rclone.conf
