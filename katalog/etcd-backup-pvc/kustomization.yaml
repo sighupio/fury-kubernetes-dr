@@ -26,6 +26,15 @@ patches:
         name: etcd-backup-pvc
       spec:
         schedule: "* * * * *"
+  - patch: |-
+      - op: replace
+        path: /spec/jobTemplate/spec/template/spec/volumes/2/persistentVolumeClaim/claimName
+        value: test
+    target:
+      group: batch
+      version: v1
+      kind: CronJob
+      name: etcd-backup-pvc
 
 configMapGenerator:
   - name: etcd-backup-pvc-config
