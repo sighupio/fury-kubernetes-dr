@@ -111,11 +111,13 @@ You can modify the backup schedule using cron syntax:
 | `0 */6 * * *` | Every 6 hours |
 | `0 0 * * 0` | Weekly on Sunday at midnight |
 
+By default, it runs every day at 1AM.
+
 #### Target
 
 Backups are automatically saved at the root of the PVC volume. The name follows the following format: `<my-custom-prefix>YYYYMMDDHHMM.etcdb`.
 
-The prefix is configurable by setting the `backup-prefix` field inside the `etcd-backup-pvc-config` ConfigMap.
+The prefix is configurable by setting the `backup-prefix` field inside the `etcd-backup-pvc-config` ConfigMap. By default, it's set as `my-pvc-etcd-backup-`.
 
 #### Retention
 
@@ -126,6 +128,8 @@ Specifies how long backups should be kept before automatic deletion (follows the
 | `10d` | 10 days |
 | `1w` | 1 week |
 | `3M` | 3 months |
+
+By default, it's set to `10d`.
 
 ## Security Considerations
 

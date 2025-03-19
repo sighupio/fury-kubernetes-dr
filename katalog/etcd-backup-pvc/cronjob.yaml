@@ -37,8 +37,8 @@ spec:
               configMap:
                 name: kubeadm-config
                 items:
-                - key: ClusterConfiguration
-                  path: config.yaml
+                  - key: ClusterConfiguration
+                    path: config.yaml
             - name: target-pvc
               persistentVolumeClaim:
                 claimName: target-pvc

@@ -20,7 +20,7 @@ configMapGenerator:
   - name: etcd-backup-s3-config
     literals:
       - target=minio:bucketname
-      - retention=10m
+      - retention=10d
       - backup-prefix=my-s3-etcd-backup-
   - name: etcd-backup-s3-certificates-location
     literals:

@@ -107,17 +107,17 @@ You can modify the backup schedule using cron syntax:
 | `0 */6 * * *` | Every 6 hours |
 | `0 0 * * 0` | Weekly on Sunday at midnight |
 
+By default it runs every day at 1AM.
+
 #### Target
 
-The S3 target follows the rclone format: `provider:bucket-name/path`.
+The S3 target follows the rclone format: `provider:bucket-name/path`. By default it's: `minio:bucketname`.
 
 The name follows the following format: `<my-custom-prefix>YYYYMMDDHHMM.etcdb`.
 
-The prefix is configurable by setting the `backup-prefix` field inside the `etcd-backup-s3-config` ConfigMap.
+The prefix is configurable by setting the `backup-prefix` field inside the `etcd-backup-s3-config` ConfigMap. By default it's set to `my-s3-etcd-backup-`.
 
 The `provider` is defined in the `rclone.conf` file, name in the target must match the name of the section in the configuration file.
-
-The `prefix` is defined inside the `etcd-backup-s3-config` ConfigMap.
 
 #### Retention
 
@@ -128,6 +128,8 @@ Specifies how long backups should be kept before automatic deletion (follows the
 | `10d` | 10 days |
 | `1w` | 1 week |
 | `3M` | 3 months |
+
+By default, it's set to `10d`.
 
 ## Security Considerations
 
