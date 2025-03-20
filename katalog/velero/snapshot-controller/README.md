@@ -4,7 +4,7 @@ This component [`snapshot-controller`](../../katalog/velero/snapshot-controller/
 
 ## Image repository and tag
 
-- Snapshot Controller image: `registry.k8s.io/sig-storage/snapshot-controller:v8.0.1`
+- Snapshot Controller image: `registry.k8s.io/sig-storage/snapshot-controller:v8.2.0`
 - Snapshot Controller repository:
 [github.com/kubernetes-csi/external-snapshotter](https://github.com/kubernetes-csi/external-snapshotter).
 
