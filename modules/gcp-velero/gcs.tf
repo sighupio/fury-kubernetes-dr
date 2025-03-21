@@ -18,19 +18,6 @@ resource "google_storage_bucket" "main" {
   labels = var.tags
 }
 
-resource "null_resource" "verify_service_account" {
-  depends_on = [google_service_account.velero]
-  
-  provisioner "local-exec" {
-    command = <<EOT
-      until gcloud iam service-accounts describe ${google_service_account.velero.email} --format="value(email)" 2>/dev/null; do
-        echo "Waiting for service account to be fully created..."
-        sleep 5
-      done
-    EOT
-  }
-}
-
 resource "google_storage_bucket_iam_binding" "velero_bucket_iam" {
   bucket = google_storage_bucket.main.name
   role   = "roles/storage.objectAdmin"
@@ -38,8 +25,6 @@ resource "google_storage_bucket_iam_binding" "velero_bucket_iam" {
   members = [
     "serviceAccount:${google_service_account.velero.email}"
   ]
-
-  depends_on = [null_resource.verify_service_account]
 
   lifecycle {
     prevent_destroy = false
