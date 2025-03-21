@@ -26,6 +26,11 @@ resource "google_storage_bucket_iam_binding" "velero_bucket_iam" {
     "serviceAccount:${google_service_account.velero.email}"
   ]
 
+  depends_on = [
+    google_service_account.velero,
+    google_service_account_key.velero
+  ]
+
   lifecycle {
     prevent_destroy = false
   }
