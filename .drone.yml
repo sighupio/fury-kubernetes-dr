@@ -1421,7 +1421,7 @@ steps:
       CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-132
       KUBECONFIG: /drone/src/kubeconfig-132
     commands:
-      - curl -Ls -o velero.tar.gz hhttps://github.com/vmware-tanzu/velero/releases/download/v1.15.2/velero-v1.15.2-linux-amd64.tar.gz
+      - curl -Ls -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.15.2/velero-v1.15.2-linux-amd64.tar.gz
       - tar -zxf velero.tar.gz
       - mv velero*/velero /usr/local/bin/velero
       - bats -t katalog/tests/velero/velero-backup.sh
