@@ -17,7 +17,7 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 ## Overview
 
-**Kubernetes Fury DR** module is based on [Velero][velero-page], [Velero Node Agent][velero-node-agent-page] and [etcd backup][etcd-backup-link].
+**Kubernetes Fury DR** module is based on [Velero][velero-page], [Velero Node Agent][velero-node-agent-page] and etcd backup ([S3][etcd-backup-s3-link]/[PVC][etcd-backup-pvc-link]).
 
 Velero allows you to:
 
@@ -375,7 +375,6 @@ In order to deploy `etcd-backup-pvc`, please refer to the [package's README.md][
 [compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/docs/COMPATIBILITY_MATRIX.md
 [etcd-backup-s3-link]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/katalog/etcd-backup-s3/README.md
 [etcd-backup-pvc-link]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/katalog/etcd-backup-pvc/README.md
-
 <!-- </KFD-DOCS> -->
 
 <!-- <FOOTER> -->
