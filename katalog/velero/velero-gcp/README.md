@@ -20,7 +20,7 @@ This deployment requires to have previously created the following resources:
 
 ### Cloud Credentials
 
-This Fury Core module contains [a terraform module](../../../modules/gcp-velero) designed to generate every file needed
+This SIGHUP Distribution Core module contains [a terraform module](../../../modules/gcp-velero) designed to generate every file needed
 by this deployment including the Cloud Credentials file.
 
 ```bash

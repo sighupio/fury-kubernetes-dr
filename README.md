@@ -1,23 +1,27 @@
 <!-- markdownlint-disable MD033 -->
 <h1>
-    <img src="https://github.com/sighupio/fury-distribution/blob/main/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px"/>
-    Kubernetes Fury Disaster Recovery
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/white-logo.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/black-logo.png">
+  <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/white-logo.png">
+</picture><br/>
+  SIGHUP Distribution <br/> Disaster Recovery
 </h1>
 <!-- markdownlint-enable MD033 -->
 
 ![Release](https://img.shields.io/badge/Latest%20Release-v3.1.0-blue)
-![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-dr?label=License)
+![License](https://img.shields.io/github/license/sighupio/module-dr?label=License)
 [![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)](https://kubernetes.slack.com/archives/C0154HYTAQH)
 
-<!-- <KFD-DOCS> -->
+<!-- <SKD-DOCS> -->
 
-**Kubernetes Fury Disaster Recovery (DR)** implements backups and disaster recovery for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using [Velero][velero-page].
+**SIGHUP Distribution Disaster Recovery (DR)** implements backups and disaster recovery for the [SIGHUP Distribution (SKD)][skd-repo] using [Velero][velero-page].
 
-If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
+If you are new to SKD please refer to the [official documentation][skd-docs] on how to get started with SKD.
 
 ## Overview
 
-**Kubernetes Fury DR** module is based on [Velero][velero-page], [Velero Node Agent][velero-node-agent-page] and etcd backup ([S3][etcd-backup-s3-link]/[PVC][etcd-backup-pvc-link]).
+**SIGHUP Distribution DR** module is based on [Velero][velero-page], [Velero Node Agent][velero-node-agent-page] and etcd backup ([S3][etcd-backup-s3-link]/[PVC][etcd-backup-pvc-link]).
 
 Velero allows you to:
 
@@ -44,7 +48,7 @@ The module contains also velero plugins to natively integrate with Velero with d
 
 ## Packages
 
-Kubernetes Fury DR provides the following packages:
+SIGHUP Distribution DR provides the following packages:
 
 | Package                                    | Version     | Description                                                                                                     |
 | ------------------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------- |
@@ -90,7 +94,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ## Usage
 
-**Kubernetes Fury DR**'s Velero deployment depends on the environment.
+**SIGHUP Distribution DR**'s Velero deployment depends on the environment.
 
 | Environment                               | Storage Backend      | Velero Plugin                                   | Terraform Module                     |
 | ----------------------------------------- | -------------------- | ----------------------------------------------- | ------------------------------------ |
@@ -99,7 +103,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 | [Velero on Azure](#velero-on-azure)       | AZ Storage Container | [velero-azure](katalog/velero/velero-azure)     | [azure-velero](modules/azure-velero) |
 | [Velero on-premises](#velero-on-premises) | MinIo                | [velero-on-prem](katalog/velero/velero-on-prem) | `/`                                  |
 
-**Kubernetes Fury DR**'s etcd-backup deployment depends on the final location of the backups.
+**SIGHUP Distribution DR**'s etcd-backup deployment depends on the final location of the backups.
 | Package                                   | Storage Location        |
 | ----------------------------------------- | ----------------------- |
 | [etcd-backup-s3](#etcd-backup-s3)         | S3 Bucket               |
@@ -110,7 +114,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 | Tool                        | Version    | Description                                                                                                                                                    |
 | --------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]     | `>=0.25.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [furyctl][furyctl-repo]     | `>=0.25.0` | The recommended tool to download and manage SKD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo] | `>=3.5.3`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
 | [terraform][terraform-page] | `>=1.3`    | Additional infrastructure is deployed using `terraform`.                                                                                                       |
 
@@ -159,7 +163,7 @@ module "velero" {
 
 > More information on modules inputs can be found in the [aws-velero](modules/aws-velero) module documentation
 >
-> [Here][kfd-velero-aws-example] you can find an example designed to create all necessary cloud resources for Velero on AWS.
+> [Here][skd-velero-aws-example] you can find an example designed to create all necessary cloud resources for Velero on AWS.
 
 5. Define a `kustomization.yaml` that includes the downloaded resources.
 
@@ -223,7 +227,7 @@ module "velero" {
 
 > More information on modules inputs can be found in the [gcp-velero](modules/gcp-velero) module documentation
 >
-> [Here][kfd-velero-gcp-example] you can find an example designed to create all necessary cloud resources for Velero on GCP.
+> [Here][skd-velero-gcp-example] you can find an example designed to create all necessary cloud resources for Velero on GCP.
 
 5. Define a `kustomization.yaml` that includes the downloaded resources.
 
@@ -284,7 +288,7 @@ module "velero" {
 
 > More information on modules inputs can be found in the [azure-velero](modules/azure-velero) module documentation
 >
-> [Here][kfd-velero-azure-example] you can find an example designed to create all necessary cloud resources for Velero on Azure.
+> [Here][skd-velero-azure-example] you can find an example designed to create all necessary cloud resources for Velero on Azure.
 
 5. Define a `kustomization.yaml` that includes the downloaded resources.
 
@@ -303,7 +307,7 @@ kustomize build . | kubectl apply -f -
 
 ### Velero on-premises
 
-[velero-on-prem][kfd-velero-on-prem] deploys a [MinIO][minio-page] in-cluster instance as an object storage backend for Velero.
+[velero-on-prem][skd-velero-on-prem] deploys a [MinIO][minio-page] in-cluster instance as an object storage backend for Velero.
 
 Please note that the MinIO server is running in the same cluster that is being backed up.
 
@@ -359,23 +363,23 @@ In order to deploy `etcd-backup-pvc`, please refer to the [package's README.md][
 [velero-node-agent-page]: https://velero.io/docs/v1.12/file-system-backup/
 [minio-page]: https://min.io/
 [terraform-page]: https://www.terraform.io/
-[kfd-repo]: https://github.com/sighupio/fury-distribution
+[skd-repo]: https://github.com/sighupio/distribution
 [furyctl-repo]: https://github.com/sighupio/furyctl
 [kustomize-repo]: https://github.com/kubernetes-sigs/kustomize
 [velero-gcp-plugin-repo]: https://github.com/vmware-tanzu/velero-plugin-for-gcp
 [velero-aws-plugin-repo]: https://github.com/vmware-tanzu/velero-plugin-for-aws
 [velero-azure-plugin-repo]: https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure
 [velero-gcp-plugin-repo-permissions]: https://github.com/vmware-tanzu/velero-plugin-for-gcp#set-permissions-for-velero
-[kfd-velero-gcp-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/gcp-examples/main.tf
-[kfd-velero-aws-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/aws-examples/main.tf
-[kfd-velero-azure-example]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/examples/azure-examples/main.tf
-[kfd-velero-on-prem]: https://github.com/sighupio/fury-kubernetes-dr/tree/main/katalog/velero/velero-on-prem
+[skd-velero-gcp-example]: https://github.com/sighupio/module-dr/tree/main/examples/gcp-examples/main.tf
+[skd-velero-aws-example]: https://github.com/sighupio/module-dr/tree/main/examples/aws-examples/main.tf
+[skd-velero-azure-example]: https://github.com/sighupio/module-dr/tree/main/examples/azure-examples/main.tf
+[skd-velero-on-prem]: https://github.com/sighupio/module-dr/tree/main/katalog/velero/velero-on-prem
 [aws-docs-iam-roles]: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
-[kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
-[compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/docs/COMPATIBILITY_MATRIX.md
-[etcd-backup-s3-link]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/katalog/etcd-backup-s3/README.md
-[etcd-backup-pvc-link]: https://github.com/sighupio/fury-kubernetes-dr/blob/master/katalog/etcd-backup-pvc/README.md
-<!-- </KFD-DOCS> -->
+[skd-docs]: https://docs.sighup.io/
+[compatibility-matrix]: https://github.com/sighupio/module-dr/blob/master/docs/COMPATIBILITY_MATRIX.md
+[etcd-backup-s3-link]: https://github.com/sighupio/module-dr/blob/master/katalog/etcd-backup-s3/README.md
+[etcd-backup-pvc-link]: https://github.com/sighupio/module-dr/blob/master/katalog/etcd-backup-pvc/README.md
+<!-- </SKD-DOCS> -->
 
 <!-- <FOOTER> -->
 
@@ -385,7 +389,7 @@ Before contributing, please read first the [Contributing Guidelines](docs/CONTRI
 
 ### Reporting Issues
 
-In case you experience any problem with the module, please [open a new issue](https://github.com/sighupio/fury-kubernetes-dr/issues/new/choose).
+In case you experience any problem with the module, please [open a new issue](https://github.com/sighupio/module-dr/issues/new/choose).
 
 ## License
 
