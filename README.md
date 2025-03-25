@@ -13,11 +13,11 @@
 ![License](https://img.shields.io/github/license/sighupio/module-dr?label=License)
 [![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)](https://kubernetes.slack.com/archives/C0154HYTAQH)
 
-<!-- <SKD-DOCS> -->
+<!-- <SD-DOCS> -->
 
-**Disaster Recovery Module** implements backups and disaster recovery for the [SIGHUP Distribution (SKD)][skd-repo] using [Velero][velero-page].
+**Disaster Recovery Module** implements backups and disaster recovery for the [SIGHUP Distribution (SD)][skd-repo] using [Velero][velero-page].
 
-If you are new to SKD please refer to the [official documentation][skd-docs] on how to get started with SKD.
+If you are new to SD please refer to the [official documentation][skd-docs] on how to get started with SD.
 
 ## Overview
 
@@ -114,7 +114,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 | Tool                        | Version    | Description                                                                                                                                                    |
 | --------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]     | `>=0.25.0` | The recommended tool to download and manage SKD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [furyctl][furyctl-repo]     | `>=0.25.0` | The recommended tool to download and manage SD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo] | `>=3.5.3`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
 | [terraform][terraform-page] | `>=1.3`    | Additional infrastructure is deployed using `terraform`.                                                                                                       |
 
@@ -379,7 +379,7 @@ In order to deploy `etcd-backup-pvc`, please refer to the [package's README.md][
 [compatibility-matrix]: https://github.com/sighupio/module-dr/blob/master/docs/COMPATIBILITY_MATRIX.md
 [etcd-backup-s3-link]: https://github.com/sighupio/module-dr/blob/master/katalog/etcd-backup-s3/README.md
 [etcd-backup-pvc-link]: https://github.com/sighupio/module-dr/blob/master/katalog/etcd-backup-pvc/README.md
-<!-- </SKD-DOCS> -->
+<!-- </SD-DOCS> -->
 
 <!-- <FOOTER> -->
 

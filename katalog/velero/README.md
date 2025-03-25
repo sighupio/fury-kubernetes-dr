@@ -12,7 +12,7 @@
     - [Velero Node Agent](#velero-node-agent)
     - [Velero schedule](#velero-schedule)
 
-<!-- <SKD-DOCS> -->
+<!-- <SD-DOCS> -->
 
 Velero *(formerly Heptio Ark)* gives you tool to back up and restore your Kubernetes cluster resources and persistent
 volumes. You can run Velero with a cloud provider or on-premises. Velero lets you:
@@ -30,7 +30,7 @@ Velero consists of:
 
 Velero requires to have already deployed the [prometheus-operator](https://github.com/coreos/prometheus-operator) CRDs
 as this feature deploys [a `ServiceMonitor` definition](velero-base/serviceMonitor.yaml). It can be deployed using the
-[skd-monitoring](https://github.com/sighupio/module-monitoring) SKD core module.
+[skd-monitoring](https://github.com/sighupio/module-monitoring) SD core module.
 
 ## Server deployment
 
@@ -192,4 +192,4 @@ bases:
   - vendor/katalog/dr/velero/snapshot-controller
 ```
 
-<!-- </SKD-DOCS> -->
+<!-- </SD-DOCS> -->
