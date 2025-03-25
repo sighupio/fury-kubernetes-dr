@@ -30,9 +30,10 @@ Velero allows you to:
 - migrate cluster resources to other clusters
 - replicate your production environment to development and testing environment.
 
-ETCD backupper allows you to:
+ETCD backup allows you to:
 
-- snapshot your ETCD cluster
+- snapshot your ETCD cluster on an S3 bucket
+- snapshot your ETCD cluster on an already provisioned PVC
 
 Together with Velero, Velero Node Agent allows you to:
 
