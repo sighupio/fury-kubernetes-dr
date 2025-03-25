@@ -1,11 +1,11 @@
 <!-- markdownlint-disable MD033 -->
-<h1>
+<h1 align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/white-logo.png">
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/black-logo.png">
   <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/white-logo.png">
 </picture><br/>
-  SIGHUP Distribution <br/> Disaster Recovery
+  Disaster Recovery Module
 </h1>
 <!-- markdownlint-enable MD033 -->
 
@@ -15,13 +15,13 @@
 
 <!-- <SKD-DOCS> -->
 
-**SIGHUP Distribution Disaster Recovery (DR)** implements backups and disaster recovery for the [SIGHUP Distribution (SKD)][skd-repo] using [Velero][velero-page].
+**Disaster Recovery Module** implements backups and disaster recovery for the [SIGHUP Distribution (SKD)][skd-repo] using [Velero][velero-page].
 
 If you are new to SKD please refer to the [official documentation][skd-docs] on how to get started with SKD.
 
 ## Overview
 
-**SIGHUP Distribution DR** module is based on [Velero][velero-page], [Velero Node Agent][velero-node-agent-page] and etcd backup ([S3][etcd-backup-s3-link]/[PVC][etcd-backup-pvc-link]).
+**Disaster Recovery Module** module is based on [Velero][velero-page], [Velero Node Agent][velero-node-agent-page] and etcd backup ([S3][etcd-backup-s3-link]/[PVC][etcd-backup-pvc-link]).
 
 Velero allows you to:
 
@@ -48,7 +48,7 @@ The module contains also velero plugins to natively integrate with Velero with d
 
 ## Packages
 
-SIGHUP Distribution DR provides the following packages:
+Disaster Recovery Module provides the following packages:
 
 | Package                                    | Version     | Description                                                                                                     |
 | ------------------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------- |
@@ -94,7 +94,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ## Usage
 
-**SIGHUP Distribution DR**'s Velero deployment depends on the environment.
+**Disaster Recovery Module**'s Velero deployment depends on the environment.
 
 | Environment                               | Storage Backend      | Velero Plugin                                   | Terraform Module                     |
 | ----------------------------------------- | -------------------- | ----------------------------------------------- | ------------------------------------ |
@@ -103,7 +103,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 | [Velero on Azure](#velero-on-azure)       | AZ Storage Container | [velero-azure](katalog/velero/velero-azure)     | [azure-velero](modules/azure-velero) |
 | [Velero on-premises](#velero-on-premises) | MinIo                | [velero-on-prem](katalog/velero/velero-on-prem) | `/`                                  |
 
-**SIGHUP Distribution DR**'s etcd-backup deployment depends on the final location of the backups.
+**Disaster Recovery Module**'s etcd-backup deployment depends on the final location of the backups.
 | Package                                   | Storage Location        |
 | ----------------------------------------- | ----------------------- |
 | [etcd-backup-s3](#etcd-backup-s3)         | S3 Bucket               |
